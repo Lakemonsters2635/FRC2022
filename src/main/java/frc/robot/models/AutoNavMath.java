@@ -1,5 +1,8 @@
 package frc.robot.models;
-import org.frcteam2910.common.control.PathLineSegment;
+import org.frcteam2910.common.control.PathSegment;
+import org.frcteam2910.common.control.SimplePathBuilder;
+import org.frcteam2910.common.control.PathSegment;
+import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,7 +19,7 @@ public class AutoNavMath {
     If the robot has to move to a higher Y-coord up, the displacement is positive, so largerDeltaY should be set as "true"
     */
 
-    public static PathLineSegment circleCircleExternalTangent(Vector2 circleStart, Vector2 circleEnd, boolean largerDeltaY) {
+    public static PathSegment circleCircleExternalTangent(Vector2 circleStart, Vector2 circleEnd, boolean largerDeltaY) {
         // TODO determine if we want to pass in start/end points as strings or vectors
         // update 3/22: made inputs vector2's instead of strings
         Vector2 start = circleStart; 
@@ -63,10 +66,13 @@ public class AutoNavMath {
 		    endTan = new Vector2((end.x - displacementX), (end.y - displacementY));
         }
 		
-		return new PathLineSegment(startTan, endTan); 
+        SimplePathBuilder builder = new SimplePathBuilder(startTan, new Rotation2(0,0, false));
+        builder.lineTo(endTan);
+        
+		return builder.build().getSegments()[0];
     }
 
-    public static PathLineSegment circleCircleInternalTangent(Vector2 startString, Vector2 endString, boolean largerDeltaY) {
+    public static PathSegment circleCircleInternalTangent(Vector2 startString, Vector2 endString, boolean largerDeltaY) {
         // TODO determine if we want to pass in start/end points as strings or vectors
         // update 3/22: made inputs vector2's instead of strings
         Vector2 start = (startString);
@@ -104,13 +110,17 @@ public class AutoNavMath {
         double Yt4 = ((rr * rr * (Yp - DD) + YDisc34) / Divisor34) + DD;
 
         if (largerDeltaY) {
-            return new PathLineSegment(new Vector2(Xt1, Yt1), new Vector2(Xt3, Yt3)); 
+            SimplePathBuilder builder = new SimplePathBuilder(new Vector2(Xt1, Yt1), new Rotation2(0,0, false));
+            builder.lineTo( new Vector2(Xt3, Yt3));
+            return  builder.build().getSegments()[0];
         } else {
-            return new PathLineSegment(new Vector2(Xt2, Yt2), new Vector2(Xt4, Yt4));
+            SimplePathBuilder builder = new SimplePathBuilder(new Vector2(Xt2, Yt2), new Rotation2(0,0, false));
+            builder.lineTo( new Vector2(Xt4, Yt4));
+            return  builder.build().getSegments()[0];            
         }
     }
 
-    public static PathLineSegment circlePointTangent(Vector2 circleString, Vector2 pointString, boolean largerDeltaY, boolean circleToPoint, double radius) {
+    public static PathSegment circlePointTangent(Vector2 circleString, Vector2 pointString, boolean largerDeltaY, boolean circleToPoint, double radius) {
         /*
         circleToPoint should be TRUE if the robot is STARTING from the CIRCLE
         should be FALSE if the robot is ENDING on the CIRCLE
@@ -158,10 +168,17 @@ public class AutoNavMath {
 
         System.out.println("TanLine = " + tanLine); 
 
+
+
         if (circleToPoint) {
-            return new PathLineSegment(tanLine, point); 
+            SimplePathBuilder builder = new SimplePathBuilder(tanLine, new Rotation2(0,0, false));
+            builder.lineTo(point);
+            return builder.build().getSegments()[0];
+
         } else {
-            return new PathLineSegment(point, tanLine); 
+            SimplePathBuilder builder = new SimplePathBuilder(point, new Rotation2(0,0, false));
+            builder.lineTo(tanLine);
+            return builder.build().getSegments()[0];            
         }       
         
     }

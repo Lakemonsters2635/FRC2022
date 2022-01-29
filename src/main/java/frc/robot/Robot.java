@@ -24,9 +24,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
-import frc.robot.commands.AutonomousCommandGroups.AutonomousShooterToTrenchSequence;
-import frc.robot.models.AutonomousSequences;
-import frc.robot.models.AutonomousTrajectories;
+
+
 import frc.robot.models.PathSelecter;
 import frc.robot.subsystems.*;
 
@@ -162,7 +161,6 @@ private void initSubsystems() {
 private void initCommands() {
     // recordCommand = new ToggleDriveRecordCommand();
     zeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem);
-    reverseZeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem, 180);
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
     visionLightCommand = new VisionLightCommand();
     visionRotationDriveCommand = new VisionRotationDriveCommand();
@@ -234,30 +232,6 @@ private void initChooser() {
 //  m_chooser.addOption("Shoot from Right, Collect Right, Shoot Again", AutonomousSequences.ShootFromRight_Of_Optimal_Then_Collect());
 //  m_chooser.addOption("Shoot Then Leave Initiation Line", AutonomousSequences.shootThenBackAwayFromInitiationLine());
 //  m_chooser.addOption("Shoot, Collect Left", AutonomousSequences.ShootThenCollectLeft());
- m_chooser.addOption("Rotate 90 degrees", AutonomousSequences.RotateTest());
- m_chooser.addOption("Galactic-Search Red A", AutonomousSequences.GalacticSearchRedPathA());
- m_chooser.addOption("Galactic-Search Red B", AutonomousSequences.GalacticSearchRedPathB());
-//  m_chooser.addOption("DriveTwoFeetTwice", AutonomousSequences.DriveTwoFeetTwice());
-m_chooser.addOption("DriveStraightAndBack", AutonomousSequences.DriveStraightForwardAndBack());
- m_chooser.addOption("DriveLeftAndBack", AutonomousSequences.DriveLeftThenRight());
-//  m_chooser.addOption("IntakeTest", AutonomousSequences.IntakeTest());
- m_chooser.addOption("GoFetchTest", AutonomousSequences.GoFetchTest());
- m_chooser.addOption("Galactic-Search Blue A", AutonomousSequences.GalacticSearchBluePathA());
- m_chooser.addOption("Galactic-Search Blue B", AutonomousSequences.GalacticSearchBluePathB());
- m_chooser.addOption("Galactic-Search Red A Rotate", AutonomousSequences.GalacticSearchRedPathARotate());
- //m_chooser.addOption("GalacticSearch command", AutonomousSequences.GalacticSearch());
- //m_chooser.addOption("Barrel path", AutonomousSequences.barrelRacing());
- m_chooser.addOption("Arc test", AutonomousSequences.PathArcTest());
- m_chooser.addOption("Barrel Racing 1", AutonomousSequences.barrelRacing());
- m_chooser.addOption("Barrel Racing 2", AutonomousSequences.barrelRacing2());
- m_chooser.addOption("Bounce Path", AutonomousSequences.bounce());
- m_chooser.addOption("Bounce2 path", AutonomousSequences.bounce2());
-//  m_chooser.addOption("Slalom Path", AutonomousSequences.slalom());
- m_chooser.addOption("Slalom2 Path", AutonomousSequences.slalom2());
-
- m_chooser.addOption("Slalom3 Path", AutonomousSequences.slalom3());
-//  m_chooser.addOption("Fetch Power Cell Command", AutonomousSequences.)
-m_chooser.addOption("Fetch Power Cell PID Tuning", AutonomousSequences.FetchPowerCellPidTest()); 
   SmartDashboard.putData("Auto mode", m_chooser);
 }
 
@@ -378,7 +352,7 @@ m_chooser.addOption("Fetch Power Cell PID Tuning", AutonomousSequences.FetchPowe
       autonomousCommand.cancel();
     }
     // if(autoHappened){
-       reverseZeroCommand.start(); // *** uncomment for reversing bot so shooter is "front"
+      //  reverseZeroCommand.start(); // *** uncomment for reversing bot so shooter is "front"
     // }
     Robot.drivetrainSubsystem.getFollower().cancel();
 
@@ -386,7 +360,7 @@ m_chooser.addOption("Fetch Power Cell PID Tuning", AutonomousSequences.FetchPowe
     
 
     subsystemManager.enableKinematicLoop(UPDATE_DT);
-    // zeroCommand.start(); // *** comment out for reversing so shooter is "front"
+    zeroCommand.start(); // *** comment out for reversing so shooter is "front"
    // SmartDashboard.putString("Path", PathSelecter.choosePath());
   }
 

@@ -54,45 +54,45 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
   private static final double TRACKWIDTH = 21.0;
   private static final double WHEELBASE = 25.0;
 
-  public static final ITrajectoryConstraint[] CONSTRAINTS = {
-      //Original
-        //   new MaxVelocityConstraint(12.0 * 12.0),
-        //   new MaxAccelerationConstraint(15.0 * 12.0),                                 
-        //   new CentripetalAccelerationConstraint(25.0 * 12.0)
+//   public static final ITrajectoryConstraint[] CONSTRAINTS = {
+//       //Original
+//         //   new MaxVelocityConstraint(12.0 * 12.0),
+//         //   new MaxAccelerationConstraint(15.0 * 12.0),                                 
+//         //   new CentripetalAccelerationConstraint(25.0 * 12.0)
         
-        new MaxVelocityConstraint(12.0 * 3.0),
-        new MaxAccelerationConstraint(15.0 * 3.0),                                 
-        new CentripetalAccelerationConstraint(25.0 * 3.0)
-  };
+//         new MaxVelocityConstraint(12.0 * 3.0),
+//         new MaxAccelerationConstraint(15.0 * 3.0),                                 
+//         new CentripetalAccelerationConstraint(25.0 * 3.0)
+//   };
   
-  public static final ITrajectoryConstraint[] AUTONOMOUS_CONSTRAINTS = {
-    //Original
-      //   new MaxVelocityConstraint(12.0 * 12.0),
-      //   new MaxAccelerationConstraint(15.0 * 12.0),                                 
-      //   new CentripetalAccelerationConstraint(25.0 * 12.0)
+//   public static final ITrajectoryConstraint[] AUTONOMOUS_CONSTRAINTS = {
+//     //Original
+//       //   new MaxVelocityConstraint(12.0 * 12.0),
+//       //   new MaxAccelerationConstraint(15.0 * 12.0),                                 
+//       //   new CentripetalAccelerationConstraint(25.0 * 12.0)
 
-      // slow OG constraints 5.0 - 3.0 - 3.0
+//       // slow OG constraints 5.0 - 3.0 - 3.0
 
-      // barrel 18s take 10, 6.66, x4.0
+//       // barrel 18s take 10, 6.66, x4.0
       
-      // new MaxVelocityConstraint(12.0 * 7.5), 
-      // new MaxAccelerationConstraint(15.0 * 3.0),                                    
-      // new CentripetalAccelerationConstraint(25.0 * 3.0) 
-      new MaxVelocityConstraint(10.0 * 6 * 2), 
-      new MaxAccelerationConstraint(15.0 * 3.0 * 2),                                    
-      new CentripetalAccelerationConstraint(25.0 * 3.0) 
-  };
+//       // new MaxVelocityConstraint(12.0 * 7.5), 
+//       // new MaxAccelerationConstraint(15.0 * 3.0),                                    
+//       // new CentripetalAccelerationConstraint(25.0 * 3.0) 
+//       new MaxVelocityConstraint(10.0 * 6 * 2), 
+//       new MaxAccelerationConstraint(15.0 * 3.0 * 2),                                    
+//       new CentripetalAccelerationConstraint(25.0 * 3.0) 
+//   };
   
-  public static final ITrajectoryConstraint[] INTAKE_CONSTRAINTS = {
-    //Original
-      //   new MaxVelocityConstraint(12.0 * 12.0),
-      //   new MaxAccelerationConstraint(15.0 * 12.0),                                 
-      //   new CentripetalAccelerationConstraint(25.0 * 12.0)
+//   public static final ITrajectoryConstraint[] INTAKE_CONSTRAINTS = {
+//     //Original
+//       //   new MaxVelocityConstraint(12.0 * 12.0),
+//       //   new MaxAccelerationConstraint(15.0 * 12.0),                                 
+//       //   new CentripetalAccelerationConstraint(25.0 * 12.0)
 
-      new MaxVelocityConstraint(10.0 * 2.0),
-        new MaxAccelerationConstraint(12.0 * 2.0),                                 
-        new CentripetalAccelerationConstraint(20.0 * 2.0)
-};  
+//       new MaxVelocityConstraint(10.0 * 2.0),
+//         new MaxAccelerationConstraint(12.0 * 2.0),                                 
+//         new CentripetalAccelerationConstraint(20.0 * 2.0)
+// };  
 
 
   //Properties used for Path following.
@@ -159,7 +159,8 @@ private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians
 
   private final Object lock = new Object();
   private HolonomicDriveSignal signal = new HolonomicDriveSignal(Vector2.ZERO, 0.0, false);
-  private Trajectory.Segment segment = null;
+  //private Trajectory.Segment segment = null;
+//   private 
 
   public DrivetrainSubsystem() {
 
@@ -391,7 +392,10 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
 
           synchronized (lock) {
               signal = localSignal;
-              segment = follower.getLastSegment();
+              //Optional<Trajectory> trajectory = follower.getCurrentTrajectory();
+              //follower.follow(trajectory);
+              
+              //segment = follower.getLastSegment();
           }
       } else {
           synchronized (lock) {
@@ -409,7 +413,8 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
     //     SmartDashboard.putNumber("Pose Rotation", follower.getCurrentPose().rotation.toDegrees());
     //   }
 
-      if(follower.getLastSegment() != null) {
+      
+      if(follower.getCurrentTrajectory() != null) {
         // SmartDashboard.putNumber("lastSegment translation x", follower.getLastSegment().translation.x);
         // SmartDashboard.putNumber("lastSegment translation y", follower.getLastSegment().translation.y);
         // SmartDashboard.putNumber("lastSegment rotation", follower.getLastSegment().rotation.toDegrees());

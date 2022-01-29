@@ -18,6 +18,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -46,7 +47,7 @@ public static int currentZone;
     topKickerMotor = new CANSparkMax(RobotMap.UPPER_KICKER_MOTOR, MotorType.kBrushless);
     //topKickerMotor = new CANSparkMax(10, MotorType.kBrushless);
 
-    shootorSolenoid = new DoubleSolenoid(4,5);
+    shootorSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,4,5);
     //shootorSolenoid = new DoubleSolenoid(5,4);
     //shootorSolenoid = new DoubleSolenoid(3,4);
     //shootorSolenoid = new DoubleSolenoid(2,3);

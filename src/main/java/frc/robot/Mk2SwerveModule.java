@@ -11,9 +11,11 @@ package frc.robot;
  * Add your docs here.
  */
 
-import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxRelativeEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.SparkMaxRelativeEncoder.Type;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Notifier;
@@ -40,7 +42,7 @@ public class Mk2SwerveModule extends SwerveModule {
     private CANSparkMax angleMotor;
     private AnalogInput angleEncoder;
     private CANSparkMax driveMotor;
-    private CANEncoder driveEncoder;
+    private RelativeEncoder driveEncoder;
 
     private final Object canLock = new Object();
     private double driveEncoderTicks = 0.0;
@@ -76,13 +78,13 @@ public class Mk2SwerveModule extends SwerveModule {
 
     public Mk2SwerveModule(Vector2 modulePosition, double angleOffset,
                            CANSparkMax angleMotor, CANSparkMax driveMotor, AnalogInput angleEncoder) {
-        super(modulePosition);
+        super(modulePosition);  
         this.angleOffset = angleOffset;
         this.angleMotor = angleMotor;
         this.angleEncoder = angleEncoder;
         this.driveMotor = driveMotor;
-        this.driveEncoder = new CANEncoder(driveMotor);
-
+        this.driveEncoder = driveMotor.getEncoder();
+        //this.driveCurrent = CanSparkMax.
         driveMotor.setIdleMode(IdleMode.kBrake); // this UNCOMMENTED makes robot stop abruptly - use to save Frank's walls
         // driveMotor.setIdleMode(IdleMode.kCoast); // this COMMENTED makes robot stop abruptly - use to save Frank's walls
         driveMotor.setSmartCurrentLimit(60);

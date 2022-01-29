@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -35,7 +36,7 @@ public class IntakeSubsystem extends Subsystem {
     intakeSweeperMotor.setIdleMode(IdleMode.kBrake);
 
 
-    extender = new DoubleSolenoid(6,7);
+    extender = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,6,7);
     //extender = new DoubleSolenoid(4,5);
 
   }
