@@ -33,14 +33,17 @@ import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.VisionRotationDriveCommand;
 
 public class AutonomousSequences {
+        public static double sampleDistance = -96.0;
+        public static double startingVelocity = 2.0;
+        public static double endingVelocity = 0.0;
 
         public static CommandGroup new2022Command() {
             CommandGroup output = new CommandGroup();
-            Path path = new SimplePathBuilder(new Vector2(0.0,0.0), Rotation2.ZERO).lineTo(new Vector2(-50.0, 0.0)).build();
-
-            Trajectory driveTrajectory = new Trajectory(path, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, 12.0, 5.0, 0.0);
+            Path path = new SimplePathBuilder(new Vector2(0.0,0.0), Rotation2.ZERO).lineTo(new Vector2(-96.0, 0.0)).lineTo(new Vector2(0.0,0.0)).build();
+         
+            Trajectory driveTrajectory = new Trajectory(path, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
             AutonomousTrajectoryCommand driveCommand = new AutonomousTrajectoryCommand(driveTrajectory);
-                System.out.println("command almost finished");
+                // System.out.println("command almost finished");
             output.addSequential(driveCommand);
 
             return output;

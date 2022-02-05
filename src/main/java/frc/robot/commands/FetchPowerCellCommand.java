@@ -56,10 +56,10 @@ public class FetchPowerCellCommand extends Command {
     initPID();
     System.out.println("FPC start");
     
-    SmartDashboard.putNumber("Vision angle", angle);
-    SmartDashboard.putNumber("Desired angle", desiredAngle);
-    SmartDashboard.putNumber("initial angle", gyroAngle);
-    SmartDashboard.putNumber("SetPoint angle", setPointAngle);
+    // SmartDashboard.putNumber("Vision angle", angle);
+    // SmartDashboard.putNumber("Desired angle", desiredAngle);
+    // SmartDashboard.putNumber("initial angle", gyroAngle);
+    // SmartDashboard.putNumber("SetPoint angle", setPointAngle);
     
     Vector2 position = new Vector2(0, 0);
     Robot.drivetrainSubsystem.resetKinematics(position, 0);

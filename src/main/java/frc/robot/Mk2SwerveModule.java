@@ -86,7 +86,7 @@ public class Mk2SwerveModule extends SwerveModule {
         this.driveEncoder = driveMotor.getEncoder();
         //this.driveCurrent = CanSparkMax.
         driveMotor.setIdleMode(IdleMode.kBrake); // this UNCOMMENTED makes robot stop abruptly - use to save Frank's walls
-        // driveMotor.setIdleMode(IdleMode.kCoast); // this COMMENTED makes robot stop abruptly - use to save Frank's walls
+        //driveMotor.setIdleMode(IdleMode.kCoast); // this COMMENTED makes robot stop abruptly - use to save Frank's walls
         driveMotor.setSmartCurrentLimit(60);
 
         angleController.setInputRange(0.0, 2.0 * Math.PI);

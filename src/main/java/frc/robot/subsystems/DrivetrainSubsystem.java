@@ -79,7 +79,7 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
       // new MaxVelocityConstraint(12.0 * 7.5), 
       // new MaxAccelerationConstraint(15.0 * 3.0),                                    
       // new CentripetalAccelerationConstraint(25.0 * 3.0) 
-      new MaxVelocityConstraint(10.0 * 6 * 2), 
+      new MaxVelocityConstraint(5 * 6 * 2), 
       new MaxAccelerationConstraint(15.0 * 3.0 * 2),                                    
       new CentripetalAccelerationConstraint(25.0 * 3.0) 
   };
@@ -125,12 +125,12 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 //NEGATE SMARTDASHBOARD VALUES IN OFFSEST
 //COMP BOT
 private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-29.9); //95.7
-private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-145.8+5); //-148 + 180   -326.8
+private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-131); //-148 + 180   -326.8
 //private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-173.1); //14
 //private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-131.5); //14
 //private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-12.5); //14
-private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(48.5 + 45); //14
-private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-24.5); //-336+180    -151.6
+private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(100); //14
+private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-20); //-336+180    -151.6
 
   private static final PidConstants FOLLOWER_TRANSLATION_CONSTANTS = new PidConstants(0.05, 0.01, 0.0);
   private static final PidConstants FOLLOWER_ROTATION_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);//0.3, 0.1, 0.0
@@ -391,6 +391,7 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
     //   //SmartDashboard.putNumber("Rigid Transform: ", rigidTransform.);
 
       Optional<HolonomicDriveSignal> optSignal = follower.update(rigidTransform, kinematicVelocity, gyroRate, timestamp, dt);
+      
       HolonomicDriveSignal localSignal;
 
       if (optSignal.isPresent()) {
@@ -450,6 +451,9 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
   public void outputToSmartDashboard() {
       super.outputToSmartDashboard();
 
+      
+      SmartDashboard.putNumber("0CUrrentAngle", swerveModules[0].getCurrentAngle());
+      ;
       // HolonomicDriveSignal localSignal;
       // Trajectory.Segment localSegment;
       // synchronized (lock) {

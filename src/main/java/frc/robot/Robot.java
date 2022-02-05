@@ -121,17 +121,17 @@ public void robotInit() {
     angle =  new double[circularBufferSize];
 
     autoHappened = false;
-    SmartDashboard.putNumber("motor1Speed", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED);
-    SmartDashboard.putNumber("motor2Speed", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED * .75);
-    SmartDashboard.putNumber("Object detection latency", RobotMap.OBJECT_DETECTION_LATENCY);
-    SmartDashboard.putNumber("angleP", 0.25);
-    SmartDashboard.putNumber("angleI", 0.0);
-    SmartDashboard.putNumber("angleD", 0.0);
+    // SmartDashboard.putNumber("motor1Speed", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED);
+    // SmartDashboard.putNumber("motor2Speed", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED * .75);
+    // SmartDashboard.putNumber("Object detection latency", RobotMap.OBJECT_DETECTION_LATENCY);
+    // SmartDashboard.putNumber("angleP", 0.25);
+    // SmartDashboard.putNumber("angleI", 0.0);
+    // SmartDashboard.putNumber("angleD", 0.0);
 
-    SmartDashboard.putNumber("strafeP", 0.005);
-    SmartDashboard.putNumber("strafeI", 0.0);
-    SmartDashboard.putNumber("strafeD", 0.0);
-    SmartDashboard.putNumber("Forward Speed", 0.5);
+    // SmartDashboard.putNumber("strafeP", 0.005);
+    // SmartDashboard.putNumber("strafeI", 0.0);
+    // SmartDashboard.putNumber("strafeD", 0.0);
+    // SmartDashboard.putNumber("Forward Speed", 0.5);
 
     
     oi = new OI();
@@ -249,8 +249,8 @@ private void initChooser() {
     time[bufferSlotNumber] = Timer.getFPGATimestamp(); 
     angle[bufferSlotNumber] = drivetrainSubsystem.getGyroscope().getAngle().toRadians();
     bufferSlotNumber = (bufferSlotNumber++) % circularBufferSize;
-
-    drivetrainSubsystem.outputToSmartDashboard();
+    subsystemManager.outputToSmartDashboard();
+    //drivetrainSubsystem.outputToSmartDashboard();
   }
 
   /**
@@ -357,7 +357,7 @@ private void initChooser() {
     // }
     Robot.drivetrainSubsystem.getFollower().cancel();
 
-    SmartDashboard.putNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED);
+    // SmartDashboard.putNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED);
     
 
     subsystemManager.enableKinematicLoop(UPDATE_DT);
@@ -372,14 +372,14 @@ private void initChooser() {
   public void teleopPeriodic() {
 
     Scheduler.getInstance().run();
-    
-    //Vector2 vec = drivetrainSubsystem.getKinematicPosition();
-    //SmartDashboard.putNumber("Current Pose X", vec.x);
-    //SmartDashboard.putNumber("Current Pose Y", vec.y);
+    subsystemManager.outputToSmartDashboard();
+    // Vector2 vec = drivetrainSubsystem.getKinematicPosition();
+    // SmartDashboard.putNumber("Current Pose X", vec.x);
+    // SmartDashboard.putNumber("Current Pose Y", vec.y);
     
    
 
-    //drivetrainSubsystem.outputToSmartDashboard();
+    drivetrainSubsystem.outputToSmartDashboard();
   }
 @Override
 public void testInit(){
