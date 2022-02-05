@@ -24,8 +24,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
-
-
+import frc.robot.models.AutonomousSequences;
 import frc.robot.models.PathSelecter;
 import frc.robot.subsystems.*;
 
@@ -151,6 +150,8 @@ public void robotInit() {
 private void initSubsystems() {
   vision = new Vision();
   drivetrainSubsystem = new DrivetrainSubsystem();
+  // drivetrainSubsystem = new DrivetrainSubsystem();
+
   elevatorSubsystem = new ElevatorSubsystem();
   shooterSubsystem = new ShooterSubsystem();
   subsystemManager = new SubsystemManager(drivetrainSubsystem);
@@ -226,8 +227,8 @@ private void initChooser() {
   
   m_chooser = new SendableChooser<>();
 
-//  m_chooser.addOption("Shoot, Collect Right",s AutonomousSequences.ShootThenCollectRight());
-//  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());
+ m_chooser.addOption("new command", AutonomousSequences.new2022Command());
+//  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
 //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
 //  m_chooser.addOption("Shoot from Right, Collect Right, Shoot Again", AutonomousSequences.ShootFromRight_Of_Optimal_Then_Collect());
 //  m_chooser.addOption("Shoot Then Leave Initiation Line", AutonomousSequences.shootThenBackAwayFromInitiationLine());

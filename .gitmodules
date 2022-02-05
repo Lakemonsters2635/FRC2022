@@ -1,4 +1,0 @@
-[submodule "common"]
-	path = common
-	url = https://github.com/robototes/2910Common.git
-	branch = 2022_update
