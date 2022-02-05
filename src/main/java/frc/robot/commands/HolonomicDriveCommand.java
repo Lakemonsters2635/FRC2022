@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -67,8 +68,8 @@ protected void execute() {
   // if (reverseRobotOriented) {
   //     robotOriented = true;
   // }
-  //     translation = translation.rotateBy(Rotation2.fromDegrees(180.0));
-  Robot.drivetrainSubsystem.holonomicDrive(translation, rotation,  !robotOriented);
+  // translation = translation.rotateBy(Rotation2.fromDegrees(180.0)); //TODO changed
+  Robot.drivetrainSubsystem.holonomicDrive(translation, rotation, !robotOriented);
   //System.out.println("HoloDriveCommand.execute" + translation + " " + rotation);
   
 }

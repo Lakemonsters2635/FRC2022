@@ -33,8 +33,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Mk2SwerveModule extends SwerveModule {
     private static final PidConstants ANGLE_CONSTANTS = new PidConstants(0.5, 0.0, 0.000);//0.5, 0.0, 0.0001
-    private static final double DRIVE_TICKS_PER_INCH = (1.0 / (4.0 * Math.PI / 60.0 * 15.0 / 20.0 * 24.0 / 38.0 * 18.0) / 0.827828) * (200/213.875); // 0.707947
-
+    private static final double DRIVE_TICKS_PER_INCH = (1.0 / (4.0625 * Math.PI / 60.0 * 15.0 / 20.0 * 24.0 / 38.0 * 18.0) / 0.827828) * (200/213.875); // 0.707947
+    // changed from 60.0 * 15.0 / 20.0 * 24.0 / 38.0 * 18.0 to 60.0 * 15.0 / 28.0 * 26.0 / 42.0 * 14.0
     private static final double CAN_UPDATE_RATE = 50.0;
 
     private final double angleOffset;

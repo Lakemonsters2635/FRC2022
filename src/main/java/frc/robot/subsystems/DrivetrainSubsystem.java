@@ -51,8 +51,8 @@ import edu.wpi.first.wpilibj.SPI;
  * Add your docs here.
  */
 public class DrivetrainSubsystem extends SwerveDrivetrain {
-  private static final double TRACKWIDTH = 21.0;
-  private static final double WHEELBASE = 25.0;
+  private static final double TRACKWIDTH = 21.25;
+  private static final double WHEELBASE = 25.25;
 
 //   public static final ITrajectoryConstraint[] CONSTRAINTS = {
 //       //Original
@@ -65,23 +65,24 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 //         new CentripetalAccelerationConstraint(25.0 * 3.0)
 //   };
   
-//   public static final ITrajectoryConstraint[] AUTONOMOUS_CONSTRAINTS = {
-//     //Original
-//       //   new MaxVelocityConstraint(12.0 * 12.0),
-//       //   new MaxAccelerationConstraint(15.0 * 12.0),                                 
-//       //   new CentripetalAccelerationConstraint(25.0 * 12.0)
 
-//       // slow OG constraints 5.0 - 3.0 - 3.0
+  public static final TrajectoryConstraint[] AUTONOMOUS_CONSTRAINTS = {
+    //Original
+      //   new MaxVelocityConstraint(12.0 * 12.0),
+      //   new MaxAccelerationConstraint(15.0 * 12.0),                                 
+      //   new CentripetalAccelerationConstraint(25.0 * 12.0)
 
-//       // barrel 18s take 10, 6.66, x4.0
+      // slow OG constraints 5.0 - 3.0 - 3.0
+
+      // barrel 18s take 10, 6.66, x4.0
       
-//       // new MaxVelocityConstraint(12.0 * 7.5), 
-//       // new MaxAccelerationConstraint(15.0 * 3.0),                                    
-//       // new CentripetalAccelerationConstraint(25.0 * 3.0) 
-//       new MaxVelocityConstraint(10.0 * 6 * 2), 
-//       new MaxAccelerationConstraint(15.0 * 3.0 * 2),                                    
-//       new CentripetalAccelerationConstraint(25.0 * 3.0) 
-//   };
+      // new MaxVelocityConstraint(12.0 * 7.5), 
+      // new MaxAccelerationConstraint(15.0 * 3.0),                                    
+      // new CentripetalAccelerationConstraint(25.0 * 3.0) 
+      new MaxVelocityConstraint(10.0 * 6 * 2), 
+      new MaxAccelerationConstraint(15.0 * 3.0 * 2),                                    
+      new CentripetalAccelerationConstraint(25.0 * 3.0) 
+  };
   
 //   public static final ITrajectoryConstraint[] INTAKE_CONSTRAINTS = {
 //     //Original
@@ -133,11 +134,16 @@ private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians
 
   private static final PidConstants FOLLOWER_TRANSLATION_CONSTANTS = new PidConstants(0.05, 0.01, 0.0);
   private static final PidConstants FOLLOWER_ROTATION_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);//0.3, 0.1, 0.0
-  private static final HolonomicFeedforward FOLLOWER_FEEDFORWARD_CONSTANTS = new HolonomicFeedforward(
+  private static final DrivetrainFeedforwardConstants FOLLOWER_FEEDFORWARD_CONSTANTS =
           new DrivetrainFeedforwardConstants(1.0 / (14.0 * 12.0), 0.0, 0.0)
-  );
+  ;
 
- //fix this
+ //fix this 2/3/2022
+ public static final TrajectoryConstraint[] TRAJECTORY_CONSTRAINTS = {
+    new FeedforwardConstraint(11.0, FOLLOWER_FEEDFORWARD_CONSTANTS.getVelocityConstant(), FOLLOWER_FEEDFORWARD_CONSTANTS.getAccelerationConstant(), false),
+    new MaxAccelerationConstraint(12.5 * 12.0),
+    new CentripetalAccelerationConstraint(15 * 12.0)
+};
   private NavX navX = new NavX(SPI.Port.kMXP);
   
   private static final PidConstants SNAP_ROTATION_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);
@@ -149,7 +155,7 @@ private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians
   private HolonomicMotionProfiledTrajectoryFollower follower = new HolonomicMotionProfiledTrajectoryFollower(
           FOLLOWER_TRANSLATION_CONSTANTS,
           FOLLOWER_ROTATION_CONSTANTS,
-          FOLLOWER_FEEDFORWARD_CONSTANTS
+          new HolonomicFeedforward(FOLLOWER_FEEDFORWARD_CONSTANTS)
   );
 
   private PidController snapRotationController = new PidController(SNAP_ROTATION_CONSTANTS);
