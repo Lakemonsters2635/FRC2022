@@ -33,18 +33,57 @@ import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.VisionRotationDriveCommand;
 
 public class AutonomousSequences {
-        public static double sampleDistance = -96.0;
+        public static double sampleDistance = 12.0;
         public static double startingVelocity = 2.0;
         public static double endingVelocity = 0.0;
 
+        public static CommandGroup autonomousCollect() {
+            CommandGroup output = new CommandGroup();
+
+
+            //Shoot the ball.
+            //Turn around 180 degrees.
+            RobotRotateCommand rotateCommand1 = new RobotRotateCommand(90);
+
+            //Drive backward 42 in.
+            SimplePathBuilder driveBack = new SimplePathBuilder(new Vector2(0.0,0.0), Rotation2.ZERO);
+            driveBack.lineTo(new Vector2(42.0, 0.0));
+            
+            Path driveBackPath = driveBack.build();
+
+            Trajectory driveBackTrajectory = new Trajectory(driveBackPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+            AutonomousTrajectoryCommand driveBackCommand = new AutonomousTrajectoryCommand(driveBackTrajectory);
+            //Turn around 180 degrees.
+            RobotRotateCommand rotateCommand2 = new RobotRotateCommand(90);
+
+            //Shoot the ball.
+
+            output.addSequential(rotateCommand1, 2);
+            output.addSequential(rotateCommand2, 2);
+            output.addSequential(driveBackCommand);
+            
+            return output;
+
+        }
+
         public static CommandGroup new2022Command() {
             CommandGroup output = new CommandGroup();
-            Path path = new SimplePathBuilder(new Vector2(0.0,0.0), Rotation2.ZERO).lineTo(new Vector2(-96.0, 0.0)).lineTo(new Vector2(0.0,0.0)).build();
+            SimplePathBuilder pathBuilder = new SimplePathBuilder(new Vector2(0.0,0.0), Rotation2.ZERO);
+            pathBuilder.lineTo(new Vector2(-96.0, 0.0));
+            
+            SimplePathBuilder goBackwards = new SimplePathBuilder(new Vector2(0.0,0.0), Rotation2.ZERO);
+            goBackwards.lineTo(new Vector2(96.0,0.0));
+            
+            Path path = pathBuilder.build();
+            Path path2 = goBackwards.build();
          
             Trajectory driveTrajectory = new Trajectory(path, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
-            AutonomousTrajectoryCommand driveCommand = new AutonomousTrajectoryCommand(driveTrajectory);
+            AutonomousTrajectoryCommand driveCommand1 = new AutonomousTrajectoryCommand(driveTrajectory);
+            Trajectory driveTrajectory2 = new Trajectory(path2, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+            AutonomousTrajectoryCommand driveCommand2 = new AutonomousTrajectoryCommand(driveTrajectory2);
                 // System.out.println("command almost finished");
-            output.addSequential(driveCommand);
+            output.addSequential(driveCommand1);
+            output.addSequential(driveCommand2);
 
             return output;
         }

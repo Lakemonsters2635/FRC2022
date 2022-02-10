@@ -47,6 +47,7 @@ public class RobotRotateCommand extends Command {
   @Override
   protected void execute() {
     currentAngle = Robot.drivetrainSubsystem.getGyroscope().getAngle().toDegrees();
+    System.out.println("current angle: " + currentAngle);
     //boolean fieldOriented = false;
     //Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, angleController.calculate(currentAngle), fieldOriented);
     Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, angleController.calculate(currentAngle));
@@ -64,8 +65,10 @@ public class RobotRotateCommand extends Command {
     //if(currentAngle > targetAngle - 2 && currentAngle < targetAngle + 2 )
 
     double omega = Robot.drivetrainSubsystem.getGyroscope().getRate();
-    
-    if ((angleDelta < 2 || (angleDelta > 358 && angleDelta < 362)) && Math.abs(omega) < 0.003)
+    System.out.println("Omega : " + omega);
+    // if ((angleDelta < 2 || (angleDelta > 358 && angleDelta < 362)) && Math.abs(omega) < 0.003)
+
+    if ((angleDelta < 2 || (angleDelta > 358 && angleDelta < 362)))
     {
       System.out.println("Rotation finished");
       return true;
