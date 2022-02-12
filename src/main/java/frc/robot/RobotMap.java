@@ -120,7 +120,7 @@ public class RobotMap {
 
    public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 2600;
    public final static double SHOOTER_MOTOR_LOW_DEFAULT_SPEED = 3100;
-   public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 1742;
+   public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 500; //1742 to 500 on 2/10/22
 
 
   

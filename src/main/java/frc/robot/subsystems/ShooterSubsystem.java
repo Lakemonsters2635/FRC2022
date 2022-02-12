@@ -35,9 +35,6 @@ public class ShooterSubsystem extends Subsystem {
   CANSparkMax topKickerMotor;
   DoubleSolenoid shootorSolenoid;
 
-//public string[] ZoneNames
-public static HashMap<Integer, double[]> shooterZoneValue;
-public static int currentZone;
 
   // DoubleSolenoid rightSolenoid;
   public ShooterSubsystem(){
@@ -54,41 +51,8 @@ public static int currentZone;
     //shootorSolenoid = new DoubleSolenoid(3,2);
     //shootorSolenoid = new DoubleSolenoid(1,2);
     //shootorSolenoid = new DoubleSolenoid(0,1);
-    shooterZoneValue = new HashMap<Integer, double[]>();
-    shooterZoneValue.put(0, new double[] {2975, 190}); //changed from 0,0 to low values 
-    shooterZoneValue.put(1, new double[] {1700, 1400});
-    shooterZoneValue.put(2, new double[] {2100, 1600});
-    shooterZoneValue.put(3, new double[] {2175, 1700});
-    currentZone = 0;
+    
     configureMotors();  
-    SmartDashboard.putString("Zone", "Green zone");
-  }
-
-  public double[] getZoneValues() {
-    return shooterZoneValue.get(currentZone);
-  }
-
-  public void indexZone() {
-    switch(currentZone) {
-
-      case 0:
-        SmartDashboard.putString("Zone", "Yellow zone");
-        currentZone++;
-        break;
-      case 1:
-        SmartDashboard.putString("Zone", "Blue zone");
-        currentZone++;
-        break;
-      case 2:
-        SmartDashboard.putString("Zone", "Red zone");
-        currentZone++;
-        break;
-      case 3:
-        SmartDashboard.putString("Zone", "Green zone");
-        currentZone=0;
-        break;
-    }
-    SmartDashboard.putNumber("zone number", currentZone);
   }
 
   public void aimHigh(){

@@ -227,7 +227,7 @@ private void initChooser() {
   
   m_chooser = new SendableChooser<>();
 
-m_chooser.addOption("auto path 1", AutonomousSequences.autonomousCollect());
+m_chooser.addOption("auto path 1", AutonomousSequences.shootCollectRight());
  m_chooser.addOption("new command", AutonomousSequences.new2022Command());
 //  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
 //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());

@@ -37,30 +37,44 @@ public class AutonomousSequences {
         public static double startingVelocity = 2.0;
         public static double endingVelocity = 0.0;
 
-        public static CommandGroup autonomousCollect() {
+        public static CommandGroup shootCollectRight() {
             CommandGroup output = new CommandGroup();
 
 
             //Shoot the ball.
             //Turn around 180 degrees.
             RobotRotateCommand rotateCommand1 = new RobotRotateCommand(90);
+            RobotRotateCommand rotateCommand2 = new RobotRotateCommand(90);
+            RobotRotateCommand rotateCommand3 = new RobotRotateCommand(90);
+            RobotRotateCommand rotateCommand4 = new RobotRotateCommand(90);
+
+            
 
             //Drive backward 42 in.
             SimplePathBuilder driveBack = new SimplePathBuilder(new Vector2(0.0,0.0), Rotation2.ZERO);
-            driveBack.lineTo(new Vector2(42.0, 0.0));
+            driveBack.lineTo(new Vector2(-42.0, 0.0));
             
             Path driveBackPath = driveBack.build();
 
             Trajectory driveBackTrajectory = new Trajectory(driveBackPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
             AutonomousTrajectoryCommand driveBackCommand = new AutonomousTrajectoryCommand(driveBackTrajectory);
+            //run intake
+            
             //Turn around 180 degrees.
-            RobotRotateCommand rotateCommand2 = new RobotRotateCommand(90);
 
             //Shoot the ball.
+            ShooterCommand shooterCommand = new ShooterCommand(false, 2, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
+
+
 
             output.addSequential(rotateCommand1, 2);
             output.addSequential(rotateCommand2, 2);
+            output.addParallel(new IntakeDetectToElevatorIndexCommand(2));
             output.addSequential(driveBackCommand);
+            output.addSequential(rotateCommand3, 2);
+            output.addSequential(rotateCommand4, 2);
+            output.addSequential(shooterCommand);
+
             
             return output;
 

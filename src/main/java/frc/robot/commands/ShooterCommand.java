@@ -66,16 +66,16 @@ public class ShooterCommand extends Command {
 
     //       targetDistance = Robot.vision.getXDistance();
     //       motor1Speed = computeShooterSpeedFromTargetDistance(targetDistance, shootHigh);
-    //       Robot.shooterSubsystem.SpinShooter(motor1Speed);
+          Robot.shooterSubsystem.SpinShooter(motor1Speed);
     //   } 
     // } else {
 
         //For now, Only use throttle adjustments in high position.
         //If we want to use in low position we need to take measurements and calibrate.
         
-       executeWithZones();
+      //  executeWithZones();
   //  executeWithSmartDashboard();
-        //executeWithThrottles(motor1Speed, motor2Speed);
+        // executeWithThrottles(motor1Speed, motor2Speed);
 
     // }
 
@@ -98,14 +98,6 @@ public class ShooterCommand extends Command {
     // SmartDashboard.putNumber("motor2Speed", lower);
   }
 
-  private void executeWithZones() {
-    double[] shooterValues = Robot.shooterSubsystem.getZoneValues();
-
-    SmartDashboard.putNumber("motor1Speed", shooterValues[0]);
-    SmartDashboard.putNumber("motor2Speed", shooterValues[1]);
-
-    Robot.shooterSubsystem.SpinShooter(shooterValues[0], shooterValues[1]);
-  }
 
   private void executeWithThrottles(double motor1Speed, double motor2Speed)
   {
