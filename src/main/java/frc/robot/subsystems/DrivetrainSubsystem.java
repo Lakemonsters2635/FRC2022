@@ -81,9 +81,8 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
       // new CentripetalAccelerationConstraint(25.0 * 3.0) 
       new MaxVelocityConstraint(5 * 6 * 2), 
       new MaxAccelerationConstraint(6.0 * 3.0 * 2),                                    
-      new CentripetalAccelerationConstraint(10.0) 
-  };
-  
+      new CentripetalAccelerationConstraint(10) 
+  };  
 //   public static final ITrajectoryConstraint[] INTAKE_CONSTRAINTS = {
 //     //Original
 //       //   new MaxVelocityConstraint(12.0 * 12.0),
@@ -142,7 +141,7 @@ private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians
  public static final TrajectoryConstraint[] TRAJECTORY_CONSTRAINTS = {
     new FeedforwardConstraint(11.0, FOLLOWER_FEEDFORWARD_CONSTANTS.getVelocityConstant(), FOLLOWER_FEEDFORWARD_CONSTANTS.getAccelerationConstant(), false),
     new MaxAccelerationConstraint(12.5 * 12.0),
-    new CentripetalAccelerationConstraint(15 * 12.0)
+    new CentripetalAccelerationConstraint(15.0 * 12.0)
 };
   private NavX navX = new NavX(SPI.Port.kMXP);
   

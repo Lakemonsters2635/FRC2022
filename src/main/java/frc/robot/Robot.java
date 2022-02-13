@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
   ShooterCommand shooterWithVisionCommand;
   ShooterCommand shooterNoVisionCommand;
   
-  IndexZoneCommand indexZoneCommand;
+  // IndexZoneCommand indexZoneCommand;
 
   IntakeCommand  intakeInCommand;
   IntakeCommand intakeOutCommand;
@@ -191,7 +191,7 @@ private void initCommands() {
     shooterToggleCommand = new ShooterToggleCommand();
 
     snapshotCommand = new SnapshotCommand();
-    indexZoneCommand = new IndexZoneCommand();
+    // indexZoneCommand = new IndexZoneCommand();
  }
 
 private void initButtons() {
@@ -218,7 +218,7 @@ private void initButtons() {
     oi.referenceResetButton.whenPressed(zeroCommand);
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
     oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
-    oi.indexZoneButton.whenPressed(indexZoneCommand);
+    // oi.indexZoneButton.whenPressed(indexZoneCommand);
     //oi.snapShotButton.whenPressed(snapshotCommand);
 
 }
@@ -228,7 +228,10 @@ private void initChooser() {
   m_chooser = new SendableChooser<>();
 
 m_chooser.addOption("auto path 1", AutonomousSequences.shootCollectRight());
- m_chooser.addOption("new command", AutonomousSequences.new2022Command());
+m_chooser.addOption("new command", AutonomousSequences.new2022Command());
+m_chooser.addOption("Rotate 360", AutonomousSequences.rotate360());
+m_chooser.addOption("arc test", AutonomousSequences.arcTest());
+m_chooser.addOption("shootCollectRightNoRotation", AutonomousSequences.shootCollectRightNoRotation());
 //  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
 //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
 //  m_chooser.addOption("Shoot from Right, Collect Right, Shoot Again", AutonomousSequences.ShootFromRight_Of_Optimal_Then_Collect());
