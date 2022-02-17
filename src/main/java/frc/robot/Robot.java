@@ -232,6 +232,9 @@ m_chooser.addOption("new command", AutonomousSequences.new2022Command());
 m_chooser.addOption("Rotate 360", AutonomousSequences.rotate360());
 m_chooser.addOption("arc test", AutonomousSequences.arcTest());
 m_chooser.addOption("shootCollectRightNoRotation", AutonomousSequences.shootCollectRightNoRotation());
+m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLineRotationTest());
+m_chooser.addOption("Dance and dance straight", AutonomousSequences.dance2022Command());
+m_chooser.addOption("Shoot Collect Left", AutonomousSequences.shootCollectLeft());
 //  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
 //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
 //  m_chooser.addOption("Shoot from Right, Collect Right, Shoot Again", AutonomousSequences.ShootFromRight_Of_Optimal_Then_Collect());

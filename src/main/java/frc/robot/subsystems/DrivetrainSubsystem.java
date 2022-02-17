@@ -124,12 +124,12 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 //NEGATE SMARTDASHBOARD VALUES IN OFFSEST
 //COMP BOT
 private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-29.9); //95.7
-private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-131); //-148 + 180   -326.8
+private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-131 - 7); //-148 + 180   -326.8
 //private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-173.1); //14
 //private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-131.5); //14
 //private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-12.5); //14
-private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(100); //14
-private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-20); //-336+180    -151.6
+private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(100 - 5); //14
+private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-20 - 1.5); //-336+180    -151.6
 
   private static final PidConstants FOLLOWER_TRANSLATION_CONSTANTS = new PidConstants(0.05, 0.01, 0.0);
   private static final PidConstants FOLLOWER_ROTATION_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);//0.3, 0.1, 0.0

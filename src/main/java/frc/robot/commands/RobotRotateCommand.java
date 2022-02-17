@@ -26,8 +26,7 @@ public class RobotRotateCommand extends Command {
     // eg. requires(chassis);
     super(3);
     requires(Robot.drivetrainSubsystem);
-    angleController = new PIDController(0.005, 0.002, 0.0);
-    angleController.enableContinuousInput(-180, 180);
+   
     this.targetAngle = angle;
   }
 
@@ -36,6 +35,8 @@ public class RobotRotateCommand extends Command {
   protected void initialize() {
     //Robot.drivetrainSubsystem.getGyroscope().setAdjustmentAngle(Rotation2.fromDegrees(offset + drivetrain.getGyroscope().getUnadjustedAngle().toDegrees()));
     Robot.drivetrainSubsystem.getGyroscope().setAdjustmentAngle(Robot.drivetrainSubsystem.getGyroscope().getUnadjustedAngle());
+    angleController = new PIDController(0.003, 0.002, 0.0);
+    angleController.enableContinuousInput(-180, 180);
 
     System.out.println("Rotation initialized.");
     //Vector2 position = new Vector2(0, 0);
@@ -47,7 +48,7 @@ public class RobotRotateCommand extends Command {
   @Override
   protected void execute() {
     currentAngle = Robot.drivetrainSubsystem.getGyroscope().getAngle().toDegrees();
-    System.out.println("current angle: " + currentAngle);
+   System.out.println("current angle: " + currentAngle);
     //boolean fieldOriented = false;
     //Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, angleController.calculate(currentAngle), fieldOriented);
     Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, angleController.calculate(currentAngle));
@@ -65,10 +66,10 @@ public class RobotRotateCommand extends Command {
     //if(currentAngle > targetAngle - 2 && currentAngle < targetAngle + 2 )
 
     double omega = Robot.drivetrainSubsystem.getGyroscope().getRate();
-    System.out.println("Omega : " + omega);
+    //%%System.out.println("angleDelta:" + angleDelta);
     // if ((angleDelta < 2 || (angleDelta > 358 && angleDelta < 362)) && Math.abs(omega) < 0.003)
 
-    if ((angleDelta < 1.5 || (angleDelta > 358 && angleDelta < 362)))
+    if (angleDelta < 2)
     {
       System.out.println("Rotation finished");
       return true;

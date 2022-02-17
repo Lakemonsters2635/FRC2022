@@ -33,7 +33,30 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Mk2SwerveModule extends SwerveModule {
     private static final PidConstants ANGLE_CONSTANTS = new PidConstants(0.5, 0.0, 0.000);//0.5, 0.0, 0.0001
-    private static final double DRIVE_TICKS_PER_INCH = (1.0 / (4.0625 * Math.PI / 60.0 * 15.0 / 20.0 * 24.0 / 38.0 * 18.0) / 0.827828) * (200/213.875); // 0.707947
+    // private static final double DRIVE_TICKS_PER_INCH = (1.0 / (4.0625 * Math.PI / 60.0 * 15.0 / 20.0 * 24.0 / 38.0 * 18.0) / 0.827828) * (200/213.875);
+    private static final double DRIVE_TICKS_PER_REVOLUTION_OF_WHEEL =  (1.0 * // ticks per revolution of motor
+                                                                        (42.0 / 14.0) * // gear ratio of first stage
+                                                                        (18.0 / 26.0) * // gear ratio of second stage
+                                                                        (60.0 / 15.0) // gear ratio of third stage
+                                                                        );  
+    /*
+    DRIVE_TICKS_PER_REVOLUTION_OF_WHEEL is calculated as follows
+    (ticks per revolution of motor * (gear ratio of 1st stage) * (2nd stage gear ratio) * (3rd stage gear ratio))
+
+    the ticks for revolution of the motor = 42
+
+    ***VERY IMPORTANT MUST READ***
+    * DRIVE_TICKS_PER_INCH is actually MOTOR REVOLUTIONS per inch
+
+    * that's why DRIVE_TICKS_PER_REVOLUTION_OF_WHEEL has 1.0 as one of the numerators instead of 42, which is the external encoder ticks per revolution of the motor
+
+    depending on the module there may be more or fewer stages, you want to multiply by overall gear ratio
+    */
+    private static final double WHEEL_DIAMETER = 4.0625; // inches
+    private static final double CARPET_FACTOR_LHS_FWING = 96.0 / 91.5; // fraction to account for wheel/carpet interation. Tell the robot to drive x amount then measure true value.
+    
+    private static final double DRIVE_TICKS_PER_INCH = (DRIVE_TICKS_PER_REVOLUTION_OF_WHEEL / (WHEEL_DIAMETER * Math.PI)) * CARPET_FACTOR_LHS_FWING;
+
     // changed from 60.0 * 15.0 / 20.0 * 24.0 / 38.0 * 18.0 to 60.0 * 15.0 / 28.0 * 26.0 / 42.0 * 14.0
     private static final double CAN_UPDATE_RATE = 50.0;
 
@@ -94,6 +117,8 @@ public class Mk2SwerveModule extends SwerveModule {
         angleController.setOutputRange(-0.5, 0.5);
 
         canUpdateNotifier.startPeriodic(1.0 / CAN_UPDATE_RATE);
+
+        System.out.println("DRIVE_TICKS_PER_INCH = " + DRIVE_TICKS_PER_INCH);
     }
 
     @Override
