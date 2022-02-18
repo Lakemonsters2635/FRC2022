@@ -35,7 +35,7 @@ public class RobotRotateCommand extends Command {
   protected void initialize() {
     //Robot.drivetrainSubsystem.getGyroscope().setAdjustmentAngle(Rotation2.fromDegrees(offset + drivetrain.getGyroscope().getUnadjustedAngle().toDegrees()));
     Robot.drivetrainSubsystem.getGyroscope().setAdjustmentAngle(Robot.drivetrainSubsystem.getGyroscope().getUnadjustedAngle());
-    angleController = new PIDController(0.003, 0.002, 0.0);
+    angleController = new PIDController(0.002, 0.002, 0.0);
     angleController.enableContinuousInput(-180, 180);
 
     System.out.println("Rotation initialized.");
@@ -69,7 +69,7 @@ public class RobotRotateCommand extends Command {
     //%%System.out.println("angleDelta:" + angleDelta);
     // if ((angleDelta < 2 || (angleDelta > 358 && angleDelta < 362)) && Math.abs(omega) < 0.003)
 
-    if (angleDelta < 2)
+    if (angleDelta < 3)
     {
       System.out.println("Rotation finished");
       return true;
