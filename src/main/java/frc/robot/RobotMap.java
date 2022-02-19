@@ -74,6 +74,8 @@ public class RobotMap {
   public static final int R_INTAKE_IN_BUTTON = 10;
   public static final int R_INTAKE_OUT_BUTTON = 9;
   public static final int R_INDEX_ZONE_BUTTON = 6;
+  public static final int R_INTAKE_EXTEND_COLLECT_BUTTON = 7;
+
   
   
 

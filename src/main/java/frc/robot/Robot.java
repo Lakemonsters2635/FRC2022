@@ -88,7 +88,7 @@ public class Robot extends TimedRobot {
   IntakeActuateCommand lowerIntakeCommand;
   IntakeActuateCommand raiseIntakeCommand;
   IntakeToggleCommand intakeToggleCommand;
-
+  IntakeExtendCollectCommand intakeCollectCommand;
   ShooterActuateCommand raiseShooterCommand;
   ShooterActuateCommand lowerShooterCommand;
   ShooterToggleCommand shooterToggleCommand;
@@ -177,7 +177,7 @@ private void initCommands() {
 
     intakeInCommand = new IntakeCommand(false);
     intakeOutCommand = new IntakeCommand(true);
-
+    intakeInCommand.isRunning();
     intakeDetectCommand = new IntakeDetectCommand();
 
     intakeDetectToElevatorIndexCommand = new IntakeDetectToElevatorIndexCommand();
@@ -185,7 +185,7 @@ private void initCommands() {
     lowerIntakeCommand = new IntakeActuateCommand(false, 3);
     raiseIntakeCommand = new IntakeActuateCommand(true, 3);
     intakeToggleCommand = new IntakeToggleCommand();
-
+    intakeCollectCommand = new IntakeExtendCollectCommand();
     raiseShooterCommand = new ShooterActuateCommand(false, 3);
     lowerShooterCommand = new ShooterActuateCommand(true, 3);
     shooterToggleCommand = new ShooterToggleCommand();
@@ -208,6 +208,7 @@ private void initButtons() {
 
      oi.intakeInButton.whileHeld(intakeInCommand);
      oi.intakeOutButton.whileHeld(intakeOutCommand);
+     oi.intakeExtendCOllectButton.whenPressed(intakeCollectCommand);
      oi.intakeDetectButton.whileHeld(intakeDetectToElevatorIndexCommand);
 
      oi.intakeElevationButton.toggleWhenPressed(intakeToggleCommand);

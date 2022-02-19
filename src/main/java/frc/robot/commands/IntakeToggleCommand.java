@@ -10,7 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class IntakeToggleCommand extends Command {
+public class 
+IntakeToggleCommand extends Command {
   
   public IntakeToggleCommand() {
     
@@ -25,7 +26,7 @@ public class IntakeToggleCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
+    // System.out.println("ToggleCommand executed");
     Robot.intakeSubsystem.raiseIntake();
 
   }

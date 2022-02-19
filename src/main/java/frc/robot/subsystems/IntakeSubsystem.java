@@ -44,6 +44,7 @@ public class IntakeSubsystem extends Subsystem {
 
   public void raiseIntake() {
     extender.set(Value.kReverse);
+    // extender.get();
   }
 
   public void lowerIntake() {
@@ -62,7 +63,13 @@ public class IntakeSubsystem extends Subsystem {
     intakeKickerMotor.set(-input);
   }
  
-
+  public boolean intakeIsExtended() {
+    Value extenderValue = extender.get();
+    if ( extenderValue == Value.kForward) {
+      return true;
+    }
+    return false;
+  }
 
   @Override
   public void initDefaultCommand() {
