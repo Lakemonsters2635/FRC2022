@@ -118,7 +118,11 @@ public class RobotMap {
 	 static final double kD = 0.003; 	// 0.22636364
 	 static final double kF = 0.047; 			//
 	 //public final static Gains kGains_Velocit = new Gains( kP, kI, kD, kF,  0,  1.00);
-	 public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
+
+   // new PID values added 2/21 for upper shooter wheel (talon ID 12) on 2021 bot 
+   static final double kP2 = 0.4125;
+   
+	 public final static Gains kGains_Velocit = new Gains(kP2, 0.0, 0.0, 0,  0,  1.00); // before 2/21 we were using kF = 0.047
 
    public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 2600;
    public final static double SHOOTER_MOTOR_LOW_DEFAULT_SPEED = 3100;

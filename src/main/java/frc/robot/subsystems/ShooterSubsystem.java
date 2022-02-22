@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -116,8 +117,27 @@ public class ShooterSubsystem extends Subsystem {
 
   public void stop() {
     //  state = State.DISABLED;
+    // motor1.set(ControlMode.Velocity, 0);
+    // motor2.set(ControlMode.Velocity, 0);
+
+    // 2/21 not sure if setting the PID values back to zero in this function will reduce the oscillations present in deceleration of shooter wheelss
+
+    motor1.config_kF(RobotMap.kPIDLoopIdx, 0, RobotMap.kTimeoutMs);
+    motor1.config_kP(RobotMap.kPIDLoopIdx, 0, RobotMap.kTimeoutMs);
+    motor1.config_kI(RobotMap.kPIDLoopIdx, 0, RobotMap.kTimeoutMs);
+    motor1.config_kD(RobotMap.kPIDLoopIdx, 0, RobotMap.kTimeoutMs);
+    
+    motor2.config_kF(RobotMap.kPIDLoopIdx, 0, RobotMap.kTimeoutMs);
+    motor2.config_kP(RobotMap.kPIDLoopIdx, 0, RobotMap.kTimeoutMs);
+    motor2.config_kI(RobotMap.kPIDLoopIdx, 0, RobotMap.kTimeoutMs);
+    motor2.config_kD(RobotMap.kPIDLoopIdx, 0, RobotMap.kTimeoutMs);
+
+    motor1.setNeutralMode(NeutralMode.Brake);
     motor1.set(ControlMode.Velocity, 0);
+    motor2.setNeutralMode(NeutralMode.Brake);
     motor2.set(ControlMode.Velocity, 0);
+
+
     topKickerMotor.set(0);
   
   }
