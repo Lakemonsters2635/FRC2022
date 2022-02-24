@@ -25,7 +25,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.models.AutonomousSequences;
-import frc.robot.models.PathSelecter;
 import frc.robot.subsystems.*;
 
 
@@ -87,19 +86,11 @@ public class Robot extends TimedRobot {
 
   IntakeActuateCommand lowerIntakeCommand;
   IntakeActuateCommand raiseIntakeCommand;
-  IntakeToggleCommand intakeToggleCommand;
   IntakeExtendCollectCommand intakeCollectCommand;
-  ShooterActuateCommand raiseShooterCommand;
-  ShooterActuateCommand lowerShooterCommand;
-  ShooterToggleCommand shooterToggleCommand;
 
 
-  VisionLightCommand visionLightCommand;
   VisionRotationDriveCommand visionRotationDriveCommand;
   RobotRotateCommand robotRotateCommand;
-
-  SnapshotCommand snapshotCommand;
-
 
 
   boolean autoHappened;
@@ -163,7 +154,6 @@ private void initCommands() {
     // recordCommand = new ToggleDriveRecordCommand();
     zeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem);
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
-    visionLightCommand = new VisionLightCommand();
     visionRotationDriveCommand = new VisionRotationDriveCommand();
     robotRotateCommand = new RobotRotateCommand(90);
     shooterWithVisionCommand = new ShooterCommand(true);
@@ -184,13 +174,8 @@ private void initCommands() {
 
     lowerIntakeCommand = new IntakeActuateCommand(false, 3);
     raiseIntakeCommand = new IntakeActuateCommand(true, 3);
-    intakeToggleCommand = new IntakeToggleCommand();
     intakeCollectCommand = new IntakeExtendCollectCommand();
-    raiseShooterCommand = new ShooterActuateCommand(false, 3);
-    lowerShooterCommand = new ShooterActuateCommand(true, 3);
-    shooterToggleCommand = new ShooterToggleCommand();
 
-    snapshotCommand = new SnapshotCommand();
     // indexZoneCommand = new IndexZoneCommand();
  }
 
@@ -211,9 +196,7 @@ private void initButtons() {
      oi.intakeExtendCOllectButton.whenPressed(intakeCollectCommand);
      oi.intakeDetectButton.whileHeld(intakeDetectToElevatorIndexCommand);
 
-     oi.intakeElevationButton.toggleWhenPressed(intakeToggleCommand);
      
-     oi.shooterElevationButton.toggleWhenPressed(shooterToggleCommand);
 
     //oi.helloArcButton.whileHeld(robotRotateCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
@@ -228,15 +211,15 @@ private void initChooser() {
   
   m_chooser = new SendableChooser<>();
 
-m_chooser.addOption("auto path 1", AutonomousSequences.shootCollectRight());
-m_chooser.addOption("new command", AutonomousSequences.new2022Command());
+m_chooser.addOption("Shoot Collect Right", AutonomousSequences.shootCollectRight());
+m_chooser.addOption("Shoot Collect Left", AutonomousSequences.shootCollectLeft());
+m_chooser.addOption("Shoot and Collect and Shoot two Cargo", AutonomousSequences.shootCollectShootTwoCargo());
+m_chooser.addOption("Drive Straight Then Back", AutonomousSequences.driveStraightThenBack());
 m_chooser.addOption("Rotate 360", AutonomousSequences.rotate360());
 m_chooser.addOption("arc test", AutonomousSequences.arcTest());
-m_chooser.addOption("shootCollectRightNoRotation", AutonomousSequences.shootCollectRightNoRotation());
+m_chooser.addOption("Shoot Arc Collect Shoot", AutonomousSequences.shootCollectRightNoRotation());
 m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLineRotationTest());
-m_chooser.addOption("Dance and dance straight", AutonomousSequences.dance2022Command());
-m_chooser.addOption("Shoot Collect Left", AutonomousSequences.shootCollectLeft());
-m_chooser.addOption("two ball auto", AutonomousSequences.twoBallAutoMidStart());
+
 //  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
 //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
 //  m_chooser.addOption("Shoot from Right, Collect Right, Shoot Again", AutonomousSequences.ShootFromRight_Of_Optimal_Then_Collect());

@@ -68,10 +68,6 @@ public class OI {
   Button intakeExtendCOllectButton = new JoystickButton(rightStick, RobotMap.R_INTAKE_EXTEND_COLLECT_BUTTON);
   Button intakeElevationButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_ELEVATION_BUTTON);
 
-  Button shooterElevationButton = new JoystickButton(leftStick, RobotMap.L_SHOOTER_ELEVATION_BUTTON);
-
-  Button snapShotButton = new JoystickButton(leftStick, RobotMap.L_SNAPSHOT_BUTTON);
-
   
   Button indexZoneButton = new JoystickButton(rightStick, RobotMap.R_INDEX_ZONE_BUTTON);
 }

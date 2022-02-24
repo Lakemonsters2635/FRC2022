@@ -58,9 +58,6 @@ public class RobotMap {
   public static final int L_SHOOTER_WITHVISION_BUTTON = 1;
   public static final int L_INTAKE_DETECT_BUTTON = 2;
   public static final int L_VISION_BUTTON = 4;
-  public static final int L_SNAPSHOT_BUTTON = 5;
-  public static final int L_SHOOTER_ELEVATION_BUTTON = 6;
-  public static final int L_CONTROL_PANEL_ROTATION_BUTTON = 7;
   public static final int L_REFERENCE_RESET_BUTTON = 8;
   public static final int L_INTAKE_ELEVATION_BUTTON = 3;
   
