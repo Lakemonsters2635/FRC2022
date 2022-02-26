@@ -23,9 +23,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.commands.*;
 import frc.robot.models.AutonomousSequences;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.IntakeSubsystem.IntakePosition;
 
 
 //changes
@@ -54,6 +56,7 @@ public class Robot extends TimedRobot {
   public static ElevatorSubsystem elevatorSubsystem;
   public static IntakeSubsystem intakeSubsystem;
   public static ShooterSubsystem shooterSubsystem;
+  public static ColorDetectorSubsystem colorDetectorSubsystem;
 
 
   SendableChooser<CommandGroup> m_chooser;
@@ -86,6 +89,8 @@ public class Robot extends TimedRobot {
 
   IntakeActuateCommand lowerIntakeCommand;
   IntakeActuateCommand raiseIntakeCommand;
+  IntakeActuateCommand middleIntakeCommand;
+
   IntakeExtendCollectCommand intakeCollectCommand;
 
 
@@ -123,6 +128,8 @@ public void robotInit() {
     // SmartDashboard.putNumber("strafeI", 0.0);
     // SmartDashboard.putNumber("strafeD", 0.0);
     // SmartDashboard.putNumber("Forward Speed", 0.5);
+    // colorDetectorSubsystem.ColorMatcher();
+    
 
     
     oi = new OI();
@@ -148,6 +155,7 @@ private void initSubsystems() {
   subsystemManager = new SubsystemManager(drivetrainSubsystem);
   intakeSubsystem = new IntakeSubsystem();
   objectTrackerSubsystem = new ObjectTrackerSubsystem();
+  colorDetectorSubsystem = new ColorDetectorSubsystem();
 }
 
 private void initCommands() {
@@ -161,6 +169,7 @@ private void initCommands() {
     elevatorUpCommand = new ElevatorCommand(false);
     elevatorDownCommand = new ElevatorCommand(true);
 
+
     elevatorIndexUpCommand = new ElevatorIndexCommand(true, 70);
     elevatorIndexDownCommand = new ElevatorIndexCommand(false, 70);
 
@@ -172,8 +181,9 @@ private void initCommands() {
 
     intakeDetectToElevatorIndexCommand = new IntakeDetectToElevatorIndexCommand();
 
-    lowerIntakeCommand = new IntakeActuateCommand(false, 3);
-    raiseIntakeCommand = new IntakeActuateCommand(true, 3);
+    lowerIntakeCommand = new IntakeActuateCommand(true, 3);
+    raiseIntakeCommand = new IntakeActuateCommand(false, 3);
+    middleIntakeCommand = new IntakeActuateCommand(IntakePosition.Middle, 3);
     intakeCollectCommand = new IntakeExtendCollectCommand();
 
     // indexZoneCommand = new IndexZoneCommand();
@@ -187,6 +197,9 @@ private void initButtons() {
     //oi.intakeButton.whileHeld(intakeCommandGroup);
      oi.elevatorUpButton.whileHeld(elevatorUpCommand);
     oi.elevatorDownButton.whileHeld(elevatorDownCommand);
+    oi.intakeActuateUpButton.whileHeld(raiseIntakeCommand);
+    oi.intakeActuateDownButton.whileHeld(lowerIntakeCommand);
+    oi.intakeActuateMiddleButton.whenPressed(middleIntakeCommand);
 
     oi.elevatorIndexUpButton.whenPressed(elevatorIndexUpCommand);
     oi.elevatorIndexDownButton.whenPressed(elevatorIndexDownCommand);
@@ -243,6 +256,8 @@ m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLin
     bufferSlotNumber = (bufferSlotNumber++) % circularBufferSize;
     subsystemManager.outputToSmartDashboard();
     //drivetrainSubsystem.outputToSmartDashboard();
+    colorDetectorSubsystem.outputColor();
+
   }
 
   /**
@@ -352,6 +367,7 @@ m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLin
     // SmartDashboard.putNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED);
     
 
+
     subsystemManager.enableKinematicLoop(UPDATE_DT);
     zeroCommand.start(); // *** comment out for reversing so shooter is "front"
    // SmartDashboard.putString("Path", PathSelecter.choosePath());
@@ -368,7 +384,8 @@ m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLin
     // Vector2 vec = drivetrainSubsystem.getKinematicPosition();
     // SmartDashboard.putNumber("Current Pose X", vec.x);
     // SmartDashboard.putNumber("Current Pose Y", vec.y);
-    
+    SmartDashboard.putNumber("redcolor", colorDetectorSubsystem.outputColor());
+
    
 
     drivetrainSubsystem.outputToSmartDashboard();

@@ -9,14 +9,25 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeSubsystem.IntakePosition;
 
 public class IntakeActuateCommand extends Command {
   private boolean m_raiseIntake = false;
+  private IntakePosition m_intakePosition;
   public IntakeActuateCommand(boolean raiseIntake, double timeOut) {
     super(timeOut);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     m_raiseIntake = raiseIntake;
+  }
+
+
+  public IntakeActuateCommand(IntakeSubsystem.IntakePosition position, double timeOut) {
+    super(timeOut);
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    m_intakePosition = position;
   }
 
   // Called just before this Command runs the first time
@@ -32,6 +43,7 @@ public class IntakeActuateCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
 
   }
 
@@ -45,7 +57,9 @@ public class IntakeActuateCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-   
+   if(m_intakePosition == IntakePosition.Middle) {
+     Robot.intakeSubsystem.midState();
+   }
     super.end();
   }
 

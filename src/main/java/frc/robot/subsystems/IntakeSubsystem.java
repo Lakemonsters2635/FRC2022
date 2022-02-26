@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -26,30 +27,44 @@ public class IntakeSubsystem extends Subsystem {
   // here. Call these from Commands.
   CANSparkMax intakeSweeperMotor;
   CANSparkMax intakeKickerMotor;
-  DoubleSolenoid extender;
+  // DoubleSolenoid extender;
+  Solenoid solenoid1;
+  Solenoid solenoid2;
 
-
+public enum IntakePosition{
+  Raised,
+  Middle,
+  Lowered
+}
   public IntakeSubsystem() {
     intakeSweeperMotor = new CANSparkMax(RobotMap.INTAKE_SWEEPER_MOTOR, MotorType.kBrushless);
     intakeKickerMotor = new CANSparkMax(RobotMap.INTAKE_KICKER_MOTOR, MotorType.kBrushless);
     intakeKickerMotor.setIdleMode(IdleMode.kBrake);
     intakeSweeperMotor.setIdleMode(IdleMode.kBrake);
 
-
-    extender = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,6,7);
+    solenoid1 = new Solenoid(PneumaticsModuleType.CTREPCM, 6);
+    solenoid2 = new Solenoid(PneumaticsModuleType.CTREPCM, 7);
+    raiseIntake();
+    // extender = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,6,7);
     //extender = new DoubleSolenoid(4,5);
 
   }
 
-
+  public void midState() {
+    solenoid1.set(false);
+    solenoid2.set(false);
+    }
   public void raiseIntake() {
-    extender.set(Value.kReverse);
+    solenoid1.set(true);
+    solenoid2.set(false);
+
+
     // extender.get();
   }
 
   public void lowerIntake() {
-    extender.set(Value.kForward);
-  }
+    solenoid1.set(false);
+    solenoid2.set(true);  }
 
   public double getKickerCurrent() {
     return Math.abs(intakeKickerMotor.getOutputCurrent());
@@ -64,10 +79,10 @@ public class IntakeSubsystem extends Subsystem {
   }
  
   public boolean intakeIsExtended() {
-    Value extenderValue = extender.get();
-    if ( extenderValue == Value.kForward) {
-      return true;
-    }
+    // Value extenderValue = extender.get();
+    // if ( extenderValue == Value.kForward) {
+    //   return true;
+    // }
     return false;
   }
 
