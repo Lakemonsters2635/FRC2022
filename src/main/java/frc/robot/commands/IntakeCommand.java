@@ -51,7 +51,11 @@ public class IntakeCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return super.isTimedOut();
+    boolean isFinished = super.isTimedOut(); 
+    if (Robot.colorDetectorSubsystem.outputDistanceForShooterTest()) {
+      isFinished = true;
+    }
+    return isFinished;
   }
 
   // Called once after isFinished returns true

@@ -93,6 +93,30 @@ public class ColorDetectorSubsystem {
     return redColor;
   }
 
+  // for output and distance calibration to SmartDashboard
+  public int outputDistance() {
+    int distanceThreshold = 90;
+    int currentDistance = m_colorSensor.getProximity();
+    if (currentDistance >= distanceThreshold) {
+      System.out.println("target found");
+      return distanceThreshold;
+    }
+    return currentDistance;
+  }
+
+  // bind this function to the shooter such that it stops spinning when object is in range
+  // TODO 2/28 this function needs to have constants refactored and bound to the intake command on new bot
+  public boolean outputDistanceForShooterTest() {
+    int distanceThreshold = 90;
+    int currentDistance = m_colorSensor.getProximity();
+    //System.out.println(currentDistance);
+    if (currentDistance >= distanceThreshold) {
+      System.out.println("target found");
+      return true;
+    }
+    return false;
+  }
+
 
   public Color get_color() {
     /**

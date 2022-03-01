@@ -97,6 +97,7 @@ public class Robot extends TimedRobot {
   VisionRotationDriveCommand visionRotationDriveCommand;
   RobotRotateCommand robotRotateCommand;
 
+  TestColorSensorDistanceCommand testColorSensorDistanceCommand;
 
   boolean autoHappened;
 
@@ -156,6 +157,7 @@ private void initSubsystems() {
   intakeSubsystem = new IntakeSubsystem();
   objectTrackerSubsystem = new ObjectTrackerSubsystem();
   colorDetectorSubsystem = new ColorDetectorSubsystem();
+
 }
 
 private void initCommands() {
@@ -185,6 +187,9 @@ private void initCommands() {
     raiseIntakeCommand = new IntakeActuateCommand(false, 3);
     middleIntakeCommand = new IntakeActuateCommand(IntakePosition.Middle, 3);
     intakeCollectCommand = new IntakeExtendCollectCommand();
+
+    testColorSensorDistanceCommand = new TestColorSensorDistanceCommand(); 
+
 
     // indexZoneCommand = new IndexZoneCommand();
  }
@@ -385,8 +390,7 @@ m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLin
     // SmartDashboard.putNumber("Current Pose X", vec.x);
     // SmartDashboard.putNumber("Current Pose Y", vec.y);
     SmartDashboard.putNumber("redcolor", colorDetectorSubsystem.outputColor());
-
-   
+    SmartDashboard.putNumber("IR distance", colorDetectorSubsystem.outputDistance());   
 
     drivetrainSubsystem.outputToSmartDashboard();
   }

@@ -82,6 +82,7 @@ public class ShooterCommand extends Command {
   @Override
   public boolean isFinished() {
     boolean isFinished = super.isTimedOut();
+    
     if (isFinished) {
       System.out.println("ShooterCommand finished");
     }
