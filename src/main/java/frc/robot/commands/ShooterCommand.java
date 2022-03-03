@@ -44,7 +44,7 @@ public class ShooterCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {    
-
+    System.out.println("shooter command init");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -53,6 +53,7 @@ public class ShooterCommand extends Command {
     
     double motor1Speed = m_motorSpeed;
     Robot.shooterSubsystem.SpinShooter(motor1Speed);
+    System.out.println("shooter command " + motor1Speed);
   }
 
   public double computeShooterSpeedFromTargetDistance(double targetDistance, boolean isShooterHigh) {
@@ -86,7 +87,7 @@ public class ShooterCommand extends Command {
     if (isFinished) {
       System.out.println("ShooterCommand finished");
     }
-    return isFinished;
+    return false;
     //return super.isTimedOut();
   }
 }

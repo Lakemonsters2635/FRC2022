@@ -52,7 +52,7 @@ public class Mk2SwerveModule extends SwerveModule {
 
     depending on the module there may be more or fewer stages, you want to multiply by overall gear ratio
     */
-    private static final double WHEEL_DIAMETER = 4.0625; // inches
+    private static final double WHEEL_DIAMETER = 4.0625; // inches 
     private static final double CARPET_FACTOR_LHS_FWING = 96.0 / 91.5; // fraction to account for wheel/carpet interation. Tell the robot to drive x amount then measure true value.
     
     private static final double DRIVE_TICKS_PER_INCH = (DRIVE_TICKS_PER_REVOLUTION_OF_WHEEL / (WHEEL_DIAMETER * Math.PI)) * CARPET_FACTOR_LHS_FWING;

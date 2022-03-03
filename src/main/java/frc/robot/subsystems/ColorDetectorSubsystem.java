@@ -98,7 +98,7 @@ public class ColorDetectorSubsystem {
     int distanceThreshold = 90;
     int currentDistance = m_colorSensor.getProximity();
     if (currentDistance >= distanceThreshold) {
-      System.out.println("target found");
+      // System.out.println("target found");
       return distanceThreshold;
     }
     return currentDistance;
@@ -111,7 +111,7 @@ public class ColorDetectorSubsystem {
     int currentDistance = m_colorSensor.getProximity();
     //System.out.println(currentDistance);
     if (currentDistance >= distanceThreshold) {
-      System.out.println("target found");
+      // System.out.println("target found");
       return true;
     }
     return false;

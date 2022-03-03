@@ -51,8 +51,8 @@ import edu.wpi.first.wpilibj.SPI;
  * Add your docs here.
  */
 public class DrivetrainSubsystem extends SwerveDrivetrain {
-  private static final double TRACKWIDTH = 21;
-  private static final double WHEELBASE = 25;
+  private static final double TRACKWIDTH = 21.0;
+  private static final double WHEELBASE = 25.0;
 
 //   public static final ITrajectoryConstraint[] CONSTRAINTS = {
 //       //Original
@@ -122,14 +122,17 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
   
 
 //NEGATE SMARTDASHBOARD VALUES IN OFFSEST
-//COMP BOT
-private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-29.9); //95.7
-private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-131 - 7); //-148 + 180   -326.8
-//private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-173.1); //14
-//private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-131.5); //14
-//private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-12.5); //14
-private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(100 - 5); //14
-private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-20 - 1.5); //-336+180    -151.6
+// // 2019 SWERVE MODULE OFFSETS
+// private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-29.9); //95.7
+// private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-131 - 7); //-148 + 180   -326.8
+// private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(100 - 5); //14
+// private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-20 - 1.5); //-336+180    -151.6
+
+// 2022 BOT DRIVETRAIN SWERVE MODULE OFFSETS
+private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-75-2+180); //
+private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(25+3+180); //
+private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-15+180); //
+private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(80-3); //
 
   private static final PidConstants FOLLOWER_TRANSLATION_CONSTANTS = new PidConstants(0.05, 0.01, 0.0);
   private static final PidConstants FOLLOWER_ROTATION_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);//0.3, 0.1, 0.0

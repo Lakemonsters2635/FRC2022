@@ -25,16 +25,16 @@ public class RobotMap {
   // number and the module. For example you with a rangefinder:
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
-
+  public static final boolean IS_2022 = true;
   public static final int LEFT_JOYSTICK_CHANNEL = 0;
   public static final int RIGHT_JOYSTICK_CHANNEL = 1;
 
   public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 8; 
-  public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_ENCODER = 0; 
+  public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_ENCODER = IS_2022 ? 0 : 3; 
   public static final int DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR = 7; 
 
   public static final int DRIVETRAIN_FRONT_RIGHT_ANGLE_MOTOR = 4; 
-  public static final int DRIVETRAIN_FRONT_RIGHT_ANGLE_ENCODER = 3;
+  public static final int DRIVETRAIN_FRONT_RIGHT_ANGLE_ENCODER = IS_2022 ? 3 : 2;
   public static final int DRIVETRAIN_FRONT_RIGHT_DRIVE_MOTOR = 3; 
   
   public static final int DRIVETRAIN_BACK_LEFT_ANGLE_MOTOR = 6; 
@@ -42,7 +42,7 @@ public class RobotMap {
   public static final int DRIVETRAIN_BACK_LEFT_DRIVE_MOTOR = 5; 
 
   public static final int DRIVETRAIN_BACK_RIGHT_ANGLE_MOTOR = 2;
-  public static final int DRIVETRAIN_BACK_RIGHT_ANGLE_ENCODER = 2;
+  public static final int DRIVETRAIN_BACK_RIGHT_ANGLE_ENCODER = IS_2022 ? 2 : 0;
   public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR = 1; 
 
   public static final int INTAKE_SWEEPER_MOTOR = 14;
@@ -123,7 +123,7 @@ public class RobotMap {
    
 	 public final static Gains kGains_Velocit = new Gains(kP2, 0.0, 0.0, 0,  0,  1.00); // before 2/21 we were using kF = 0.047
 
-   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 2600;
+   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 1000;
    public final static double SHOOTER_MOTOR_LOW_DEFAULT_SPEED = 3100;
    public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 500; //1742 to 500 on 2/10/22
 

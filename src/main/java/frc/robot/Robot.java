@@ -97,7 +97,6 @@ public class Robot extends TimedRobot {
   VisionRotationDriveCommand visionRotationDriveCommand;
   RobotRotateCommand robotRotateCommand;
 
-  TestColorSensorDistanceCommand testColorSensorDistanceCommand;
 
   boolean autoHappened;
 
@@ -157,7 +156,6 @@ private void initSubsystems() {
   intakeSubsystem = new IntakeSubsystem();
   objectTrackerSubsystem = new ObjectTrackerSubsystem();
   colorDetectorSubsystem = new ColorDetectorSubsystem();
-
 }
 
 private void initCommands() {
@@ -188,9 +186,6 @@ private void initCommands() {
     middleIntakeCommand = new IntakeActuateCommand(IntakePosition.Middle, 3);
     intakeCollectCommand = new IntakeExtendCollectCommand();
 
-    testColorSensorDistanceCommand = new TestColorSensorDistanceCommand(); 
-
-
     // indexZoneCommand = new IndexZoneCommand();
  }
 
@@ -204,7 +199,7 @@ private void initButtons() {
     oi.elevatorDownButton.whileHeld(elevatorDownCommand);
     oi.intakeActuateUpButton.whileHeld(raiseIntakeCommand);
     oi.intakeActuateDownButton.whileHeld(lowerIntakeCommand);
-    oi.intakeActuateMiddleButton.whenPressed(middleIntakeCommand);
+    oi.intakeActuateMiddleButton.whenPressed(lowerIntakeCommand);
 
     oi.elevatorIndexUpButton.whenPressed(elevatorIndexUpCommand);
     oi.elevatorIndexDownButton.whenPressed(elevatorIndexDownCommand);
@@ -219,7 +214,7 @@ private void initButtons() {
     //oi.helloArcButton.whileHeld(robotRotateCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
-    oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
+    // oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
     // oi.indexZoneButton.whenPressed(indexZoneCommand);
     //oi.snapShotButton.whenPressed(snapshotCommand);
 
@@ -390,7 +385,8 @@ m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLin
     // SmartDashboard.putNumber("Current Pose X", vec.x);
     // SmartDashboard.putNumber("Current Pose Y", vec.y);
     SmartDashboard.putNumber("redcolor", colorDetectorSubsystem.outputColor());
-    SmartDashboard.putNumber("IR distance", colorDetectorSubsystem.outputDistance());   
+
+   
 
     drivetrainSubsystem.outputToSmartDashboard();
   }
