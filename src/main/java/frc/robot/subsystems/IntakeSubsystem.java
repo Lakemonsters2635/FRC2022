@@ -28,8 +28,8 @@ public class IntakeSubsystem extends Subsystem {
   CANSparkMax intakeSweeperMotor;
   CANSparkMax intakeKickerMotor;
   // DoubleSolenoid extender;
-  Solenoid solenoid1;
-  Solenoid solenoid2;
+  // Solenoid solenoid1;
+  // Solenoid solenoid2;
 
 public enum IntakePosition{
   Raised,
@@ -42,29 +42,30 @@ public enum IntakePosition{
     intakeKickerMotor.setIdleMode(IdleMode.kBrake);
     intakeSweeperMotor.setIdleMode(IdleMode.kBrake);
 
-    solenoid1 = new Solenoid(PneumaticsModuleType.CTREPCM, 6);
-    solenoid2 = new Solenoid(PneumaticsModuleType.CTREPCM, 7);
-    raiseIntake();
+    // solenoid1 = new Solenoid(PneumaticsModuleType.CTREPCM, 6);
+    // solenoid2 = new Solenoid(PneumaticsModuleType.CTREPCM, 7);
+    // raiseIntake();
     // extender = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,6,7);
     //extender = new DoubleSolenoid(4,5);
 
   }
 
-  public void midState() {
-    solenoid1.set(false);
-    solenoid2.set(false);
-    }
-  public void raiseIntake() {
-    solenoid1.set(true);
-    solenoid2.set(false);
+  // public void midState() {
+  //   solenoid1.set(false);
+  //   solenoid2.set(false);
+  //   }
+  // public void raiseIntake() {
+  //   solenoid1.set(true);
+  //   solenoid2.set(false);
 
 
     // extender.get();
-  }
-
-  public void lowerIntake() {
-    solenoid1.set(false);
-    solenoid2.set(true);  }
+  // }
+// 
+  // public void lowerIntake() {
+  //   solenoid1.set(false);
+  //   solenoid2.set(true);  
+  // }
 
   public double getKickerCurrent() {
     return Math.abs(intakeKickerMotor.getOutputCurrent());
