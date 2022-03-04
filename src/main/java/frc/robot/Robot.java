@@ -199,7 +199,7 @@ private void initButtons() {
     oi.elevatorDownButton.whileHeld(elevatorDownCommand);
     oi.intakeActuateUpButton.whileHeld(raiseIntakeCommand);
     oi.intakeActuateDownButton.whileHeld(lowerIntakeCommand);
-    oi.intakeActuateMiddleButton.whenPressed(lowerIntakeCommand);
+    // oi.intakeActuateMiddleButton.whenPressed(lowerIntakeCommand);
 
     oi.elevatorIndexUpButton.whenPressed(elevatorIndexUpCommand);
     oi.elevatorIndexDownButton.whenPressed(elevatorIndexDownCommand);
@@ -207,7 +207,7 @@ private void initButtons() {
      oi.intakeInButton.whileHeld(intakeInCommand);
      oi.intakeOutButton.whileHeld(intakeOutCommand);
      oi.intakeExtendCOllectButton.whenPressed(intakeCollectCommand);
-     oi.intakeDetectButton.whileHeld(intakeDetectToElevatorIndexCommand);
+    //  oi.intakeDetectButton.whileHeld(intakeDetectToElevatorIndexCommand);
 
      
 

@@ -36,9 +36,9 @@ public class IntakeCommand extends Command {
     System.out.println("IntakeSubsystem.isExtended: " + m_intakeExtended);
     // if (m_intakeExtended) {
       if (m_reverse) {
-        Robot.intakeSubsystem.setIntakeMotor(0.95);
+        Robot.intakeSubsystem.setIntakeMotor(-0.6);
       } else {
-        Robot.intakeSubsystem.setIntakeMotor(-0.95);
+        Robot.intakeSubsystem.setIntakeMotor(0.6);
       }
     // } else {
     //   Robot.intakeSubsystem.setIntakeMotor(0.0);
@@ -55,7 +55,7 @@ public class IntakeCommand extends Command {
     if (Robot.colorDetectorSubsystem.outputDistanceForShooterTest()) {
       isFinished = true;
     }
-    return isFinished;
+    return false;
   }
 
   // Called once after isFinished returns true

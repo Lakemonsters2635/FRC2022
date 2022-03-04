@@ -12,10 +12,12 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.IntakeCommand;
 
@@ -25,28 +27,37 @@ import frc.robot.commands.IntakeCommand;
 public class IntakeSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  private static final int PH_CAN_ID = 15;
+  PneumaticHub m_ph;
   CANSparkMax intakeSweeperMotor;
   CANSparkMax intakeKickerMotor;
-  // DoubleSolenoid extender;
-  // Solenoid solenoid1;
-  // Solenoid solenoid2;
+  DoubleSolenoid frontSolenoid;
+  DoubleSolenoid backSolenoid;
 
 public enum IntakePosition{
-  Raised,
+  Raised, // retracted
   Middle,
-  Lowered
+  Lowered // extended
 }
   public IntakeSubsystem() {
+
+    m_ph = new PneumaticHub(PH_CAN_ID);
+
     intakeSweeperMotor = new CANSparkMax(RobotMap.INTAKE_SWEEPER_MOTOR, MotorType.kBrushless);
-    intakeKickerMotor = new CANSparkMax(RobotMap.INTAKE_KICKER_MOTOR, MotorType.kBrushless);
-    intakeKickerMotor.setIdleMode(IdleMode.kBrake);
+    // intakeKickerMotor = new CANSparkMax(RobotMap.INTAKE_KICKER_MOTOR, MotorType.kBrushless);
+    // intakeKickerMotor.setIdleMode(IdleMode.kBrake);
     intakeSweeperMotor.setIdleMode(IdleMode.kBrake);
 
-    // solenoid1 = new Solenoid(PneumaticsModuleType.CTREPCM, 6);
-    // solenoid2 = new Solenoid(PneumaticsModuleType.CTREPCM, 7);
+    frontSolenoid = m_ph.makeDoubleSolenoid(RobotMap.FRONT_PISTON_BLOCKED, RobotMap.FRONT_PISTON_UNBLOCKED);
+    backSolenoid = m_ph.makeDoubleSolenoid(RobotMap.BACK_PISTON_BLOCKED, RobotMap.BACK_PISTON_UNBLOCKED);
+
+    
+
+    // frontSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.FRONT_PISTON_BLOCKED, RobotMap.FRONT_PISTON_UNBLOCKED);
+    // backSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.BACK_PISTON_BLOCKED, RobotMap.BACK_PISTON_UNBLOCKED);
     // raiseIntake();
     // extender = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,6,7);
-    //extender = new DoubleSolenoid(4,5);
+    // extender = new DoubleSolenoid(4,5);
 
   }
 
@@ -54,11 +65,26 @@ public enum IntakePosition{
   //   solenoid1.set(false);
   //   solenoid2.set(false);
   //   }
-  // public void raiseIntake() {
-  //   solenoid1.set(true);
-  //   solenoid2.set(false);
+  public void extendIntake() {
+    System.out.println("extend intake");
+    //System.out.println("forward channel front: " + frontSolenoid.getFwdChannel());
+    //System.out.println("forward channel back: " + backSolenoid.getFwdChannel());
 
+    frontSolenoid.set(Value.kForward); // "reverse" is 7 closed
+    backSolenoid.set(Value.kReverse);  // "forward" is 15 open
+  }
 
+  public void retractIntake() {
+    System.out.println("retract intake");
+
+    frontSolenoid.set(Value.kReverse);
+    backSolenoid.set(Value.kForward);
+
+  }
+
+  public void neutralIntake() {
+
+  }
     // extender.get();
   // }
 // 
@@ -71,7 +97,7 @@ public enum IntakePosition{
     return Math.abs(intakeKickerMotor.getOutputCurrent());
   }
   
-  public void setIntakeMotor(double input) {
+  public void setIntakeMotor(double input) { // spin intake
     intakeSweeperMotor.set(input);
   }
 

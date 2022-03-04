@@ -51,8 +51,8 @@ import edu.wpi.first.wpilibj.SPI;
  * Add your docs here.
  */
 public class DrivetrainSubsystem extends SwerveDrivetrain {
-  private static final double TRACKWIDTH = 21.0;
-  private static final double WHEELBASE = 25.0;
+  private static final double TRACKWIDTH = 21.845;
+  private static final double WHEELBASE = 25.845;
 
 //   public static final ITrajectoryConstraint[] CONSTRAINTS = {
 //       //Original
