@@ -18,7 +18,6 @@ import frc.robot.commands.AutonomousTrajectoryCommand;
 
 // import frc.robot.commands.GalacticSearchCommand;
 import frc.robot.commands.IntakeActuateCommand;
-import frc.robot.commands.IntakeDetectToElevatorIndexCommand;
 import frc.robot.commands.RobotRotateCommand;
 import frc.robot.commands.ShooterCommand;
 
@@ -61,7 +60,6 @@ public class AutonomousSequences {
             output.addSequential(shooterCommand);
             // output.addSequential(rotateCommand1, 4);
             output.addSequential(rotateCommand2, 4);
-            output.addParallel(new IntakeDetectToElevatorIndexCommand(6));
             output.addSequential(driveBackCommand);
             // output.addSequential(rotateCommand3, 4);
             output.addSequential(rotateCommand4, 4);
@@ -114,7 +112,6 @@ public class AutonomousSequences {
             // output.addSequential(rotateCommand1, 4);
             output.addSequential(rotateCommand2, 4);
             output.addSequential(alignwheelsCommand);
-            output.addParallel(new IntakeDetectToElevatorIndexCommand(6));
             output.addSequential(driveBackCommand);
             // // output.addSequential(rotateCommand3, 4);
             // output.addSequential(rotateCommand4, 4);
@@ -171,14 +168,12 @@ public class AutonomousSequences {
             output.addSequential(rotateCommand1, 4);
 
             output.addSequential(alignwheelsCommand);
-            output.addParallel(new IntakeDetectToElevatorIndexCommand(6));
             output.addSequential(driveBackCommand);
 
             output.addSequential(rotateCommand2, 4);
             output.addSequential(shooterCommand2);
 
             output.addSequential(rotateCommand3, 4);
-            output.addParallel(new IntakeDetectToElevatorIndexCommand(6));
             output.addSequential(driveToNextBallCommand);
 
             output.addSequential(rotateCommand4, 4);

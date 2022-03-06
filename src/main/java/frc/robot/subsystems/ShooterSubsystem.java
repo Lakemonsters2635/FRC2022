@@ -81,16 +81,17 @@ public class ShooterSubsystem extends Subsystem {
   }
 
   public void SpinShooter(double motorSpeed) {
-    //DON'T GO OVER 3,000;
-    motorSpeed = Math.min(6000, Math.abs(motorSpeed));
+    //DON'T GO OVER 8,000;
+    motorSpeed = Math.min(10000, Math.abs(motorSpeed));
     
    // double lowerMotorSpeed = upperMotorSpeed * 3;
 
-    // SmartDashboard.putNumber("upper", upperMotorSpeed);
+    SmartDashboard.putNumber("shooter speed", motorSpeed);
     // SmartDashboard.putNumber("lower", lowerMotorSpeed);
     motor1.set(ControlMode.Velocity, motorSpeed*2048/600);
 
   }
+  
   
 
   @Override

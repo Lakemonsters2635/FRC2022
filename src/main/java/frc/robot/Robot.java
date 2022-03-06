@@ -53,7 +53,6 @@ public class Robot extends TimedRobot {
   public static Vision vision;
   public static ObjectTrackerSubsystem objectTrackerSubsystem;
 
-  public static ElevatorSubsystem elevatorSubsystem;
   public static IntakeSubsystem intakeSubsystem;
   public static ShooterSubsystem shooterSubsystem;
   public static ColorDetectorSubsystem colorDetectorSubsystem;
@@ -68,11 +67,6 @@ public class Robot extends TimedRobot {
   ZeroFieldOrientedCommand zeroCommand;
   ZeroFieldOrientedCommand reverseZeroCommand;
 
-  ElevatorCommand elevatorUpCommand;
-  ElevatorCommand elevatorDownCommand;
-
-  ElevatorIndexCommand elevatorIndexUpCommand;
-  ElevatorIndexCommand elevatorIndexDownCommand;
 
   ShooterCommand shooterWithVisionCommand;
   ShooterCommand shooterNoVisionCommand;
@@ -82,16 +76,10 @@ public class Robot extends TimedRobot {
   IntakeCommand  intakeInCommand;
   IntakeCommand intakeOutCommand;
 
-  IntakeDetectCommand intakeDetectCommand;
-
-  IntakeDetectToElevatorIndexCommand intakeDetectToElevatorIndexCommand;
-
 
   IntakeActuateCommand lowerIntakeCommand;
   IntakeActuateCommand raiseIntakeCommand;
   IntakeActuateCommand middleIntakeCommand;
-
-  IntakeExtendCollectCommand intakeCollectCommand;
 
 
   VisionRotationDriveCommand visionRotationDriveCommand;
@@ -149,8 +137,6 @@ private void initSubsystems() {
   vision = new Vision();
   drivetrainSubsystem = new DrivetrainSubsystem();
   // drivetrainSubsystem = new DrivetrainSubsystem();
-
-  elevatorSubsystem = new ElevatorSubsystem();
   shooterSubsystem = new ShooterSubsystem();
   subsystemManager = new SubsystemManager(drivetrainSubsystem);
   intakeSubsystem = new IntakeSubsystem();
@@ -166,25 +152,15 @@ private void initCommands() {
     robotRotateCommand = new RobotRotateCommand(90);
     shooterWithVisionCommand = new ShooterCommand(true);
     shooterNoVisionCommand = new ShooterCommand(false);
-    elevatorUpCommand = new ElevatorCommand(false);
-    elevatorDownCommand = new ElevatorCommand(true);
-
-
-    elevatorIndexUpCommand = new ElevatorIndexCommand(true, 70);
-    elevatorIndexDownCommand = new ElevatorIndexCommand(false, 70);
 
 
     intakeInCommand = new IntakeCommand(false);
     intakeOutCommand = new IntakeCommand(true);
     intakeInCommand.isRunning();
-    intakeDetectCommand = new IntakeDetectCommand();
-
-    intakeDetectToElevatorIndexCommand = new IntakeDetectToElevatorIndexCommand();
 
     lowerIntakeCommand = new IntakeActuateCommand(true, 3);
     raiseIntakeCommand = new IntakeActuateCommand(false, 3);
     middleIntakeCommand = new IntakeActuateCommand(IntakePosition.Middle, 3);
-    intakeCollectCommand = new IntakeExtendCollectCommand();
 
     // indexZoneCommand = new IndexZoneCommand();
  }
@@ -195,18 +171,13 @@ private void initButtons() {
     oi.visionDriveButton.whileHeld(visionRotationDriveCommand);
     
     //oi.intakeButton.whileHeld(intakeCommandGroup);
-     oi.elevatorUpButton.whileHeld(elevatorUpCommand);
-    oi.elevatorDownButton.whileHeld(elevatorDownCommand);
     oi.intakeActuateUpButton.whileHeld(raiseIntakeCommand);
     oi.intakeActuateDownButton.whileHeld(lowerIntakeCommand);
     // oi.intakeActuateMiddleButton.whenPressed(lowerIntakeCommand);
 
-    oi.elevatorIndexUpButton.whenPressed(elevatorIndexUpCommand);
-    oi.elevatorIndexDownButton.whenPressed(elevatorIndexDownCommand);
 
      oi.intakeInButton.whileHeld(intakeInCommand);
      oi.intakeOutButton.whileHeld(intakeOutCommand);
-     oi.intakeExtendCOllectButton.whenPressed(intakeCollectCommand);
     //  oi.intakeDetectButton.whileHeld(intakeDetectToElevatorIndexCommand);
 
      

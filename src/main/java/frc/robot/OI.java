@@ -55,13 +55,6 @@ public class OI {
  
   Button visionDriveButton = new JoystickButton(leftStick, RobotMap.L_VISION_BUTTON);
   
-
-  Button elevatorUpButton = new JoystickButton(rightStick, RobotMap.R_ELEVATOR_UP_BUTTON);
-  Button elevatorDownButton = new JoystickButton(rightStick, RobotMap.R_ELEVATOR_DOWN_BUTTON);
-
-  Button elevatorIndexUpButton = new JoystickButton(rightStick, RobotMap.R_ELEVATOR_INDEX_UP_BUTTON);
-  Button elevatorIndexDownButton = new JoystickButton(rightStick, RobotMap.R_ELEVATOR_INDEX_DOWN_BUTTON);
-  
   // Button intakeDetectButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_BUTTON);
   Button intakeInButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_BUTTON);
   Button intakeOutButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_REVERSE_BUTTON);

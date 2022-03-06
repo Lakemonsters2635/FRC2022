@@ -45,15 +45,20 @@ public class ShooterCommand extends Command {
   @Override
   public void initialize() {    
     System.out.println("shooter command init");
+    if (m_motorSpeed == 0) {
+      m_motorSpeed = 3000;
+    }
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    double motor1Speed = m_motorSpeed;
+    double leftJoystickZ = Robot.oi.leftStick.getZ();
+    leftJoystickZ = leftJoystickZ + 1;
+    double motor1Speed = m_motorSpeed + leftJoystickZ * 2500;
     Robot.shooterSubsystem.SpinShooter(motor1Speed);
-    System.out.println("shooter command " + motor1Speed);
+    // System.out.println("shooter command " + motor1Speed);
   }
 
   public double computeShooterSpeedFromTargetDistance(double targetDistance, boolean isShooterHigh) {
