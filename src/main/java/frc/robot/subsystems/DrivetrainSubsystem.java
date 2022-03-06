@@ -43,6 +43,7 @@ import frc.robot.commands.HolonomicDriveCommand;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 
 
 
@@ -146,7 +147,7 @@ private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians
     new MaxAccelerationConstraint(12.5 * 12.0),
     new CentripetalAccelerationConstraint(15.0 * 12.0)
 };
-  private NavX navX = new NavX(SPI.Port.kMXP);
+  private NavX navX = new NavX(SerialPort.Port.kUSB);
   
   private static final PidConstants SNAP_ROTATION_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);
 
