@@ -8,10 +8,12 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -34,6 +36,9 @@ public class IntakeSubsystem extends Subsystem {
   DoubleSolenoid frontSolenoid;
   DoubleSolenoid backSolenoid;
 
+  private final static I2C.Port i2cPort = I2C.Port.kOnboard;
+  private final static ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+
 public enum IntakePosition{
   Raised, // retracted
   Middle,
@@ -42,7 +47,6 @@ public enum IntakePosition{
   public IntakeSubsystem() {
 
     m_ph = new PneumaticHub(PH_CAN_ID);
-
     intakeSweeperMotor = new CANSparkMax(RobotMap.INTAKE_SWEEPER_MOTOR, MotorType.kBrushless);
     // intakeKickerMotor = new CANSparkMax(RobotMap.INTAKE_KICKER_MOTOR, MotorType.kBrushless);
     // intakeKickerMotor.setIdleMode(IdleMode.kBrake);
@@ -50,7 +54,7 @@ public enum IntakePosition{
 
     frontSolenoid = m_ph.makeDoubleSolenoid(RobotMap.FRONT_PISTON_BLOCKED, RobotMap.FRONT_PISTON_UNBLOCKED);
     backSolenoid = m_ph.makeDoubleSolenoid(RobotMap.BACK_PISTON_BLOCKED, RobotMap.BACK_PISTON_UNBLOCKED);
-
+    // frontSolenoid.
     
 
     // frontSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.FRONT_PISTON_BLOCKED, RobotMap.FRONT_PISTON_UNBLOCKED);
@@ -70,21 +74,34 @@ public enum IntakePosition{
     //System.out.println("forward channel front: " + frontSolenoid.getFwdChannel());
     //System.out.println("forward channel back: " + backSolenoid.getFwdChannel());
 
+    backSolenoid.set(Value.kReverse); // "forward" is 15 open
     frontSolenoid.set(Value.kForward); // "reverse" is 7 closed
-    backSolenoid.set(Value.kReverse);  // "forward" is 15 open
+    
   }
 
   public void retractIntake() {
     System.out.println("retract intake");
 
-    frontSolenoid.set(Value.kReverse);
     backSolenoid.set(Value.kForward);
+    frontSolenoid.set(Value.kReverse);
 
   }
 
   public void neutralIntake() {
 
   }
+
+  public static boolean isCargoIn() {
+    int distanceThreshold = 130; // this is in native color sensor units with a max of 2047 (?) and LARGER units = CLOSER to sensor
+    int currentDistance = m_colorSensor.getProximity();
+    //System.out.println(currentDistance);
+    if (currentDistance >= distanceThreshold) {
+      // System.out.println("target found");
+      return true;
+    }
+    return false;
+  }
+
     // extender.get();
   // }
 // 
@@ -97,7 +114,9 @@ public enum IntakePosition{
     return Math.abs(intakeKickerMotor.getOutputCurrent());
   }
   
-  public void setIntakeMotor(double input) { // spin intake
+  public void setIntakeMotor(double input) { 
+
+    // System.out.println("intake motor spinning: " + input);// spin intake
     intakeSweeperMotor.set(input);
   }
 

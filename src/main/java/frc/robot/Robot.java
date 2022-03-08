@@ -77,9 +77,9 @@ public class Robot extends TimedRobot {
   IntakeCommand intakeOutCommand;
 
 
-  IntakeActuateCommand lowerIntakeCommand;
-  IntakeActuateCommand raiseIntakeCommand;
-  IntakeActuateCommand middleIntakeCommand;
+  IntakeActuateCommand extendIntakeCommand;
+  public IntakeActuateCommand retractIntakeCommand;
+  // IntakeActuateCommand middleIntakeCommand;
 
 
   VisionRotationDriveCommand visionRotationDriveCommand;
@@ -158,9 +158,9 @@ private void initCommands() {
     intakeOutCommand = new IntakeCommand(true);
     intakeInCommand.isRunning();
 
-    lowerIntakeCommand = new IntakeActuateCommand(true, 3);
-    raiseIntakeCommand = new IntakeActuateCommand(false, 3);
-    middleIntakeCommand = new IntakeActuateCommand(IntakePosition.Middle, 3);
+    extendIntakeCommand = new IntakeActuateCommand(true, 3); // extend
+    retractIntakeCommand = new IntakeActuateCommand(false, 3); // retract 
+    // middleIntakeCommand = new IntakeActuateCommand(IntakePosition.Middle, 3);
 
     // indexZoneCommand = new IndexZoneCommand();
  }
@@ -171,8 +171,8 @@ private void initButtons() {
     oi.visionDriveButton.whileHeld(visionRotationDriveCommand);
     
     //oi.intakeButton.whileHeld(intakeCommandGroup);
-    oi.intakeActuateUpButton.whileHeld(raiseIntakeCommand);
-    oi.intakeActuateDownButton.whileHeld(lowerIntakeCommand);
+    oi.intakeActuateUpButton.whileHeld(retractIntakeCommand);
+    oi.intakeActuateDownButton.whileHeld(extendIntakeCommand);
     // oi.intakeActuateMiddleButton.whenPressed(lowerIntakeCommand);
 
 
@@ -185,7 +185,7 @@ private void initButtons() {
     //oi.helloArcButton.whileHeld(robotRotateCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
-    // oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
+    oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
     // oi.indexZoneButton.whenPressed(indexZoneCommand);
     //oi.snapShotButton.whenPressed(snapshotCommand);
 
@@ -355,7 +355,9 @@ m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLin
     // Vector2 vec = drivetrainSubsystem.getKinematicPosition();
     // SmartDashboard.putNumber("Current Pose X", vec.x);
     // SmartDashboard.putNumber("Current Pose Y", vec.y);
-    SmartDashboard.putNumber("redcolor", colorDetectorSubsystem.outputColor());
+    colorDetectorSubsystem.get_color();
+    SmartDashboard.putNumber("Distance from sensor", colorDetectorSubsystem.outputDistance()); 
+    SmartDashboard.putNumber("Navx Angle", drivetrainSubsystem.getGyroscope().getAngle().toDegrees());
 
    
 

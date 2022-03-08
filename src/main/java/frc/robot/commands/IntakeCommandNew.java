@@ -10,13 +10,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class IntakeCommand extends Command {
+public class IntakeCommandNew extends Command {
+  private boolean m_isCargoDetected = false;
   private boolean m_reverse = false;
-  public IntakeCommand(boolean reverse) {
+
+  public IntakeCommandNew(boolean reverse) {
     m_reverse = reverse;
   }
 
-  public IntakeCommand(boolean reverse, double timeout) {
+  public IntakeCommandNew(boolean reverse, double timeout) {
     super(timeout);
     m_reverse = reverse;
   }
@@ -24,9 +26,11 @@ public class IntakeCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   
-  protected void initialize() {
+  protected void 
+  initialize() {
     boolean m_intakeExtended = Robot.intakeSubsystem.intakeIsExtended();
     System.out.println("!!!!!!!!!!!!!!!!!!!IntakeCommand initialized: " + m_intakeExtended);
+    m_isCargoDetected = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -46,15 +50,23 @@ public class IntakeCommand extends Command {
     
    
     //Robot.elevatorSubsystem.setBottomKickerMotor(1);
+
+    boolean currentlyDetected = Robot.intakeSubsystem.isCargoIn();
+    
+    if (!m_isCargoDetected && currentlyDetected != m_isCargoDetected) {
+      System.out.println("Cargo detected"); 
+      Robot.intakeSubsystem.retractIntake();
+      m_isCargoDetected = currentlyDetected;
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     boolean isFinished = super.isTimedOut(); 
-    if (Robot.colorDetectorSubsystem.outputDistanceForShooterTest()) {
-      isFinished = true;
-    }
+    // if (Robot.colorDetectorSubsystem.outputDistanceForShooterTest()) {
+    //   isFinished = true;
+    // }
     return false;
   }
 
@@ -62,7 +74,10 @@ public class IntakeCommand extends Command {
   @Override
   protected void end() {
     Robot.intakeSubsystem.setIntakeMotor(0);
-  }
+    
+    IntakeActuateCommand retractIntake = new IntakeActuateCommand(true, 3);
+    retractIntake.start();
+  } 
 
 
   // Called when another command which requires one or more of the same

@@ -13,15 +13,16 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.IntakeSubsystem.IntakePosition;
 
 public class IntakeActuateCommand extends Command {
-  private boolean m_raiseIntake = false;
+  private boolean m_retractIntake = false;
   private IntakePosition m_intakePosition;
-  public IntakeActuateCommand(boolean raiseIntake, double timeOut) {
+  private boolean m_isCargoDetected = false;
+
+  public IntakeActuateCommand(boolean retractIntake, double timeOut) {
     super(timeOut);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    m_raiseIntake = raiseIntake;
+    m_retractIntake = retractIntake;
   }
-
 
   public IntakeActuateCommand(IntakeSubsystem.IntakePosition position, double timeOut) {
     super(timeOut);
@@ -33,7 +34,9 @@ public class IntakeActuateCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if (m_raiseIntake) {
+    m_isCargoDetected = false;
+
+    if (m_retractIntake) {
       Robot.intakeSubsystem.extendIntake();
     } else {
       Robot.intakeSubsystem.retractIntake();
@@ -43,8 +46,15 @@ public class IntakeActuateCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    
-
+    // boolean currentlyDetected = Robot.intakeSubsystem.isCargoIn();
+    // Robot.intakeSubsystem.setIntakeMotor(.6);
+    // if (!m_isCargoDetected && currentlyDetected != m_isCargoDetected) {
+    //   System.out.println("Cargo detected"); 
+    //   Robot.intakeSubsystem.setIntakeMotor(0.0);
+    //   Robot.intakeSubsystem.retractIntake();
+    //   m_isCargoDetected = currentlyDetected;
+    // }
+        
   }
 
   // Make this return true when this Command no longer needs to run execute()

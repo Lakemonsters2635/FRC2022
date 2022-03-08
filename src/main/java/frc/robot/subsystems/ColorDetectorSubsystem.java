@@ -50,8 +50,11 @@ public class ColorDetectorSubsystem {
   // public static final Color kYellowTarget = ColorMatch.makeColor(0.293, 0.561, 0.144);
   public static final Color kBlueTarget = new Color( 0.205566,  0.476807,  0.317383);
   public static final Color kGreenTarget = new Color(0.234619,  0.566406,  0.198975);
-  public static final Color kRedTarget = new Color(0.384277,  0.413818,  0.201660);
+  public static final Color kRedTarget = new Color(0.43,  0.43,  0.21);
   public static final Color kYellowTarget = new Color( 0.326172,  0.540283,  0.133789);
+
+    // no color: (.279, .474, .245)
+
 
   private ColorMatchResult matchedResult = new ColorMatchResult(Color.kBlack, 0);
   public static Dictionary m_colorDictionary = new Hashtable();
@@ -94,7 +97,7 @@ public class ColorDetectorSubsystem {
   }
 
   // for output and distance calibration to SmartDashboard
-  public int outputDistance() {
+  public int outputDistanceWithThreshold() {
     int distanceThreshold = 90;
     int currentDistance = m_colorSensor.getProximity();
     if (currentDistance >= distanceThreshold) {
@@ -102,6 +105,10 @@ public class ColorDetectorSubsystem {
       return distanceThreshold;
     }
     return currentDistance;
+  }
+
+  public int outputDistance() {
+    return m_colorSensor.getProximity(); 
   }
 
   // bind this function to the shooter such that it stops spinning when object is in range
