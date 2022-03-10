@@ -70,6 +70,9 @@ public class Robot extends TimedRobot {
 
   ShooterCommand shooterWithVisionCommand;
   ShooterCommand shooterNoVisionCommand;
+  ShooterIdleCommand shooterIdleCommand;
+  ShooterIdleCommand shooterIdleCommand_ZERO_RPM;
+
   
   // IndexZoneCommand indexZoneCommand;
 
@@ -78,8 +81,8 @@ public class Robot extends TimedRobot {
 
 
   IntakeActuateCommand extendIntakeCommand;
-  public IntakeActuateCommand retractIntakeCommand;
-  // IntakeActuateCommand middleIntakeCommand;
+  IntakeRetractCommand2 retractIntakeCommand;
+  IntakeRetractCommand midStateIntakeCommand;
 
 
   VisionRotationDriveCommand visionRotationDriveCommand;
@@ -152,14 +155,17 @@ private void initCommands() {
     robotRotateCommand = new RobotRotateCommand(90);
     shooterWithVisionCommand = new ShooterCommand(true);
     shooterNoVisionCommand = new ShooterCommand(false);
+    shooterIdleCommand = new ShooterIdleCommand();
+    shooterIdleCommand_ZERO_RPM = new ShooterIdleCommand(0.0);
 
 
     intakeInCommand = new IntakeCommand(false);
     intakeOutCommand = new IntakeCommand(true);
-    intakeInCommand.isRunning();
+    // intakeInCommand.isRunning();
 
     extendIntakeCommand = new IntakeActuateCommand(true, 3); // extend
-    retractIntakeCommand = new IntakeActuateCommand(false, 3); // retract 
+    retractIntakeCommand = new IntakeRetractCommand2(3); // retract 
+    midStateIntakeCommand = new IntakeRetractCommand(3, true);
     // middleIntakeCommand = new IntakeActuateCommand(IntakePosition.Middle, 3);
 
     // indexZoneCommand = new IndexZoneCommand();
@@ -171,8 +177,9 @@ private void initButtons() {
     oi.visionDriveButton.whileHeld(visionRotationDriveCommand);
     
     //oi.intakeButton.whileHeld(intakeCommandGroup);
-    oi.intakeActuateUpButton.whileHeld(retractIntakeCommand);
+    oi.intakeActuateUpButton.whenPressed(retractIntakeCommand);
     oi.intakeActuateDownButton.whileHeld(extendIntakeCommand);
+    oi.intakeMidStateBUtton.whileHeld(midStateIntakeCommand);
     // oi.intakeActuateMiddleButton.whenPressed(lowerIntakeCommand);
 
 
@@ -188,6 +195,8 @@ private void initButtons() {
     oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
     // oi.indexZoneButton.whenPressed(indexZoneCommand);
     //oi.snapShotButton.whenPressed(snapshotCommand);
+    oi.shooterIdleButton.whenPressed(shooterIdleCommand);
+    oi.shooterZERORPMButton.whenPressed(shooterIdleCommand_ZERO_RPM);
 
 }
 

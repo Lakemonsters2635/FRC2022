@@ -47,11 +47,11 @@ public class IntakeActuateCommand extends Command {
   @Override
   protected void execute() {
     // boolean currentlyDetected = Robot.intakeSubsystem.isCargoIn();
-    // Robot.intakeSubsystem.setIntakeMotor(.6);
+    // // Robot.intakeSubsystem.setIntakeMotor(.6);
     // if (!m_isCargoDetected && currentlyDetected != m_isCargoDetected) {
     //   System.out.println("Cargo detected"); 
-    //   Robot.intakeSubsystem.setIntakeMotor(0.0);
-    //   Robot.intakeSubsystem.retractIntake();
+    //   // Robot.intakeSubsystem.setIntakeMotor(0.0);
+    //   Robot.intakeSubsystem.midState();
     //   m_isCargoDetected = currentlyDetected;
     // }
         

@@ -78,6 +78,8 @@ public class ShooterCommand extends Command {
   @Override
   public void end() {
     Robot.shooterSubsystem.stop();
+    Robot.shooterSubsystem.configureMotors();
+
     
     if (useCamera) {
       Robot.vision.ledOff();

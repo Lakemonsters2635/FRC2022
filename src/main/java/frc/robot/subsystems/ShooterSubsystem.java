@@ -72,12 +72,13 @@ public class ShooterSubsystem extends Subsystem {
     // motor1.config_kD(RobotMap.kPIDLoopIdx, 0, RobotMap.kTimeoutMs);
     
 
-    // motor1.setNeutralMode(NeutralMode.Brake); 
+    motor1.setNeutralMode(NeutralMode.Coast); 
     motor1.set(ControlMode.Velocity, 0);
   
   }
 
   public void Init() {
+
   }
 
   public void SpinShooter(double motorSpeed) {

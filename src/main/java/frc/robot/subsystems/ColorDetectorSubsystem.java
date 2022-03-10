@@ -51,9 +51,19 @@ public class ColorDetectorSubsystem {
   public static final Color kBlueTarget = new Color( 0.205566,  0.476807,  0.317383);
   public static final Color kGreenTarget = new Color(0.234619,  0.566406,  0.198975);
   public static final Color kRedTarget = new Color(0.43,  0.43,  0.21);
-  public static final Color kYellowTarget = new Color( 0.326172,  0.540283,  0.133789);
+  public static final Color kYellowTarget = new Color( 0.358154296875,  0.552978515625,  0.08935546875);
 
     // no color: (.279, .474, .245)
+
+    // for yellow plastic plate
+    // 0.358154296875 red
+    // 0.552978515625 green
+    // 0.08935546875 blue
+
+    // when extended 
+    // 0.28466796875 red
+    // 0.474365234375 green
+    // 0.2412109375 blue
 
 
   private ColorMatchResult matchedResult = new ColorMatchResult(Color.kBlack, 0);
@@ -72,7 +82,7 @@ public class ColorDetectorSubsystem {
     m_colorMatcher.addColorMatch(kRedTarget);
     m_colorMatcher.addColorMatch(kYellowTarget);
 
-    m_colorMatcher.setConfidenceThreshold(0.955);
+    m_colorMatcher.setConfidenceThreshold(0.5);
 
     m_colorDictionary.put(kBlueTarget, kRedTarget);
     m_colorDictionary.put(kGreenTarget, kYellowTarget);
@@ -141,7 +151,7 @@ public class ColorDetectorSubsystem {
     /**
      * Run the color match algorithm on our detected color
      */
-    String colorString = "Unknown";
+    String colorString = "unknown";
     //m_colorMatcher.matchColor(colorToMatch)
     ColorMatchResult match = m_colorMatcher.matchColor(detectedColor);
 
@@ -158,7 +168,8 @@ public class ColorDetectorSubsystem {
     }
 
 
-    if (match == null || match.confidence < 0.955) {
+
+    if (match == null || match.confidence < 0.50) {
       //System.out.println("Unknown");
     } else if ( match != null) { 
        //System.out.println(colorString + "  \tconfidence: " + match.confidence) ;

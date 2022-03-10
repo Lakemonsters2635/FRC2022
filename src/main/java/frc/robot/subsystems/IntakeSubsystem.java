@@ -39,11 +39,12 @@ public class IntakeSubsystem extends Subsystem {
   private final static I2C.Port i2cPort = I2C.Port.kOnboard;
   private final static ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
 
-public enum IntakePosition{
-  Raised, // retracted
-  Middle,
-  Lowered // extended
-}
+  public enum IntakePosition{
+    Raised, // retracted
+    Middle,
+    Lowered // extended
+  }
+
   public IntakeSubsystem() {
 
     m_ph = new PneumaticHub(PH_CAN_ID);
@@ -65,12 +66,15 @@ public enum IntakePosition{
 
   }
 
-  // public void midState() {
-  //   solenoid1.set(false);
-  //   solenoid2.set(false);
-  //   }
+  public void midState() {
+    System.out.println("mid state");
+    backSolenoid.set(Value.kForward);
+    frontSolenoid.set(Value.kForward);
+  }
+
+
   public void extendIntake() {
-    System.out.println("extend intake");
+    // System.out.println("extend intake");
     //System.out.println("forward channel front: " + frontSolenoid.getFwdChannel());
     //System.out.println("forward channel back: " + backSolenoid.getFwdChannel());
 
@@ -80,7 +84,7 @@ public enum IntakePosition{
   }
 
   public void retractIntake() {
-    System.out.println("retract intake");
+    // System.out.println("retract intake");
 
     backSolenoid.set(Value.kForward);
     frontSolenoid.set(Value.kReverse);
@@ -92,11 +96,12 @@ public enum IntakePosition{
   }
 
   public static boolean isCargoIn() {
-    int distanceThreshold = 130; // this is in native color sensor units with a max of 2047 (?) and LARGER units = CLOSER to sensor
+    // based off whether sensor is over the yellow plate 
+    int distanceThreshold = 200; // this is in native color sensor units with a max of 2047 (?) and LARGER units = CLOSER to sensor
     int currentDistance = m_colorSensor.getProximity();
-    //System.out.println(currentDistance);
-    if (currentDistance >= distanceThreshold) {
-      // System.out.println("target found");
+   // System.out.println(currentDistance);
+    if (currentDistance >= distanceThreshold) { // TODO revisit < 1000 condition
+      // System.out.println("target found in isCargoIn()");
       return true;
     }
     return false;

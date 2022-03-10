@@ -63,6 +63,7 @@ public class RobotMap {
   public static final int L_INTAKE_ACTUATE_UP_BUTTON = 6;
   // public static final int L_INTAKE_ACTUATE_MIDDLE_BUTTON = 9;
   public static final int L_INTAKE_ACTUATE_DOWN_BUTTON = 7;
+  public static final int L_INTAKE_MID_STATE_BUTTON = 9;
 
 
   public static final int R_SHOOTER_NOVISION_BUTTON = 1;
@@ -73,7 +74,9 @@ public class RobotMap {
   public static final int R_INTAKE_IN_BUTTON = 10;
   public static final int R_INTAKE_OUT_BUTTON = 9;
   public static final int R_INDEX_ZONE_BUTTON = 6;
-  public static final int R_INTAKE_EXTEND_COLLECT_BUTTON = 7;
+  public static final int R_SHOOTER_IDLE_BUTTON = 7;
+  public static final int R_SHOOTER_ZERO_RPM_BUTTON = 8;
+
 
   
   public static final int BACK_PISTON_BLOCKED = 14;
