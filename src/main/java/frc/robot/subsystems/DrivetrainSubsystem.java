@@ -292,8 +292,8 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
         br.close();
     }
     catch(Exception err) {
-        System.out.println("Error reading drive file:" + fileName);
-        System.out.println(err.getMessage());
+        // System.out.println("Error reading drive file:" + fileName);
+        // System.out.println(err.getMessage());
     }
     
     return driveRecording;
@@ -455,7 +455,7 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
       super.outputToSmartDashboard();
 
       
-      SmartDashboard.putNumber("0CUrrentAngle", swerveModules[0].getCurrentAngle());
+      // SmartDashboard.putNumber("0CUrrentAngle", swerveModules[0].getCurrentAngle());
       ;
       // HolonomicDriveSignal localSignal;
       // Trajectory.Segment localSegment;

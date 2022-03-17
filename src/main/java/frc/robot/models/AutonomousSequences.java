@@ -19,8 +19,10 @@ import frc.robot.commands.AutonomousTrajectoryCommand;
 import frc.robot.commands.FetchCargoCommand;
 // import frc.robot.commands.GalacticSearchCommand;
 import frc.robot.commands.IntakeActuateCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.RobotRotateCommand;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.ShooterIdleCommand;
 
 public class AutonomousSequences {
         public static double sampleDistance = 12.0;
@@ -30,7 +32,10 @@ public class AutonomousSequences {
         public static CommandGroup shootCollectRight() {
             CommandGroup output = new CommandGroup();
 
-            IntakeActuateCommand lowerIntake = new IntakeActuateCommand(false, 1);
+            IntakeActuateCommand retractCommand = new IntakeActuateCommand(false, 1);
+            IntakeActuateCommand retractCommand2 = new IntakeActuateCommand(false, 1);
+
+            IntakeActuateCommand extendCommand = new IntakeActuateCommand(true, 1);
             //Shoot the ball.
             //Turn around 180 degrees.
             // RobotRotateCommand rotateCommand1 = new RobotRotateCommand(-90);
@@ -54,17 +59,33 @@ public class AutonomousSequences {
             //Turn around 180 degrees.
 
             //Shoot the ball.
-            ShooterCommand shooterCommand = new ShooterCommand(false, 2, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
-            ShooterCommand shooterCommand2 = new ShooterCommand(false, 2, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
+            ShooterIdleCommand shooterCommand = new ShooterIdleCommand(1000.0);            
+            ShooterIdleCommand shooterCommand2 = new ShooterIdleCommand(1000.0);
+            ShooterIdleCommand revUpCommand = new ShooterIdleCommand(1000.0);
+           
+            ShooterIdleCommand revUpCommand2 = new ShooterIdleCommand(1000.0);
+            IntakeCommand runIntake = new IntakeCommand(false);
+            IntakeCommand runIntake2 = new IntakeCommand(false);
+            IntakeCommand driveRunIntake = new IntakeCommand(false);
 
-            output.addSequential(lowerIntake);
-            output.addSequential(shooterCommand);
+            output.addSequential(revUpCommand, 2);
+
+            output.addParallel(retractCommand);
+            output.addParallel(runIntake);
+            output.addSequential(shooterCommand, 2);
             // output.addSequential(rotateCommand1, 4);
             output.addSequential(rotateCommand2, 4);
+            output.addSequential(extendCommand);
+            output.addParallel(driveRunIntake);
             output.addSequential(driveBackCommand);
             // output.addSequential(rotateCommand3, 4);
+
             output.addSequential(rotateCommand4, 4);
-            output.addSequential(shooterCommand2);
+
+            output.addSequential(revUpCommand2, 2);
+            output.addParallel(retractCommand2);
+            output.addParallel(runIntake2);
+            output.addSequential(shooterCommand2, 2);
 
             
             return output;
@@ -189,17 +210,61 @@ public class AutonomousSequences {
             ShooterCommand shooterCommand = new ShooterCommand(false, 2, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
 
             SimplePathBuilder driveOver = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
-            .lineTo(new Vector2(-10.0, 0.0));
+            .lineTo(new Vector2(-60.0, 0.0));
 
             Path driveOverPath = driveOver.build();
             
             Trajectory driveOverTrajectory = new Trajectory(driveOverPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
             AutonomousTrajectoryCommand driveOverCommand = new AutonomousTrajectoryCommand(driveOverTrajectory);
 
-            output.addSequential(shooterCommand);
+            // output.addSequential(shooterCommand);
             output.addSequential(driveOverCommand);
             return output;
         }
+
+        public static CommandGroup shootPassTarmacLine() {
+            CommandGroup output = new CommandGroup();
+
+            SimplePathBuilder driveStart = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
+            .lineTo(new Vector2(25.0, 0.0));
+
+            Path driveStartPath = driveStart.build();
+            
+            Trajectory driveStartTrajectory = new Trajectory(driveStartPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+            AutonomousTrajectoryCommand driveStartCommand = new AutonomousTrajectoryCommand(driveStartTrajectory);
+
+            SimplePathBuilder driveOver = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
+            .lineTo(new Vector2(100.0, 0.0));
+
+            Path driveOverPath = driveOver.build();
+
+            IntakeActuateCommand extendIntakeCommand = new IntakeActuateCommand(true, 2);
+            IntakeActuateCommand retractIntakeCommand = new IntakeActuateCommand(false, 2);
+
+            ShooterIdleCommand shooterCommand = new ShooterIdleCommand(2200.0);
+            ShooterIdleCommand revUpCommand = new ShooterIdleCommand(3000.0);
+            IntakeCommand runIntake = new IntakeCommand(false);
+
+
+            
+            Trajectory driveOverTrajectory = new Trajectory(driveOverPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+            AutonomousTrajectoryCommand driveOverCommand = new AutonomousTrajectoryCommand(driveOverTrajectory);
+
+            // output.addSequential(extendIntakeCommand);
+            
+            // output.addParallel(retractIntakeCommand);
+            output.addSequential(revUpCommand, 3);
+
+            output.addParallel(runIntake);
+            output.addParallel(retractIntakeCommand);
+            output.addSequential(shooterCommand, 2);
+
+            output.addSequential(driveOverCommand);
+            return output;
+        }
+
+
+
         public static CommandGroup rotate360() {
             CommandGroup output = new CommandGroup();
 

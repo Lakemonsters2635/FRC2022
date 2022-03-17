@@ -40,7 +40,7 @@ public class IntakeRetractCommand extends Command {
       boolean currentlyDetected = Robot.intakeSubsystem.isCargoIn();
     
       if (!m_isInMidPos && currentlyDetected != m_isInMidPos) {
-        System.out.println("Cargo detected"); 
+        // System.out.println("Cargo detected"); 
         // Robot.intakeSubsystem.midState();
         m_isInMidPos = currentlyDetected;
       }

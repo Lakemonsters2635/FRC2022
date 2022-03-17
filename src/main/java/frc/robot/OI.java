@@ -51,7 +51,7 @@ public class OI {
 
   Button shooterVisionButton = new JoystickButton(leftStick, RobotMap.L_SHOOTER_WITHVISION_BUTTON);
   Button shooterNoVisionButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_NOVISION_BUTTON);
-
+  Button shooterReverseButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_REVERSE_BUTTON);
  
   Button visionDriveButton = new JoystickButton(leftStick, RobotMap.L_VISION_BUTTON);
   
@@ -61,9 +61,9 @@ public class OI {
   // Button intakeElevationButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_ELEVATION_BUTTON);
 
   // Button intakeActuateMiddleButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_ACTUATE_MIDDLE_BUTTON);
-  Button intakeActuateUpButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_ACTUATE_UP_BUTTON);
-  Button intakeActuateDownButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_ACTUATE_DOWN_BUTTON);
-  Button intakeMidStateBUtton = new JoystickButton(leftStick, RobotMap.L_INTAKE_MID_STATE_BUTTON);
+  Button intakeActuateUpButton = new JoystickButton(rightStick, RobotMap.R_INTAKE_EXTEND_BUTTON);
+  Button intakeActuateDownButton = new JoystickButton(rightStick, RobotMap.R_INTAKE_RETRACT_BUTTON);
+  Button intakeMidStateButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_MID_STATE_BUTTON);
 
   Button indexZoneButton = new JoystickButton(rightStick, RobotMap.R_INDEX_ZONE_BUTTON);
   Button shooterIdleButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_IDLE_BUTTON); 

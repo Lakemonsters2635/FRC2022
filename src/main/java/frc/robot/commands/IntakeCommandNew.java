@@ -29,7 +29,7 @@ public class IntakeCommandNew extends Command {
   protected void 
   initialize() {
     boolean m_intakeExtended = Robot.intakeSubsystem.intakeIsExtended();
-    System.out.println("!!!!!!!!!!!!!!!!!!!IntakeCommand initialized: " + m_intakeExtended);
+    // System.out.println("!!!!!!!!!!!!!!!!!!!IntakeCommand initialized: " + m_intakeExtended);
     m_isCargoDetected = false;
   }
 

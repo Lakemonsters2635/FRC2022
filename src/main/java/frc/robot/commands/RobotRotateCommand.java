@@ -38,7 +38,7 @@ public class RobotRotateCommand extends Command {
     angleController = new PIDController(0.002, 0.002, 0.0);
     angleController.enableContinuousInput(-180, 180);
 
-    System.out.println("Rotation initialized.");
+    // System.out.println("Rotation initialized.");
     //Vector2 position = new Vector2(0, 0);
     //Robot.drivetrainSubsystem.resetKinematics(position, 0);
     angleController.setSetpoint(targetAngle);
@@ -48,7 +48,7 @@ public class RobotRotateCommand extends Command {
   @Override
   protected void execute() {
     currentAngle = Robot.drivetrainSubsystem.getGyroscope().getAngle().toDegrees();
-   System.out.println("current angle: " + currentAngle);
+  //  System.out.println("current angle: " + currentAngle);
     //boolean fieldOriented = false;
     //Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, angleController.calculate(currentAngle), fieldOriented);
     Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, angleController.calculate(currentAngle));
@@ -59,7 +59,7 @@ public class RobotRotateCommand extends Command {
   protected boolean isFinished() {
      if (super.isTimedOut())
      {
-      System.out.println("Rotation timed out");
+      // System.out.println("Rotation timed out");
        return true;
      }
      double angleDelta = Math.abs(currentAngle - targetAngle);
@@ -71,7 +71,7 @@ public class RobotRotateCommand extends Command {
 
     if (angleDelta < 3)
     {
-      System.out.println("Rotation finished");
+      // System.out.println("Rotation finished");
       return true;
     } 
     else 

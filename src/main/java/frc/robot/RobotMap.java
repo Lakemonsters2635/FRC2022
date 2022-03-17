@@ -60,20 +60,25 @@ public class RobotMap {
   public static final int L_VISION_BUTTON = 4;
   public static final int L_REFERENCE_RESET_BUTTON = 8;
   public static final int L_INTAKE_REVERSE_BUTTON = 3;
-  public static final int L_INTAKE_ACTUATE_UP_BUTTON = 6;
+  // public static final int L_INTAKE_ACTUATE_UP_BUTTON = 6;
   // public static final int L_INTAKE_ACTUATE_MIDDLE_BUTTON = 9;
-  public static final int L_INTAKE_ACTUATE_DOWN_BUTTON = 7;
+  // public static final int L_INTAKE_ACTUATE_DOWN_BUTTON = 7;
   public static final int L_INTAKE_MID_STATE_BUTTON = 9;
 
 
   public static final int R_SHOOTER_NOVISION_BUTTON = 1;
-  public static final int R_ELEVATOR_INDEX_DOWN_BUTTON = 2;
-  public static final int R_ELEVATOR_INDEX_UP_BUTTON = 3;
+
+  public static final int R_INTAKE_EXTEND_BUTTON = 2;
+  public static final int R_INTAKE_RETRACT_BUTTON = 3;
+  public static final int R_SHOOTER_REVERSE_BUTTON = 11;
+  // public static final int R_ELEVATOR_INDEX_UP_BUTTON = 3;
   public static final int R_ELEVATOR_DOWN_BUTTON = 5;
   public static final int R_ELEVATOR_UP_BUTTON = 4;
+
   public static final int R_INTAKE_IN_BUTTON = 10;
   public static final int R_INTAKE_OUT_BUTTON = 9;
   public static final int R_INDEX_ZONE_BUTTON = 6;
+
   public static final int R_SHOOTER_IDLE_BUTTON = 7;
   public static final int R_SHOOTER_ZERO_RPM_BUTTON = 8;
 
@@ -120,7 +125,7 @@ public class RobotMap {
      * 
 	 * 	                                    			  kP   kI   kD   kF          Iz    PeakOut */
  	//public final static Gains kGains_Velocit = new Gains( 0.25, 0.001, 20, 1023.0/7200.0,  300,  1.00);
-	 static final double kP = 0.3; 		// 0.3735, before 0.25 on 2021
+	 static final double kP = 0.03; 	// 0.05 2022
 	 static final double kI = 0.54*0.83/200; 	// 0.002241
 	 static final double kD = 0.003; 	// 0.22636364
 	 static final double kF = 0.05086878976; 			// previously 0.047 on 2021 bot, tuned 2/21
@@ -130,11 +135,11 @@ public class RobotMap {
    static final double kP2 = 0.4125;
    
 	//  public final static Gains kGains_Velocit = new Gains(kP2, 0.0, 0.0, 0,  0,  1.00); // before 2/21 we were using kF = 0.047
-  public final static Gains kGains_Velocit = new Gains(0.0, 0.0, 0.0, kF,  0,  1.00);
+  public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
 
    public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 1000; // can go up to 6000, 10000+ in phoenix tuner
    public final static double SHOOTER_MOTOR_LOW_DEFAULT_SPEED = 3100;
-   public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 500; //1742 to 500 on 2/10/22
+   public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 2200; //1742 to 500 on 2/10/22
 
 
   

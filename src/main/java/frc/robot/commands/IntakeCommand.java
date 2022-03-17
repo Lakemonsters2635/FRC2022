@@ -26,7 +26,7 @@ public class IntakeCommand extends Command {
   
   protected void initialize() {
     boolean m_intakeExtended = Robot.intakeSubsystem.intakeIsExtended();
-    System.out.println("!!!!!!!!!!!!!!!!!!!IntakeCommand initialized: " + m_intakeExtended);
+    // System.out.println("!!!!!!!!!!!!!!!!!!!IntakeCommand initialized: " + m_intakeExtended);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -36,9 +36,9 @@ public class IntakeCommand extends Command {
     // System.out.println("IntakeSubsystem.isExtended: " + m_intakeExtended);
     // if (m_intakeExtended) {
       if (m_reverse) {
-        Robot.intakeSubsystem.setIntakeMotor(-0.6);
+        Robot.intakeSubsystem.setIntakeMotor(-0.3);
       } else {
-        Robot.intakeSubsystem.setIntakeMotor(0.6);
+        Robot.intakeSubsystem.setIntakeMotor(0.4);
       }
     // } else {
     //   Robot.intakeSubsystem.setIntakeMotor(0.0);

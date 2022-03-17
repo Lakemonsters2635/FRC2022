@@ -118,7 +118,7 @@ public class Mk2SwerveModule extends SwerveModule {
 
         canUpdateNotifier.startPeriodic(1.0 / CAN_UPDATE_RATE);
 
-        System.out.println("DRIVE_TICKS_PER_INCH = " + DRIVE_TICKS_PER_INCH);
+        // System.out.println("DRIVE_TICKS_PER_INCH = " + DRIVE_TICKS_PER_INCH);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class Mk2SwerveModule extends SwerveModule {
             angle += 2.0 * Math.PI;
         }
 
-        SmartDashboard.putNumber(getName(), Math.toDegrees((1.0 - angleEncoder.getVoltage() / RobotController.getVoltage5V()) * 2.0 * Math.PI) + angleOffset);
+        // SmartDashboard.putNumber(getName(), Math.toDegrees((1.0 - angleEncoder.getVoltage() / RobotController.getVoltage5V()) * 2.0 * Math.PI) + angleOffset);
 
 
         return angle;

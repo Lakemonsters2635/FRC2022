@@ -58,14 +58,14 @@ public class AutonomousTrajectoryCommand extends Command {
         //autonomousTrajectory.calculateSegments(5/1000);
 
 
-        System.out.println("Autonomous Trajectory Command Initialized.");
+        // System.out.println("Autonomous Trajectory Command Initialized.");
         Vector2 position = new Vector2(0, 0);
         Robot.drivetrainSubsystem.resetKinematics(position, 0);
 
 
         Robot.drivetrainSubsystem.getFollower().follow(autonomousTrajectory);
 
-        System.out.println(autonomousTrajectory.getDuration());
+        // System.out.println(autonomousTrajectory.getDuration());
         
 
     	
@@ -127,7 +127,7 @@ public class AutonomousTrajectoryCommand extends Command {
         boolean isFinished = false;
 
         if(isTimedOut()){
-            System.out.println("Timed Out");
+            // System.out.println("Timed Out");
             isFinished = true;
         }
 
