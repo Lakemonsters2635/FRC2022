@@ -19,7 +19,7 @@ public final class SubsystemManager {
 			final double timestamp = Timer.getFPGATimestamp();
 			final double dt = timestamp - lastTimestamp;
 			lastTimestamp = timestamp;
-			SmartDashboard.putNumber("Updater rate", 1.0 / dt);
+			// SmartDashboard.putNumber("Updater rate", 1.0 / dt);
 			subsystems.forEach(s -> s.updateKinematics(timestamp));
 		}
 	});

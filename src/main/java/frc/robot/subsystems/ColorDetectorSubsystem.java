@@ -173,16 +173,16 @@ public class ColorDetectorSubsystem {
       //System.out.println("Unknown");
     } else if ( match != null) { 
        //System.out.println(colorString + "  \tconfidence: " + match.confidence) ;
-       SmartDashboard.putNumber("Confidence", match.confidence);
+      //  SmartDashboard.putNumber("Confidence", match.confidence);
     }
   
     /**
      * Open Smart Dashboard or Shuffleboard to see the color detected by the sensor.
      */
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    SmartDashboard.putString("Detected Color", colorString);
+    // SmartDashboard.putNumber("Red", detectedColor.red);
+    // SmartDashboard.putNumber("Green", detectedColor.green);
+    // SmartDashboard.putNumber("Blue", detectedColor.blue);
+    // SmartDashboard.putString("Detected Color", colorString);
     //FireLog.log("detected_color", colorString);
     if (match != null) {
       return match.color;

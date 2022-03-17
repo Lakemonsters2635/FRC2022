@@ -52,7 +52,7 @@ public class VisionRotationDriveCommand extends Command {
     forward = Robot.oi.leftStick.getRawAxis(1);
     strafe = Robot.oi.leftStick.getRawAxis(0);
     boolean visionTargetFound = Robot.vision.targetExists();
-    SmartDashboard.putBoolean("TargetFound", visionTargetFound);
+    // SmartDashboard.putBoolean("TargetFound", visionTargetFound);
 
     if (visionTargetFound) {
 
@@ -76,7 +76,7 @@ public class VisionRotationDriveCommand extends Command {
     }
 
     totalRotation += rotation;
-    SmartDashboard.putNumber("driveRotation", rotation);
+    // SmartDashboard.putNumber("driveRotation", rotation);
 
     final boolean robotOriented = false;
 
@@ -100,7 +100,7 @@ public class VisionRotationDriveCommand extends Command {
 protected boolean isFinished() {
   boolean isFinished = super.isTimedOut();
   if (isFinished) {
-    SmartDashboard.putNumber("totalRotation", totalRotation);
+    // SmartDashboard.putNumber("totalRotation", totalRotation);
   }
    return isFinished;
 }

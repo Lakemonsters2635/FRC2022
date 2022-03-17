@@ -89,14 +89,14 @@ public class Vision extends Subsystem {
 		{
 
 			double targetDistance = getXDistance();
-			SmartDashboard.putNumber("targetDistance", targetDistance);
+			// SmartDashboard.putNumber("targetDistance", targetDistance);
 			return true;
 		}
 		return false;
 	}
 	
 	public double getXAngle() {
-		SmartDashboard.putNumber("xAngle", x);
+		// SmartDashboard.putNumber("xAngle", x);
 		return x;
 	}
 	
@@ -106,7 +106,7 @@ public class Vision extends Subsystem {
 	
 	public double getXDistance() {
 		double angle = getYAngle();
-		SmartDashboard.putNumber("y angle", angle);
+		// SmartDashboard.putNumber("y angle", angle);
 		//double xDistance = -30.6 * angle - 254;
 		double xDistance = -18.7 * angle - 80.7;
 		return xDistance;

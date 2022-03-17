@@ -55,14 +55,14 @@ public class FetchPowerCellPidTestCommand extends Command {
   protected void initialize() {
     
     
-    SmartDashboard.putNumber("Vision angle", angle);
-    SmartDashboard.putNumber("Desired angle", desiredAngle);
-    SmartDashboard.putNumber("initial angle", gyroAngle);
-    SmartDashboard.putNumber("SetPoint angle", setPointAngle);
+    // SmartDashboard.putNumber("Vision angle", angle);
+    // SmartDashboard.putNumber("Desired angle", desiredAngle);
+    // SmartDashboard.putNumber("initial angle", gyroAngle);
+    // SmartDashboard.putNumber("SetPoint angle", setPointAngle);
     
     Vector2 position = new Vector2(0, 0);
     Robot.drivetrainSubsystem.resetKinematics(position, 0);
-    System.out.println("Initialized FPC");
+    // System.out.println("Initialized FPC");
   }
 
   @Override
@@ -76,7 +76,7 @@ public class FetchPowerCellPidTestCommand extends Command {
 
      VisionObject closestObject = Robot.objectTrackerSubsystem.getClosestObject("powerCell");
      if (closestObject == null) {
-       SmartDashboard.putNumber("driveRotation", 99);
+      //  SmartDashboard.putNumber("driveRotation", 99);
        Robot.drivetrainSubsystem.holonomicDrive(new Vector2(0,0), 0, false);
        return; // no object found
      }
@@ -94,7 +94,7 @@ public class FetchPowerCellPidTestCommand extends Command {
     }
 
     totalRotation += rotation;
-    SmartDashboard.putNumber("driveRotation", rotation);
+    // SmartDashboard.putNumber("driveRotation", rotation);
     
     // strafe
     strafeController.setSetpoint(closestObject.x);
@@ -106,7 +106,7 @@ public class FetchPowerCellPidTestCommand extends Command {
       strafe = -1;
     }
 
-    SmartDashboard.putNumber("driveStrafe", strafe);
+    // SmartDashboard.putNumber("driveStrafe", strafe);
 
     // forward
     //forwardController.setSetpoint(closestObject.z-RobotMap.TARGET_TRIGGER_DISTANCE); // TODO figure out how to implement code that begins intake process 
@@ -118,7 +118,7 @@ public class FetchPowerCellPidTestCommand extends Command {
       forward = -1;
     }
 
-    SmartDashboard.putNumber("driveForward", forward);
+    // SmartDashboard.putNumber("driveForward", forward);
     
     final boolean robotOriented = false;
 
@@ -139,7 +139,7 @@ protected boolean isFinished() {
   
   boolean done = Math.abs(closestObject.z-RobotMap.TARGET_TRIGGER_DISTANCE) <= tolerance;
   if (done) {
-    System.out.println("done FPC");
+    // System.out.println("done FPC");
   }
   return done;
   // return false;

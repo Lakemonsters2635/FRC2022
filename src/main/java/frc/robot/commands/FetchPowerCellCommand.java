@@ -54,7 +54,7 @@ public class FetchPowerCellCommand extends Command {
   @Override
   protected void initialize() {
     initPID();
-    System.out.println("FPC start");
+    // System.out.println("FPC start");
     
     // SmartDashboard.putNumber("Vision angle", angle);
     // SmartDashboard.putNumber("Desired angle", desiredAngle);
@@ -63,7 +63,7 @@ public class FetchPowerCellCommand extends Command {
     
     Vector2 position = new Vector2(0, 0);
     Robot.drivetrainSubsystem.resetKinematics(position, 0);
-    System.out.println("Initialized FPC");
+    // System.out.println("Initialized FPC");
 
     isClose = false;
   }
@@ -77,11 +77,11 @@ public class FetchPowerCellCommand extends Command {
     double rotation = 0;
     VisionObject closestObject = Robot.objectTrackerSubsystem.getClosestObject("powerCell");
      if (closestObject == null) {
-       SmartDashboard.putNumber("driveRotation", 99);
+      //  SmartDashboard.putNumber("driveRotation", 99);
        Robot.drivetrainSubsystem.holonomicDrive(new Vector2(0,0), 0, false);
        return; // no object found
      }
-     System.out.println("Closest z: " + closestObject.z);
+    //  System.out.println("Closest z: " + closestObject.z);
      closestObject.motionCompensate(Robot.drivetrainSubsystem, true);
   
     double angle =  Math.atan2(closestObject.x, closestObject.z);
@@ -96,7 +96,7 @@ public class FetchPowerCellCommand extends Command {
     }
 
     totalRotation += rotation;
-    SmartDashboard.putNumber("driveRotation", rotation);
+    // SmartDashboard.putNumber("driveRotation", rotation);
     
     // strafe
     strafeController.setSetpoint(closestObject.x);
@@ -108,7 +108,7 @@ public class FetchPowerCellCommand extends Command {
       strafe = -1;
     }
 
-    SmartDashboard.putNumber("driveStrafe", strafe);
+    // SmartDashboard.putNumber("driveStrafe", strafe);
 
     // forward
     //forwardController.setSetpoint(closestObject.z-RobotMap.TARGET_TRIGGER_DISTANCE); // TODO figure out how to implement code that begins intake process 
@@ -120,7 +120,7 @@ public class FetchPowerCellCommand extends Command {
       forward = -1;
     }
 
-    SmartDashboard.putNumber("driveForward", forward);
+    // SmartDashboard.putNumber("driveForward", forward);
     
     final boolean robotOriented = false;
 
@@ -134,7 +134,7 @@ public class FetchPowerCellCommand extends Command {
      
     //  }
     final Vector2 translation = new Vector2(v, strafe);
-    System.out.println("translation: " + translation);
+    // System.out.println("translation: " + translation);
     Robot.drivetrainSubsystem.holonomicDrive(translation, rotation, robotOriented);
   }
 
@@ -153,7 +153,7 @@ protected boolean isFinished() {
   //   System.out.println("done FPC");
   // }
   if (isClose) {
-    System.out.println("FPC done");
+    // System.out.println("FPC done");
   }
   return isClose;
   // return false;

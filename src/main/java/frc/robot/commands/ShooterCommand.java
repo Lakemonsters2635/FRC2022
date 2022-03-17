@@ -44,7 +44,7 @@ public class ShooterCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {    
-    System.out.println("shooter command init");
+    // System.out.println("shooter command init");
     if (m_motorSpeed == 0) {
       m_motorSpeed = 3000;
     }
@@ -92,7 +92,7 @@ public class ShooterCommand extends Command {
     boolean isFinished = super.isTimedOut();
     
     if (isFinished) {
-      System.out.println("ShooterCommand finished");
+      // System.out.println("ShooterCommand finished");
     }
     return false;
     //return super.isTimedOut();

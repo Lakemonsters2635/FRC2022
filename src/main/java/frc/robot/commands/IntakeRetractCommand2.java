@@ -36,10 +36,10 @@ public class IntakeRetractCommand2 extends Command {
     // if (!m_isInMidPos) {
       boolean currentlyDetected = Robot.intakeSubsystem.isCargoIn();
       
-       System.out.println("!m_isInMidPos + " + currentlyDetected);
+      //  System.out.println("!m_isInMidPos + " + currentlyDetected);
 
       if (!m_isInMidPos && currentlyDetected != m_isInMidPos) {
-        System.out.println("Cargo/yellow plate detected"); 
+        // System.out.println("Cargo/yellow plate detected"); 
         // Robot.intakeSubsystem.midState();
         m_isInMidPos = currentlyDetected;
         turnOnMidState = true;

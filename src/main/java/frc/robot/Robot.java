@@ -72,6 +72,7 @@ public class Robot extends TimedRobot {
   ShooterCommand shooterNoVisionCommand;
   ShooterIdleCommand shooterIdleCommand;
   ShooterIdleCommand shooterIdleCommand_ZERO_RPM;
+  ShooterIdleCommand reverseShooterCommand; 
 
   
   // IndexZoneCommand indexZoneCommand;
@@ -104,6 +105,7 @@ public class Robot extends TimedRobot {
 
   @Override
 public void robotInit() { 
+  // Robot.vision.ledOn();
     time = new double[circularBufferSize]; 
     angle =  new double[circularBufferSize];
 
@@ -129,7 +131,7 @@ public void robotInit() {
     initCommands();
     initButtons();
     initChooser();
-    vision.ledOff();
+    vision.ledOn();
 
 
 
@@ -153,10 +155,12 @@ private void initCommands() {
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
     visionRotationDriveCommand = new VisionRotationDriveCommand();
     robotRotateCommand = new RobotRotateCommand(90);
+
     shooterWithVisionCommand = new ShooterCommand(true);
     shooterNoVisionCommand = new ShooterCommand(false);
     shooterIdleCommand = new ShooterIdleCommand();
     shooterIdleCommand_ZERO_RPM = new ShooterIdleCommand(0.0);
+    reverseShooterCommand = new ShooterIdleCommand(-1000);
 
 
     intakeInCommand = new IntakeCommand(false);
@@ -179,7 +183,7 @@ private void initButtons() {
     //oi.intakeButton.whileHeld(intakeCommandGroup);
     oi.intakeActuateUpButton.whenPressed(retractIntakeCommand);
     oi.intakeActuateDownButton.whileHeld(extendIntakeCommand);
-    oi.intakeMidStateBUtton.whileHeld(midStateIntakeCommand);
+    oi.intakeMidStateButton.whileHeld(midStateIntakeCommand);
     // oi.intakeActuateMiddleButton.whenPressed(lowerIntakeCommand);
 
 
@@ -197,6 +201,7 @@ private void initButtons() {
     //oi.snapShotButton.whenPressed(snapshotCommand);
     oi.shooterIdleButton.whenPressed(shooterIdleCommand);
     oi.shooterZERORPMButton.whenPressed(shooterIdleCommand_ZERO_RPM);
+    oi.shooterReverseButton.whileHeld(reverseShooterCommand);
 
 }
 
@@ -212,13 +217,14 @@ m_chooser.addOption("Rotate 360", AutonomousSequences.rotate360());
 m_chooser.addOption("arc test", AutonomousSequences.arcTest());
 m_chooser.addOption("Shoot Arc Collect Shoot", AutonomousSequences.shootCollectRightNoRotation());
 m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLineRotationTest());
+m_chooser.addOption("shoot one pass tarmac", AutonomousSequences.shootPassTarmacLine());
 
 //  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
 //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
 //  m_chooser.addOption("Shoot from Right, Collect Right, Shoot Again", AutonomousSequences.ShootFromRight_Of_Optimal_Then_Collect());
 //  m_chooser.addOption("Shoot Then Leave Initiation Line", AutonomousSequences.shootThenBackAwayFromInitiationLine());
 //  m_chooser.addOption("Shoot, Collect Left", AutonomousSequences.ShootThenCollectLeft());
-  SmartDashboard.putData("Auto mode", m_chooser);
+  // SmartDashboard.putData("Auto mode", m_chooser);
 }
 
   /**
@@ -283,7 +289,8 @@ m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLin
     autoHappened = true;
     subsystemManager.enableKinematicLoop(UPDATE_DT);
     zeroCommand.start();
-    autonomousCommand = m_chooser.getSelected();
+    autonomousCommand = AutonomousSequences.shootCollectRight();
+    // autonomousCommand = m_chooser.getSelected();
 
     // String chosenPath = PathSelecter.choosePath();
     // SmartDashboard.putString("Path", chosenPath);
@@ -336,6 +343,7 @@ m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLin
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    vision.ledOn();
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
@@ -365,8 +373,8 @@ m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLin
     // SmartDashboard.putNumber("Current Pose X", vec.x);
     // SmartDashboard.putNumber("Current Pose Y", vec.y);
     colorDetectorSubsystem.get_color();
-    SmartDashboard.putNumber("Distance from sensor", colorDetectorSubsystem.outputDistance()); 
-    SmartDashboard.putNumber("Navx Angle", drivetrainSubsystem.getGyroscope().getAngle().toDegrees());
+    // SmartDashboard.putNumber("Distance from sensor", colorDetectorSubsystem.outputDistance()); 
+    // SmartDashboard.putNumber("Navx Angle", drivetrainSubsystem.getGyroscope().getAngle().toDegrees());
 
    
 

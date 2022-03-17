@@ -67,7 +67,7 @@ public class IntakeSubsystem extends Subsystem {
   }
 
   public void midState() {
-    System.out.println("mid state");
+    // System.out.println("mid state");
     backSolenoid.set(Value.kForward);
     frontSolenoid.set(Value.kForward);
   }

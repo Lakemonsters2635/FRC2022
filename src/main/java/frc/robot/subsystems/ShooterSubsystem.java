@@ -83,7 +83,7 @@ public class ShooterSubsystem extends Subsystem {
 
   public void SpinShooter(double motorSpeed) {
     //DON'T GO OVER 8,000;
-    motorSpeed = Math.min(10000, Math.abs(motorSpeed));
+    motorSpeed = Math.min(10000, motorSpeed); // was Math.abs(motorSpeed) 3/10
     
    // double lowerMotorSpeed = upperMotorSpeed * 3;
 
