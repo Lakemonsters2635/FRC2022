@@ -52,7 +52,7 @@ import edu.wpi.first.wpilibj.SerialPort;
  * Add your docs here.
  */
 public class DrivetrainSubsystem extends SwerveDrivetrain {
-  private static final double TRACKWIDTH = 21.845;
+  private static final double TRACKWIDTH = 21.845; // TODO DEFINE BOT GEOMETRY GLOBALLY
   private static final double WHEELBASE = 25.845;
 
 //   public static final ITrajectoryConstraint[] CONSTRAINTS = {

@@ -14,8 +14,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 // import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.commands.AreWeThereYetCommand;
 import frc.robot.commands.AutonomousTrajectoryCommand;
-
+import frc.robot.commands.FetchCargoCommand;
 // import frc.robot.commands.GalacticSearchCommand;
 import frc.robot.commands.IntakeActuateCommand;
 import frc.robot.commands.RobotRotateCommand;
@@ -333,7 +334,13 @@ public class AutonomousSequences {
             return output;
         }
   
-
+        public static CommandGroup fetchCargoCommandTest() {
+            CommandGroup output = new CommandGroup();
+            FetchCargoCommand fcc = new FetchCargoCommand("red");             
+            output.addSequential(fcc);
+        
+            return output;
+        }
 
         public static String getMethodName() {
 		    String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();

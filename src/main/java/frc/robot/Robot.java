@@ -204,15 +204,18 @@ private void initChooser() {
   
   m_chooser = new SendableChooser<>();
 
-m_chooser.addOption("Shoot Collect Right", AutonomousSequences.shootCollectRight());
-m_chooser.addOption("Shoot Collect Left", AutonomousSequences.shootCollectLeft());
-m_chooser.addOption("Shoot and Collect and Shoot two Cargo", AutonomousSequences.shootCollectShootTwoCargo());
-m_chooser.addOption("Drive Straight Then Back", AutonomousSequences.driveStraightThenBack());
-m_chooser.addOption("Rotate 360", AutonomousSequences.rotate360());
-m_chooser.addOption("arc test", AutonomousSequences.arcTest());
-m_chooser.addOption("Shoot Arc Collect Shoot", AutonomousSequences.shootCollectRightNoRotation());
-m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLineRotationTest());
+  m_chooser.addOption("Shoot Collect Right", AutonomousSequences.shootCollectRight());
+  m_chooser.addOption("Shoot Collect Left", AutonomousSequences.shootCollectLeft());
+  m_chooser.addOption("Shoot and Collect and Shoot two Cargo", AutonomousSequences.shootCollectShootTwoCargo());
+  m_chooser.addOption("Drive Straight Then Back", AutonomousSequences.driveStraightThenBack());
+  m_chooser.addOption("Rotate 360", AutonomousSequences.rotate360());
+  m_chooser.addOption("arc test", AutonomousSequences.arcTest());
+  m_chooser.addOption("Shoot Arc Collect Shoot", AutonomousSequences.shootCollectRightNoRotation());
+  m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLineRotationTest());
 
+  // vision tests
+  m_chooser.addOption("FetchCargoCommand test", AutonomousSequences.fetchCargoCommandTest());
+  
 //  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
 //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
 //  m_chooser.addOption("Shoot from Right, Collect Right, Shoot Again", AutonomousSequences.ShootFromRight_Of_Optimal_Then_Collect());

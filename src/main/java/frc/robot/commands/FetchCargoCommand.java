@@ -20,29 +20,44 @@ import frc.robot.models.VisionObject;
 // import com.kauailabs.navx.frc.AHRS;  
 // import edu.wpi.first.wpilibj.SPI;
 
-public class FetchPowerCellCommand extends Command {
+public class FetchCargoCommand extends Command {
   PIDController angleController;
   PIDController strafeController;
   PIDController forwardController; 
   double gyroAngle;
-  double angle;
+  double angle; 
   double desiredAngle;
   double setPointAngle = 6;
   boolean isClose;
   double v; // velocity? 3/14
 
+  String cargoColor; // blue or red, gets passed into constructor
+
   public double totalRotation = 0;
 
-  public FetchPowerCellCommand() {
+  public FetchCargoCommand(String cargoColor) {
     requires(Robot.drivetrainSubsystem);
-    //initPID();    
+    //initPID();
+    checkUpdateCargoColor(cargoColor);     
   }
 
-  public FetchPowerCellCommand(double timeout) {
+  public FetchCargoCommand(String cargoColor, double timeout) {
     super(timeout);
     requires(Robot.drivetrainSubsystem);
     //initPID();
-    
+    checkUpdateCargoColor(cargoColor);     
+
+  }
+
+  private void checkUpdateCargoColor(String color) {
+    // checks cargoColor given to constructor, normalizes case
+    if (color.equalsIgnoreCase("blue")) {
+      this.cargoColor = "blue";
+    } else if (color.equalsIgnoreCase("red")) {
+      this.cargoColor = "red"; 
+    } else {
+      // TODO some time of catch all end case that deals with a non red/blue input?
+    }
   }
 
   protected void initPID(){
@@ -55,7 +70,7 @@ public class FetchPowerCellCommand extends Command {
   @Override
   protected void initialize() {
     initPID();
-    System.out.println("FPC start");
+    System.out.println("FCC start");
     
     // SmartDashboard.putNumber("Vision angle", angle);
     // SmartDashboard.putNumber("Desired angle", desiredAngle);
@@ -64,7 +79,7 @@ public class FetchPowerCellCommand extends Command {
     
     Vector2 position = new Vector2(0, 0);
     Robot.drivetrainSubsystem.resetKinematics(position, 0);
-    System.out.println("Initialized FPC");
+    System.out.println("Initialized FCC");
 
     isClose = false;
   }
@@ -77,7 +92,7 @@ public class FetchPowerCellCommand extends Command {
     double strafe = 0;
     double rotation = 0;
 
-    VisionObject closestObject = Robot.objectTrackerSubsystem.getClosestObject("powerCell");
+    VisionObject closestObject = Robot.objectTrackerSubsystem.getClosestObject(cargoColor);
      
     if (closestObject == null) {
       SmartDashboard.putNumber("driveRotation", 99);
@@ -142,11 +157,10 @@ public class FetchPowerCellCommand extends Command {
     Robot.drivetrainSubsystem.holonomicDrive(translation, rotation, robotOriented);
   }
 
-
 @Override
 protected boolean isFinished() {
-  double tolerance = 4;
-  VisionObject closestObject = Robot.objectTrackerSubsystem.getClosestObject("powerCell");
+  double tolerance = 4; // TODO units...? i think it's inches
+  VisionObject closestObject = Robot.objectTrackerSubsystem.getClosestObject(cargoColor);
   if(closestObject == null) {
     return false;
   }//TODO could lose sight for small amount of time causing command to finish early
@@ -154,10 +168,10 @@ protected boolean isFinished() {
   //boolean done = Math.abs(closestObject.z-RobotMap.TARGET_TRIGGER_DISTANCE) <= tolerance;
   isClose = Math.abs(closestObject.z-RobotMap.TARGET_TRIGGER_DISTANCE) <= tolerance;
   // if (done) {
-  //   System.out.println("done FPC");
+  //   System.out.println("done FCC");
   // }
   if (isClose) {
-    System.out.println("FPC done");
+    System.out.println("FCC done");
   }
   return isClose;
   // return false;
