@@ -65,6 +65,8 @@ public class ObjectTrackerSubsystem extends Subsystem {
     }
 
     private void applyRotationTranslationMatrix() {
+        // sets reference to be the CENTER of the robot 
+        
         for (int i = 0; i < foundObjects.length; i++) {
             double x = foundObjects[i].x; 
             double y = foundObjects[i].y; 
