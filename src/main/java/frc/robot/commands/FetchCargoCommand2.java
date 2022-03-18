@@ -13,7 +13,12 @@ import frc.robot.models.VisionObject;
 import frc.robot.subsystems.Vision;
 
 public class FetchCargoCommand2 extends Command {
-  /** Creates a new FetchCargoCommand2. */
+  /** Creates a new FetchCargoCommand2. 
+   *  Grabs either the closest object of specified color or the closest object in a given range
+   *  Dead-reckons to cargo
+   *  
+   *  Not tested on robot yet as of 3/17
+  */
 
   // ***ALL DISTANCE UNITS SHOULD BE IN INCHES***
 
@@ -97,6 +102,7 @@ public class FetchCargoCommand2 extends Command {
       this.cargoColor = "red"; 
     } else {
       // TODO some time of catch all end case that deals with a non red/blue input?
+      // ^ low priority
     }
   }
 }
