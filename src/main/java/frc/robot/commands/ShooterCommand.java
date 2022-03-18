@@ -7,6 +7,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
@@ -21,7 +24,9 @@ public class ShooterCommand extends Command {
   private double m_motorSpeed = 0;
   private double m_lowerMotorSpeed = 0;
   private boolean shootHigh = true;
-
+  private double ty;
+  private double a = -30.1533;
+  private double b = 1895.8439;
   /**
    * Creates a new ExampleCommand.
    *
@@ -44,7 +49,16 @@ public class ShooterCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {    
-    // System.out.println("shooter command init");
+    System.out.println("shooter command init");
+    // get ty from limelight
+    ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
+    System.out.println(ty);
+    if (ty > -10 && useCamera == true) {
+      m_motorSpeed = (a * ty) + b;
+      System.out.println(m_motorSpeed);
+    }
+    // System.out.println(ty);
+
     if (m_motorSpeed == 0) {
       m_motorSpeed = 3000;
     }
@@ -54,10 +68,13 @@ public class ShooterCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double leftJoystickZ = Robot.oi.leftStick.getZ();
-    leftJoystickZ = leftJoystickZ + 1;
-    double motor1Speed = m_motorSpeed + leftJoystickZ * 2500;
-    Robot.shooterSubsystem.SpinShooter(motor1Speed);
+    // double leftJoystickZ = Robot.oi.leftStick.getZ();
+    // leftJoystickZ = leftJoystickZ + 1;
+    // double motor1Speed = m_motorSpeed + leftJoystickZ * 2500;
+    // uncomment 3 lines above if you want to use the slider - Ritchie
+    Robot.shooterSubsystem.SpinShooter(m_motorSpeed);
+    // if use camera and if ty greater than a certain distance, calculate rpm
+    // spinshooter(rpm)
     // System.out.println("shooter command " + motor1Speed);
   }
 

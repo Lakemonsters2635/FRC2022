@@ -65,7 +65,7 @@ public class OI {
   Button intakeActuateDownButton = new JoystickButton(rightStick, RobotMap.R_INTAKE_RETRACT_BUTTON);
   Button intakeMidStateButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_MID_STATE_BUTTON);
 
-  Button indexZoneButton = new JoystickButton(rightStick, RobotMap.R_INDEX_ZONE_BUTTON);
+  // Button indexZoneButton = new JoystickButton(rightStick, RobotMap.R_INDEX_ZONE_BUTTON);
   Button shooterIdleButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_IDLE_BUTTON); 
   Button shooterZERORPMButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_ZERO_RPM_BUTTON);
 }
