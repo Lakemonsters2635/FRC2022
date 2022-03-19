@@ -29,13 +29,18 @@ public class FetchCargoCommand2 extends Command {
   private double[] distanceInRange = {-1, -1}; // [lower bound, upper bound]
   // {-1, -1} means get the closest object - special case placeholder
 
-  public FetchCargoCommand2(String cargoColor) {
+  private boolean noCargoFound = false; 
+  private double threshold = 5; // how close the bot needs to get to cargo before terminating command
+
+  public FetchCargoCommand2(String cargoColor, double timeOut) {
+    super(timeOut);
     this.cargoColor = cargoColor; 
     checkUpdateCargoColor(this.cargoColor);
     requires(Robot.drivetrainSubsystem);
   }
 
-  public FetchCargoCommand2(String cargoColor, double lowerDistanceBound, double upperDistanceBound) {
+  public FetchCargoCommand2(String cargoColor, double lowerDistanceBound, double upperDistanceBound, double timeOut) {
+    super(timeOut); 
     this.cargoColor = cargoColor; 
     checkUpdateCargoColor(this.cargoColor);
     distanceInRange[0] = lowerDistanceBound; 
@@ -63,10 +68,10 @@ public class FetchCargoCommand2 extends Command {
     
     if (targetCargo == null) {
       System.out.println("No cargo found"); 
-      return; 
+      noCargoFound = true;
     }
 
-    // zero drivetrain: is this necessary?
+    // zero drivetrain: is this necessary? also may be better to put at top of initialize() 
     Robot.drivetrainSubsystem.resetKinematics(Vector2.ZERO, 0);
   
     // find angle bot rotates to line up with cargo
@@ -77,7 +82,7 @@ public class FetchCargoCommand2 extends Command {
   
     // dead reckoning drive to target
     // TODO may need to add an offset to stop before reaching cargo
-    Robot.drivetrainSubsystem.holonomicDrive(this.targetPosition, this.targetRotation, true);
+    Robot.drivetrainSubsystem.holonomicDrive(this.targetPosition, this.targetRotation, false); // camera returns robot-centric coordinates
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -91,7 +96,14 @@ public class FetchCargoCommand2 extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (noCargoFound) {
+      return true;
+    } else if (Robot.drivetrainSubsystem.autonomousDriveFinished(targetPosition, this.threshold)) {
+      return true;
+    } else {
+      super.isTimedOut(); 
+    }
+    return false; 
   }
 
   private void checkUpdateCargoColor(String color) {
