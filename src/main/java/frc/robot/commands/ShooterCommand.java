@@ -25,8 +25,10 @@ public class ShooterCommand extends Command {
   private double m_lowerMotorSpeed = 0;
   private boolean shootHigh = true;
   private double ty;
-  private double a = -30.1533;
-  private double b = 1895.8439;
+  private double a = -23.4;
+  private double b = 1860.0;
+  
+  // 2081 - 278x - 50.9x^2 -3.91x^3 - 0.0889x^4
   /**
    * Creates a new ExampleCommand.
    *
@@ -53,12 +55,23 @@ public class ShooterCommand extends Command {
     // get ty from limelight
     ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
     System.out.println(ty);
-    if (ty > -10 && useCamera == true) {
-      m_motorSpeed = (a * ty) + b;
-      System.out.println(m_motorSpeed);
-    }
-    // System.out.println(ty);
+    if (useCamera == true) {
+      if (ty > -3.6) {
+        m_motorSpeed = (a * ty) + b;
+      } else if (ty <= -3.6 && ty >= -17.0) {
+        // m_motorSpeed = (2081.0 - (278.0*ty) - (50.9 * Math.pow(ty, 2)) - (3.91 * (Math.pow(ty, 3)))  - (0.0889 *(Math.pow(ty, 4))));
+        // m_motorSpeed = ty;
+        
+        m_motorSpeed = 2855 + (102.0 * ty) + (9.64 * Math.pow(ty, 2.0));
+        System.out.println(m_motorSpeed);
 
+      } else {
+        m_motorSpeed = 1000;
+      }
+      // System.out.println(ty);
+  
+    }
+    
     if (m_motorSpeed == 0) {
       m_motorSpeed = 3000;
     }
@@ -70,7 +83,8 @@ public class ShooterCommand extends Command {
   public void execute() {
     // double leftJoystickZ = Robot.oi.leftStick.getZ();
     // leftJoystickZ = leftJoystickZ + 1;
-    // double motor1Speed = m_motorSpeed + leftJoystickZ * 2500;
+    // double motor1Speed = m_motorSpeed + leftJoystickZ * 500;
+    
     // uncomment 3 lines above if you want to use the slider - Ritchie
     Robot.shooterSubsystem.SpinShooter(m_motorSpeed);
     // if use camera and if ty greater than a certain distance, calculate rpm

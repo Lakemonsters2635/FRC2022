@@ -137,7 +137,7 @@ public class RobotMap {
 	//  public final static Gains kGains_Velocit = new Gains(kP2, 0.0, 0.0, 0,  0,  1.00); // before 2/21 we were using kF = 0.047
   public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
 
-   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 1000; // can go up to 6000, 10000+ in phoenix tuner
+   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 2000; // can go up to 6000, 10000+ in phoenix tuner
    public final static double SHOOTER_MOTOR_LOW_DEFAULT_SPEED = 3100;
    public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 2200; //1742 to 500 on 2/10/22
 
