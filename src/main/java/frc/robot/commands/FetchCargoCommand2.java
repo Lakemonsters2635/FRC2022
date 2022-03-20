@@ -8,6 +8,7 @@ import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.models.VisionObject;
 import frc.robot.subsystems.Vision;
@@ -19,7 +20,6 @@ public class FetchCargoCommand2 extends Command {
    *  
    *  Not tested on robot yet as of 3/17
   */
-
   // ***ALL DISTANCE UNITS SHOULD BE IN INCHES***
 
   private String cargoColor; 
@@ -30,7 +30,7 @@ public class FetchCargoCommand2 extends Command {
   // {-1, -1} means get the closest object - special case placeholder
 
   private boolean noCargoFound = false; 
-  private double threshold = 5; // how close the bot needs to get to cargo before terminating command
+  private double threshold = 62.0; // how close the bot needs to get to cargo before terminating command
 
   public FetchCargoCommand2(String cargoColor, double timeOut) {
     super(timeOut);
@@ -54,6 +54,8 @@ public class FetchCargoCommand2 extends Command {
     // puts data onto network tables and applies rotation/translation matrix
     Robot.objectTrackerSubsystem.data(); 
 
+    // gets closest object in specified range
+    // else get absolute closest object if the range is the special -1 to 1 default case
     if (distanceInRange[0] != -1 && distanceInRange[1] != -1) {
       VisionObject[] cargoList = Robot.objectTrackerSubsystem.getObjectsOfType(this.cargoColor);
       for (int i = 0; i < cargoList.length; i++) {
@@ -62,36 +64,45 @@ public class FetchCargoCommand2 extends Command {
           break; 
         }
       }
-    } else { // get closest object if the range is the special -1 to 1 default case
+    } else { 
       this.targetCargo = Robot.objectTrackerSubsystem.getClosestObject(this.cargoColor); 
     }
     
     if (targetCargo == null) {
       System.out.println("No cargo found"); 
-      noCargoFound = true;
+      noCargoFound = true; // ends command
     }
 
     // zero drivetrain: is this necessary? also may be better to put at top of initialize() 
     Robot.drivetrainSubsystem.resetKinematics(Vector2.ZERO, 0);
   
     // find angle bot rotates to line up with cargo
-    this.targetRotation = Math.atan2(targetCargo.y, targetCargo.z);
+    this.targetRotation = Math.toDegrees(Math.atan2(targetCargo.x, targetCargo.z)); // in camera coordinates
 
     // TODO may need to negate either y or z - don't remember which direction is negative on bot
-    this.targetPosition = new Vector2(targetCargo.y, targetCargo.z); 
+    this.targetPosition = new Vector2(-targetCargo.z, targetCargo.x); // in camera coordinates
   
     // dead reckoning drive to target
     // TODO may need to add an offset to stop before reaching cargo
-    Robot.drivetrainSubsystem.holonomicDrive(this.targetPosition, this.targetRotation, false); // camera returns robot-centric coordinates
+    SmartDashboard.putString("FetchCargoCommand2 target position Vector2", this.targetPosition.toString());
+    SmartDashboard.putNumber("FetchCargoCommand2 rootation angle", this.targetRotation);
+    
+    Robot.drivetrainSubsystem.holonomicDrive(this.targetPosition, 0.0, false); // camera returns robot-centric coordinates
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    SmartDashboard.putNumber("FCC2 z (corrected w/ matrix)", targetCargo.z);
+    SmartDashboard.putNumber("FCC2 y (corrected w/ matrix)", targetCargo.y);
+    SmartDashboard.putNumber("FCC2 x (corrected w/ matrix)", targetCargo.x);
+  }
 
   // Called once the command ends.
   @Override
-  public void end() {}
+  public void end() {
+    System.out.println("FetchCargoCommand2 done");
+  }
 
   // Returns true when the command should end.
   @Override

@@ -20,6 +20,10 @@ import frc.robot.models.VisionObject;
 // import com.kauailabs.navx.frc.AHRS;  
 // import edu.wpi.first.wpilibj.SPI;
 
+/* 
+  Copy of FetchPowerCellCommand with modified contructor to take cargo color
+*/
+
 public class FetchCargoCommand extends Command {
   PIDController angleController;
   PIDController strafeController;

@@ -1,6 +1,8 @@
 package frc.robot.models;
 
 
+import com.fasterxml.jackson.databind.ser.std.InetSocketAddressSerializer;
+
 // import org.frcteam2910.common.control.ITrajectoryConstraint;
 import org.frcteam2910.common.control.Path;
 // import org.frcteam2910.common.control.PathArcSegment;
@@ -16,10 +18,12 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.AreWeThereYetCommand;
 import frc.robot.commands.AutonomousTrajectoryCommand;
-import frc.robot.commands.FetchCargoCommand;
+import frc.robot.commands.FetchCargoCommand2;
 // import frc.robot.commands.GalacticSearchCommand;
 import frc.robot.commands.IntakeActuateCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakeRetractCommand;
+import frc.robot.commands.IntakeRetractCommand2;
 import frc.robot.commands.RobotRotateCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.ShooterIdleCommand;
@@ -399,12 +403,35 @@ public class AutonomousSequences {
             return output;
         }
   
-        public static CommandGroup fetchCargoCommandTest() {
+        public static CommandGroup testFetchCargoCommand2RED() {
             CommandGroup output = new CommandGroup();
-            FetchCargoCommand fcc = new FetchCargoCommand("red");             
+            FetchCargoCommand2 fcc = new FetchCargoCommand2("red", 100);             
             output.addSequential(fcc);
         
             return output;
+        }
+
+        public static CommandGroup testFetchCargoCommand2BLUE() {
+            CommandGroup output = new CommandGroup();
+            FetchCargoCommand2 fcc = new FetchCargoCommand2("blue", 100);             
+            output.addSequential(fcc);
+        
+            return output;
+        }
+
+        public static CommandGroup testVisionDriveToPickUpCargo() {
+            CommandGroup output = new CommandGroup(); 
+            IntakeActuateCommand extendIntake = new IntakeActuateCommand(false, 2); 
+            FetchCargoCommand2 fcc = new FetchCargoCommand2("red", 10); 
+            IntakeCommand spinIntake = new IntakeCommand(false, 5); // need to find the right timeout so that it stops spinning when intake retracts
+            IntakeRetractCommand2 retractIntake = new IntakeRetractCommand2(2); 
+
+            output.addSequential(extendIntake);
+            output.addSequential(fcc);
+            output.addParallel(spinIntake);
+            output.addSequential(retractIntake);
+
+            return output; 
         }
 
         public static String getMethodName() {

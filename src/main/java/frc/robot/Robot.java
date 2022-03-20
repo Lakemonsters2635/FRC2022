@@ -182,13 +182,13 @@ private void initButtons() {
     
     //oi.intakeButton.whileHeld(intakeCommandGroup);
     oi.intakeActuateUpButton.whenPressed(retractIntakeCommand);
-    oi.intakeActuateDownButton.whileHeld(extendIntakeCommand);
+    oi.intakeActuateDownButton.whileHeld(extendIntakeCommand); // TODO should these by whenPresed? noticed 3/20 (Megan)
     oi.intakeMidStateButton.whileHeld(midStateIntakeCommand);
     // oi.intakeActuateMiddleButton.whenPressed(lowerIntakeCommand);
 
 
-     oi.intakeInButton.whileHeld(intakeInCommand);
-     oi.intakeOutButton.whileHeld(intakeOutCommand);
+    oi.intakeInButton.whileHeld(intakeInCommand);
+    oi.intakeOutButton.whileHeld(intakeOutCommand);
     //  oi.intakeDetectButton.whileHeld(intakeDetectToElevatorIndexCommand);
 
      
@@ -206,29 +206,29 @@ private void initButtons() {
 }
 
 private void initChooser() {
-  
   m_chooser = new SendableChooser<>();
 
+  // vision auto tests
+  m_chooser.addOption("VISION - FetchCargoCommand test RED cargo", AutonomousSequences.testFetchCargoCommand2RED());
+  m_chooser.addOption("VISION - FetchCargoCommand test BLUE cargo", AutonomousSequences.testFetchCargoCommand2BLUE());
 
-  // vision tests
-  m_chooser.addOption("FetchCargoCommand test", AutonomousSequences.fetchCargoCommandTest());
-  
-m_chooser.addOption("Shoot Collect Right", AutonomousSequences.shootCollectRight());
-m_chooser.addOption("Shoot Collect Left", AutonomousSequences.shootCollectLeft());
-m_chooser.addOption("Shoot and Collect and Shoot two Cargo", AutonomousSequences.shootCollectShootTwoCargo());
-m_chooser.addOption("Drive Straight Then Back", AutonomousSequences.driveStraightThenBack());
-m_chooser.addOption("Rotate 360", AutonomousSequences.rotate360());
-m_chooser.addOption("arc test", AutonomousSequences.arcTest());
-m_chooser.addOption("Shoot Arc Collect Shoot", AutonomousSequences.shootCollectRightNoRotation());
-m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLineRotationTest());
-m_chooser.addOption("shoot one pass tarmac", AutonomousSequences.shootPassTarmacLine());
+  // traditional auto
+  m_chooser.addOption("Shoot Collect Right", AutonomousSequences.shootCollectRight());
+  m_chooser.addOption("Shoot Collect Left", AutonomousSequences.shootCollectLeft());
+  m_chooser.addOption("Shoot and Collect and Shoot two Cargo", AutonomousSequences.shootCollectShootTwoCargo());
+  m_chooser.addOption("Drive Straight Then Back", AutonomousSequences.driveStraightThenBack());
+  m_chooser.addOption("Rotate 360", AutonomousSequences.rotate360());
+  m_chooser.addOption("arc test", AutonomousSequences.arcTest());
+  m_chooser.addOption("Shoot Arc Collect Shoot", AutonomousSequences.shootCollectRightNoRotation());
+  m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLineRotationTest());
+  m_chooser.addOption("shoot one pass tarmac", AutonomousSequences.shootPassTarmacLine());
 
-//  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
-//  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
-//  m_chooser.addOption("Shoot from Right, Collect Right, Shoot Again", AutonomousSequences.ShootFromRight_Of_Optimal_Then_Collect());
-//  m_chooser.addOption("Shoot Then Leave Initiation Line", AutonomousSequences.shootThenBackAwayFromInitiationLine());
-//  m_chooser.addOption("Shoot, Collect Left", AutonomousSequences.ShootThenCollectLeft());
-  // SmartDashboard.putData("Auto mode", m_chooser);
+  //  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
+  //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
+  //  m_chooser.addOption("Shoot from Right, Collect Right, Shoot Again", AutonomousSequences.ShootFromRight_Of_Optimal_Then_Collect());
+  //  m_chooser.addOption("Shoot Then Leave Initiation Line", AutonomousSequences.shootThenBackAwayFromInitiationLine());
+  //  m_chooser.addOption("Shoot, Collect Left", AutonomousSequences.ShootThenCollectLeft());
+  SmartDashboard.putData("Auto mode", m_chooser);
 }
 
   /**
@@ -293,8 +293,8 @@ m_chooser.addOption("shoot one pass tarmac", AutonomousSequences.shootPassTarmac
     autoHappened = true;
     subsystemManager.enableKinematicLoop(UPDATE_DT);
     zeroCommand.start();
-    autonomousCommand = AutonomousSequences.shootCollectRight();
-    // autonomousCommand = m_chooser.getSelected();
+    // autonomousCommand = AutonomousSequences.shootCollectRight();
+    autonomousCommand = m_chooser.getSelected();
 
     // String chosenPath = PathSelecter.choosePath();
     // SmartDashboard.putString("Path", chosenPath);

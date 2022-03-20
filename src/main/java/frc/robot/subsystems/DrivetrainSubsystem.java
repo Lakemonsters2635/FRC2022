@@ -80,9 +80,9 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
       // new MaxVelocityConstraint(12.0 * 7.5), 
       // new MaxAccelerationConstraint(15.0 * 3.0),                                    
       // new CentripetalAccelerationConstraint(25.0 * 3.0) 
-      new MaxVelocityConstraint(5 * 6 * 2), 
-      new MaxAccelerationConstraint(6.0 * 3.0 * 2),                                    
-      new CentripetalAccelerationConstraint(10) 
+      new MaxVelocityConstraint(5 * 6 * 2), // before 60
+      new MaxAccelerationConstraint(6.0 * 3.0 * 2), // before 36                                   
+      new CentripetalAccelerationConstraint(10) // before 10
   };  
 //   public static final ITrajectoryConstraint[] INTAKE_CONSTRAINTS = {
 //     //Original
