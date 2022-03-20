@@ -209,6 +209,10 @@ private void initChooser() {
   
   m_chooser = new SendableChooser<>();
 
+
+  // vision tests
+  m_chooser.addOption("FetchCargoCommand test", AutonomousSequences.fetchCargoCommandTest());
+  
 m_chooser.addOption("Shoot Collect Right", AutonomousSequences.shootCollectRight());
 m_chooser.addOption("Shoot Collect Left", AutonomousSequences.shootCollectLeft());
 m_chooser.addOption("Shoot and Collect and Shoot two Cargo", AutonomousSequences.shootCollectShootTwoCargo());

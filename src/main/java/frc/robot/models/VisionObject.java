@@ -9,7 +9,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 
 public class VisionObject {
-    public String objectLabel; 
+    public String objectLabel; // red or blue cargo
     public double x;
     public double y;
     public double z;

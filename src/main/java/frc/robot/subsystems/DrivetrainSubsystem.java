@@ -52,7 +52,7 @@ import edu.wpi.first.wpilibj.SerialPort;
  * Add your docs here.
  */
 public class DrivetrainSubsystem extends SwerveDrivetrain {
-  private static final double TRACKWIDTH = 21.845;
+  private static final double TRACKWIDTH = 21.845; // TODO DEFINE BOT GEOMETRY GLOBALLY
   private static final double WHEELBASE = 25.845;
 
 //   public static final ITrajectoryConstraint[] CONSTRAINTS = {
@@ -245,7 +245,7 @@ private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians
       }
   }
 
-  public boolean autonomousDriveFinished(Vector2 translation) {
+  public boolean autonomousDriveFinished(Vector2 translation, double threshHold) {
     Vector2 kinematicPosition = getKinematicPosition();
 
     Vector2 Delta = kinematicPosition.subtract(translation);
@@ -254,7 +254,7 @@ private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians
     //System.out.println("kinematicPosition: " + kinematicPosition);
     
 
-    if(Delta.length < 50) 
+    if(Delta.length < threshHold) 
         return true;
     else
         return false;    
