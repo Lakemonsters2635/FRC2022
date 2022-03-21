@@ -254,8 +254,10 @@ private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians
     //System.out.println("kinematicPosition: " + kinematicPosition);
     
 
-    if(Delta.length < threshHold) 
-        return true;
+    if(Delta.length < threshHold) {
+      System.out.println("autonomousDriveFinished in DrivetrainSubsystem TRUE"); 
+      return true;
+    }
     else
         return false;    
   }

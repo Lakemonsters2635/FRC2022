@@ -30,13 +30,15 @@ public class FetchCargoCommand2 extends Command {
   // {-1, -1} means get the closest object - special case placeholder
 
   private boolean noCargoFound = false; 
-  private double threshold = 62.0; // how close the bot needs to get to cargo before terminating command
+  private double threshold = 50.0; // how close the bot needs to get to cargo before terminating command
 
   public FetchCargoCommand2(String cargoColor, double timeOut) {
     super(timeOut);
     this.cargoColor = cargoColor; 
     checkUpdateCargoColor(this.cargoColor);
     requires(Robot.drivetrainSubsystem);
+    setInterruptible(true);  
+
   }
 
   public FetchCargoCommand2(String cargoColor, double lowerDistanceBound, double upperDistanceBound, double timeOut) {
@@ -46,6 +48,7 @@ public class FetchCargoCommand2 extends Command {
     distanceInRange[0] = lowerDistanceBound; 
     distanceInRange[1] = upperDistanceBound;
     requires(Robot.drivetrainSubsystem);
+    setInterruptible(true);  
   }
 
   // Called when the command is initially scheduled.
@@ -88,6 +91,7 @@ public class FetchCargoCommand2 extends Command {
     SmartDashboard.putNumber("FetchCargoCommand2 rootation angle", this.targetRotation);
     
     Robot.drivetrainSubsystem.holonomicDrive(this.targetPosition, 0.0, false); // camera returns robot-centric coordinates
+    // Robot.drivetrainSubsystem.holonomicDrive(new Vector2(0.0, 40.0), 0.0, false); // camera returns robot-centric coordinates
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -101,6 +105,7 @@ public class FetchCargoCommand2 extends Command {
   // Called once the command ends.
   @Override
   public void end() {
+    Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0, false);
     System.out.println("FetchCargoCommand2 done");
   }
 
@@ -118,7 +123,7 @@ public class FetchCargoCommand2 extends Command {
   }
 
   private void checkUpdateCargoColor(String color) {
-    // checks cargoColor given to constructor, normalizes case
+    // checks cargoColor given to frconstructor, normalizes case
     if (color.equalsIgnoreCase("blue")) {
       this.cargoColor = "blue";
     } else if (color.equalsIgnoreCase("red")) {

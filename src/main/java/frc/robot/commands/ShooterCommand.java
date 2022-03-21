@@ -58,11 +58,12 @@ public class ShooterCommand extends Command {
     if (useCamera == true) {
       if (ty > -3.6) {
         m_motorSpeed = (a * ty) + b;
+        
       } else if (ty <= -3.6 && ty >= -17.0) {
         // m_motorSpeed = (2081.0 - (278.0*ty) - (50.9 * Math.pow(ty, 2)) - (3.91 * (Math.pow(ty, 3)))  - (0.0889 *(Math.pow(ty, 4))));
         // m_motorSpeed = ty;
         
-        m_motorSpeed = 2855 + (102.0 * ty) + (9.64 * Math.pow(ty, 2.0));
+        m_motorSpeed = 2855 + (102.0 * ty) + (9.64 * ty * ty);
         System.out.println(m_motorSpeed);
 
       } else {

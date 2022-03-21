@@ -12,12 +12,20 @@ import frc.robot.Robot;
 
 public class IntakeCommand extends Command {
   private boolean m_reverse = false;
+  private boolean inAuto = false; 
+
   public IntakeCommand(boolean reverse) {
     m_reverse = reverse;
   }
 
   public IntakeCommand(boolean reverse, double timeout) {
     super(timeout);
+    m_reverse = reverse;
+  }
+
+  public IntakeCommand(boolean reverse, double timeout, boolean isInAuto) {
+    super(timeout);
+    // inAuto = isInAuto; 
     m_reverse = reverse;
   }
 
@@ -52,9 +60,9 @@ public class IntakeCommand extends Command {
   @Override
   protected boolean isFinished() {
     boolean isFinished = super.isTimedOut(); 
-    if (Robot.colorDetectorSubsystem.outputDistanceForShooterTest()) {
-      isFinished = true;
-    }
+    // if (inAuto && Robot.colorDetectorSubsystem.outputDistanceForShooterTest()) {
+    //   isFinished = true;
+    // }
     return false;
   }
 

@@ -211,6 +211,9 @@ private void initChooser() {
   // vision auto tests
   m_chooser.addOption("VISION - FetchCargoCommand test RED cargo", AutonomousSequences.testFetchCargoCommand2RED());
   m_chooser.addOption("VISION - FetchCargoCommand test BLUE cargo", AutonomousSequences.testFetchCargoCommand2BLUE());
+  m_chooser.addOption("fcc new command", AutonomousSequences.testVisionDriveToPickUpCargo());
+  m_chooser.addOption("fcc OLD command", AutonomousSequences.testfccOLD());
+  m_chooser.addOption("fcc rotate fcc", AutonomousSequences.twoFccOld()); 
 
   // traditional auto
   m_chooser.addOption("Shoot Collect Right", AutonomousSequences.shootCollectRight());
@@ -222,6 +225,7 @@ private void initChooser() {
   m_chooser.addOption("Shoot Arc Collect Shoot", AutonomousSequences.shootCollectRightNoRotation());
   m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLineRotationTest());
   m_chooser.addOption("shoot one pass tarmac", AutonomousSequences.shootPassTarmacLine());
+  m_chooser.addOption("three ball auto", AutonomousSequences.threeBallAuto());
 
   //  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
   //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
