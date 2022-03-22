@@ -83,7 +83,7 @@ public class RobotRotateCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0);
+    Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0, true);
   }
 
   // Called when another command which requires one or more of the same

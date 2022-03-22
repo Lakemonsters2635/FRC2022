@@ -105,7 +105,7 @@ public class FetchCargoCommand2 extends Command {
   // Called once the command ends.
   @Override
   public void end() {
-    Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0, false);
+    Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0, true);
     System.out.println("FetchCargoCommand2 done");
   }
 
