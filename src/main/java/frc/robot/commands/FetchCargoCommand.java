@@ -104,7 +104,7 @@ public class FetchCargoCommand extends Command {
       return; // no object found
     }
     
-    System.out.println("Closest z: " + closestObject.z);
+    // System.out.println("Closest z: " + closestObject.z);
     closestObject.motionCompensate(Robot.drivetrainSubsystem, true);
   
     double angle =  Math.atan2(closestObject.x, closestObject.z);
@@ -157,7 +157,7 @@ public class FetchCargoCommand extends Command {
      
     //  }
     final Vector2 translation = new Vector2(v, strafe);
-    System.out.println("translation: " + translation);
+    // System.out.println("translation: " + translation);
     Robot.drivetrainSubsystem.holonomicDrive(translation, rotation, robotOriented);
   }
 
@@ -190,7 +190,11 @@ protected boolean isFinished() {
 @Override
   protected void end() {
     Robot.vision.ledOff();
-    Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0);
+    // Robot.drivetrainSubsystem.holonomicDrive(new Vector2(-100.0, 0.0), 0, true);
+    // System.out.println("FCC end() drive forward extra 5 in");
+
+    Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0, true);
+    System.out.println("FCC end()");
   }
 
   // Called when another command which requires one or more of the same

@@ -16,6 +16,7 @@ import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.robot.commands.ZeroFieldOrientedCommand;
 import org.frcteam2910.common.robot.subsystems.SubsystemManager;
 
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -55,6 +56,7 @@ public class Robot extends TimedRobot {
 
   public static IntakeSubsystem intakeSubsystem;
   public static ShooterSubsystem shooterSubsystem;
+  public static ClimberSubsystem climberSubsystem;
   public static ColorDetectorSubsystem colorDetectorSubsystem;
 
 
@@ -76,6 +78,9 @@ public class Robot extends TimedRobot {
 
   
   // IndexZoneCommand indexZoneCommand;
+
+  ClimberActuateCommand extendClimberCommand;
+  ClimberActuateCommand retractClimberCommand;
 
   IntakeCommand  intakeInCommand;
   IntakeCommand intakeOutCommand;
@@ -108,7 +113,6 @@ public void robotInit() {
   // Robot.vision.ledOn();
     time = new double[circularBufferSize]; 
     angle =  new double[circularBufferSize];
-
     autoHappened = false;
     // SmartDashboard.putNumber("motor1Speed", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED);
     // SmartDashboard.putNumber("motor2Speed", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED * .75);
@@ -141,6 +145,7 @@ public void robotInit() {
 private void initSubsystems() {
   vision = new Vision();
   drivetrainSubsystem = new DrivetrainSubsystem();
+  climberSubsystem = new ClimberSubsystem();
   // drivetrainSubsystem = new DrivetrainSubsystem();
   shooterSubsystem = new ShooterSubsystem();
   subsystemManager = new SubsystemManager(drivetrainSubsystem);
@@ -158,9 +163,12 @@ private void initCommands() {
 
     shooterWithVisionCommand = new ShooterCommand(true);
     shooterNoVisionCommand = new ShooterCommand(false);
-    shooterIdleCommand = new ShooterIdleCommand();
-    shooterIdleCommand_ZERO_RPM = new ShooterIdleCommand(0.0);
+    // shooterIdleCommand = new ShooterIdleCommand();
+    // shooterIdleCommand_ZERO_RPM = new ShooterIdleCommand(0.0);
     reverseShooterCommand = new ShooterIdleCommand(-1000);
+  
+    extendClimberCommand = new ClimberActuateCommand(false, 3);
+    retractClimberCommand = new ClimberActuateCommand(true, 3);
 
 
     intakeInCommand = new IntakeCommand(false);
@@ -199,8 +207,10 @@ private void initButtons() {
     oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
     // oi.indexZoneButton.whenPressed(indexZoneCommand);
     //oi.snapShotButton.whenPressed(snapshotCommand);
-    oi.shooterIdleButton.whenPressed(shooterIdleCommand);
-    oi.shooterZERORPMButton.whenPressed(shooterIdleCommand_ZERO_RPM);
+    // oi.shooterIdleButton.whenPressed(shooterIdleCommand);
+    // oi.shooterZERORPMButton.whenPressed(shooterIdleCommand_ZERO_RPM);
+    oi.extendClimberButton.whenPressed(extendClimberCommand);
+    oi.retractClimberButton.whenPressed(retractClimberCommand);
     oi.shooterReverseButton.whileHeld(reverseShooterCommand);
 
 }
@@ -225,7 +235,7 @@ private void initChooser() {
   m_chooser.addOption("Shoot Arc Collect Shoot", AutonomousSequences.shootCollectRightNoRotation());
   m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLineRotationTest());
   m_chooser.addOption("shoot one pass tarmac", AutonomousSequences.shootPassTarmacLine());
-  m_chooser.addOption("three ball auto", AutonomousSequences.threeBallAuto());
+  m_chooser.addOption("two ball auto RED", AutonomousSequences.twoBallAutoRED());
 
   //  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
   //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());

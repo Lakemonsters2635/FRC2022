@@ -469,7 +469,7 @@ public class AutonomousSequences {
             return output; 
         }
 
-        public static CommandGroup threeBallAuto() {
+        public static CommandGroup twoBallAutoRED() { // previously "threeBallAuto()"
             CommandGroup output = new CommandGroup();
 
             SimplePathBuilder collectBall = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO).lineTo(new Vector2(-20.0, 0.0));
@@ -486,6 +486,106 @@ public class AutonomousSequences {
             RobotRotateCommand rr3 = new RobotRotateCommand(90); 
             RobotRotateCommand rr4 = new RobotRotateCommand(-90);
             FetchCargoCommand fcc2 = new FetchCargoCommand("red");
+
+            SimplePathBuilder driveStart = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
+            .lineTo(new Vector2(50.0, 0.0));
+
+            Path driveStartPath = driveStart.build();
+            
+            Trajectory driveStartTrajectory = new Trajectory(driveStartPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+            AutonomousTrajectoryCommand driveStartCommand = new AutonomousTrajectoryCommand(driveStartTrajectory);
+
+            SimplePathBuilder driveOver = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
+            .lineTo(new Vector2(100.0, 0.0));
+
+            Path driveOverPath = driveOver.build();
+
+            IntakeActuateCommand extendIntakeCommand = new IntakeActuateCommand(true, 2);
+            IntakeActuateCommand retractIntakeCommand = new IntakeActuateCommand(false, 2);
+            IntakeActuateCommand extendIntakeCommand2 = new IntakeActuateCommand(true, 2);
+            IntakeActuateCommand retractIntakeCommand2 = new IntakeActuateCommand(false, 2);
+            IntakeActuateCommand extendIntakeCommand3 = new IntakeActuateCommand(true, 2);
+            IntakeActuateCommand retractIntakeCommand3 = new IntakeActuateCommand(false, 2);
+
+            ShooterCommand shooterCommand = new ShooterCommand(true);
+            ShooterCommand shooterCommand2 = new ShooterCommand(true);
+            ShooterCommand shooterCommand3 = new ShooterCommand(true);
+
+            ShooterCommand revUpCommand = new ShooterCommand(true);
+            ShooterIdleCommand revUpCommand2 = new ShooterIdleCommand(3000.0);
+            ShooterIdleCommand revUpCommand3 = new ShooterIdleCommand(3000.0);
+
+            IntakeCommand runIntake = new IntakeCommand(false);
+            IntakeCommand runIntake2 = new IntakeCommand(false);
+            IntakeCommand runIntake3 = new IntakeCommand(false);
+            IntakeCommand runIntake4 = new IntakeCommand(false);
+
+
+            Trajectory driveOverTrajectory = new Trajectory(driveOverPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+            AutonomousTrajectoryCommand driveOverCommand = new AutonomousTrajectoryCommand(driveOverTrajectory);
+            VisionRotationDriveCommand visionRotateCommand = new VisionRotationDriveCommand(2);
+            VisionRotationDriveCommand visionRotateCommand2 = new VisionRotationDriveCommand(2);
+            DoNothingCommand doNothing = new DoNothingCommand(2);
+            // output.addSequential(extendIntakeCommand);
+            
+            // output.addParallel(retractIntakeCommand);
+            output.addSequential(driveStartCommand);
+            
+            Robot.vision.ledOn();
+            output.addSequential(visionRotateCommand);
+            output.addSequential(revUpCommand, 2);
+            
+            output.addParallel(runIntake);
+            output.addParallel(retractIntakeCommand);
+            Robot.vision.ledOn();
+
+            output.addSequential(shooterCommand, 3);
+
+            output.addParallel(extendIntakeCommand);
+            output.addSequential(rr);
+
+            // output.addSequential(driveOverCommand);
+            output.addParallel(runIntake2);
+            output.addSequential(fcc1);
+
+            output.addParallel(runIntake3);
+            output.addSequential(collectBallCommand, 2); 
+            output.addSequential(doNothing, 1);// ends the second leg of grabbing red cargo
+            output.addSequential(rr2);
+
+            Robot.vision.ledOn();
+            output.addSequential(visionRotateCommand2);
+            output.addSequential(revUpCommand2, 2);
+            
+            output.addParallel(runIntake4);
+            output.addParallel(retractIntakeCommand2);
+            Robot.vision.ledOn();
+
+            output.addSequential(shooterCommand2, 3);
+
+            // output.addSequential(fcc2, 5);
+
+
+            return output; 
+        }
+
+        public static CommandGroup twoBallAutoBLUE() { // copy of twoBallAutoRED(), which was previously "threeBallAuto()"
+            CommandGroup output = new CommandGroup();
+
+            SimplePathBuilder collectBall = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO).lineTo(new Vector2(-20.0, 0.0));
+            collectBall.lineTo(new Vector2(-20.0, 0.0));
+
+            Path collectBallPath = collectBall.build();
+            
+            Trajectory collectBallTrajectory = new Trajectory(collectBallPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+            AutonomousTrajectoryCommand collectBallCommand = new AutonomousTrajectoryCommand(collectBallTrajectory);
+            
+            FetchCargoCommand fcc1 = new FetchCargoCommand("blue", 5);
+            RobotRotateCommand rr = new RobotRotateCommand(60); 
+            RobotRotateCommand rr2 = new RobotRotateCommand(-90);
+            RobotRotateCommand rr3 = new RobotRotateCommand(90); 
+            RobotRotateCommand rr4 = new RobotRotateCommand(-90);
+            FetchCargoCommand fcc2 = new FetchCargoCommand("blue");
 
             SimplePathBuilder driveStart = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
             .lineTo(new Vector2(50.0, 0.0));

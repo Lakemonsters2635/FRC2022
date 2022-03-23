@@ -66,6 +66,11 @@ public class OI {
   Button intakeMidStateButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_MID_STATE_BUTTON);
 
   // Button indexZoneButton = new JoystickButton(rightStick, RobotMap.R_INDEX_ZONE_BUTTON);
-  Button shooterIdleButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_IDLE_BUTTON); 
-  Button shooterZERORPMButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_ZERO_RPM_BUTTON);
+  // Button shooterIdleButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_IDLE_BUTTON); 
+  // Button shooterZERORPMButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_ZERO_RPM_BUTTON);
+  // climber extend is left 6
+  // climber retract is left 7
+  Button extendClimberButton = new JoystickButton(rightStick, RobotMap.R_EXTEND_CLIMBER_BUTTON);
+  Button retractClimberButton = new JoystickButton(rightStick, RobotMap.R_RETRACT_CLIMBER_BUTTON);
+
 }

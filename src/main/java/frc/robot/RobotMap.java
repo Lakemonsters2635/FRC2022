@@ -77,10 +77,12 @@ public class RobotMap {
 
   public static final int R_INTAKE_IN_BUTTON = 10;
   public static final int R_INTAKE_OUT_BUTTON = 9;
-  public static final int R_INDEX_ZONE_BUTTON = 6;
+  // public static final int R_INDEX_ZONE_BUTTON = 6;
 
-  public static final int R_SHOOTER_IDLE_BUTTON = 7;
-  public static final int R_SHOOTER_ZERO_RPM_BUTTON = 8;
+  // public static final int R_SHOOTER_IDLE_BUTTON = 7;
+  // public static final int R_SHOOTER_ZERO_RPM_BUTTON = 8;
+  public static final int R_EXTEND_CLIMBER_BUTTON = 6;
+  public static final int R_RETRACT_CLIMBER_BUTTON = 7;
 
 
   
@@ -89,6 +91,8 @@ public class RobotMap {
 
   public static final int FRONT_PISTON_BLOCKED = 6;
   public static final int FRONT_PISTON_UNBLOCKED = 7;
+  public static final int CLIMBER_FORWARD_CHANNEL = 0;
+  public static final int CLIMBER_REVERSE_CHANNEL = 1;
 
 
 
