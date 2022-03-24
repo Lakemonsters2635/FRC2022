@@ -46,7 +46,7 @@ public class RobotMap {
   public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR = 1; 
 
   public static final int INTAKE_SWEEPER_MOTOR = 14;
-  public static final int INTAKE_KICKER_MOTOR = 16;
+  // public static final int INTAKE_KICKER_MOTOR = 16; // from 2021 code, not used in 2022 
 
   // public static final int SHOOTER_TOP_CAN = 12;
   public static final int SHOOTER_BOTTOM_CAN = 13;
@@ -101,7 +101,7 @@ public class RobotMap {
   //public static final double CAMERA_ANGLE = -1*Math.atan(TARGET_HEIGHT/183);
   public static final double CAMERA_ANGLE = Math.toRadians(26);
 
-  public static final double TARGET_TRIGGER_DISTANCE = 50; // inches
+  public static final double TARGET_TRIGGER_DISTANCE = 40; 
 
   public static double OBJECT_DETECTION_LATENCY = 0.217; // seconds
   /**

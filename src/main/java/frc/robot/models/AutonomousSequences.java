@@ -234,7 +234,7 @@ public class AutonomousSequences {
             CommandGroup output = new CommandGroup();
 
             SimplePathBuilder driveStart = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
-            .lineTo(new Vector2(25.0, 0.0));
+            .lineTo(new Vector2(55.0, 0.0));
 
             Path driveStartPath = driveStart.build();
             
@@ -242,7 +242,7 @@ public class AutonomousSequences {
             AutonomousTrajectoryCommand driveStartCommand = new AutonomousTrajectoryCommand(driveStartTrajectory);
 
             SimplePathBuilder driveOver = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
-            .lineTo(new Vector2(100.0, 0.0));
+            .lineTo(new Vector2(55.0, 0.0));
 
             Path driveOverPath = driveOver.build();
 
@@ -250,7 +250,7 @@ public class AutonomousSequences {
             IntakeActuateCommand retractIntakeCommand = new IntakeActuateCommand(false, 2);
 
             ShooterCommand shooterCommand = new ShooterCommand(true);
-            ShooterIdleCommand revUpCommand = new ShooterIdleCommand(3000.0);
+            ShooterIdleCommand revUpCommand = new ShooterIdleCommand(2800.0);
             IntakeCommand runIntake = new IntakeCommand(false);
 
 
@@ -262,16 +262,18 @@ public class AutonomousSequences {
             
             // output.addParallel(retractIntakeCommand);
             Robot.vision.ledOn();
+
+            output.addSequential(driveOverCommand);
+
+            output.addParallel(revUpCommand, 2);
             output.addSequential(visionRotateCommand);
-            output.addSequential(revUpCommand, 2);
             
             output.addParallel(runIntake);
             output.addParallel(retractIntakeCommand);
             Robot.vision.ledOn();
 
-            output.addSequential(shooterCommand, 3);
+            output.addSequential(shooterCommand, 2);
 
-            // output.addSequential(driveOverCommand);
             return output;
         }
 
@@ -469,7 +471,7 @@ public class AutonomousSequences {
             return output; 
         }
 
-        public static CommandGroup twoBallAutoRED() { // previously "threeBallAuto()"
+        public static CommandGroup twoBallAuto(String cargoColor, double estimatedRotationToCargo, double estimatedRotationToHubAfter2ndCargo) { // previously "threeBallAuto()"
             CommandGroup output = new CommandGroup();
 
             SimplePathBuilder collectBall = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO).lineTo(new Vector2(-20.0, 0.0));
@@ -480,15 +482,17 @@ public class AutonomousSequences {
             Trajectory collectBallTrajectory = new Trajectory(collectBallPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
             AutonomousTrajectoryCommand collectBallCommand = new AutonomousTrajectoryCommand(collectBallTrajectory);
             
-            FetchCargoCommand fcc1 = new FetchCargoCommand("red", 5);
-            RobotRotateCommand rr = new RobotRotateCommand(60); 
-            RobotRotateCommand rr2 = new RobotRotateCommand(-90);
-            RobotRotateCommand rr3 = new RobotRotateCommand(90); 
-            RobotRotateCommand rr4 = new RobotRotateCommand(-90);
-            FetchCargoCommand fcc2 = new FetchCargoCommand("red");
+            FetchCargoCommand fcc1 = new FetchCargoCommand(cargoColor, 5);
+
+            // rr and rr2 to be parameters
+            RobotRotateCommand rr = new RobotRotateCommand(estimatedRotationToCargo); //60 
+            RobotRotateCommand rr2 = new RobotRotateCommand(estimatedRotationToHubAfter2ndCargo); // -80
+            // RobotRotateCommand rr3 = new RobotRotateCommand(90); 
+            // RobotRotateCommand rr4 = new RobotRotateCommand(-90);
+            // FetchCargoCommand fcc2 = new FetchCargoCommand(cargoColor);
 
             SimplePathBuilder driveStart = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
-            .lineTo(new Vector2(50.0, 0.0));
+            .lineTo(new Vector2(60.0, 0.0));
 
             Path driveStartPath = driveStart.build();
             
@@ -502,18 +506,20 @@ public class AutonomousSequences {
 
             IntakeActuateCommand extendIntakeCommand = new IntakeActuateCommand(true, 2);
             IntakeActuateCommand retractIntakeCommand = new IntakeActuateCommand(false, 2);
-            IntakeActuateCommand extendIntakeCommand2 = new IntakeActuateCommand(true, 2);
+            // IntakeActuateCommand extendIntakeCommand2 = new IntakeActuateCommand(true, 2);
             IntakeActuateCommand retractIntakeCommand2 = new IntakeActuateCommand(false, 2);
-            IntakeActuateCommand extendIntakeCommand3 = new IntakeActuateCommand(true, 2);
-            IntakeActuateCommand retractIntakeCommand3 = new IntakeActuateCommand(false, 2);
+            // IntakeActuateCommand extendIntakeCommand3 = new IntakeActuateCommand(true, 2);
+            // IntakeActuateCommand retractIntakeCommand3 = new IntakeActuateCommand(false, 2);
 
             ShooterCommand shooterCommand = new ShooterCommand(true);
             ShooterCommand shooterCommand2 = new ShooterCommand(true);
-            ShooterCommand shooterCommand3 = new ShooterCommand(true);
+            // ShooterCommand shooterCommand3 = new ShooterCommand(true);
 
-            ShooterCommand revUpCommand = new ShooterCommand(true);
-            ShooterIdleCommand revUpCommand2 = new ShooterIdleCommand(3000.0);
-            ShooterIdleCommand revUpCommand3 = new ShooterIdleCommand(3000.0);
+            ShooterIdleCommand revUpCommand = new ShooterIdleCommand(2500.0);
+            ShooterIdleCommand revUpCommand2 = new ShooterIdleCommand(2700.0);
+            ShooterIdleCommand revUpCommand3 = new ShooterIdleCommand(0.0);
+            ShooterIdleCommand revUpCommand4 = new ShooterIdleCommand(2800.0);
+
 
             IntakeCommand runIntake = new IntakeCommand(false);
             IntakeCommand runIntake2 = new IntakeCommand(false);
@@ -522,46 +528,62 @@ public class AutonomousSequences {
 
 
             Trajectory driveOverTrajectory = new Trajectory(driveOverPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
-            AutonomousTrajectoryCommand driveOverCommand = new AutonomousTrajectoryCommand(driveOverTrajectory);
+            // AutonomousTrajectoryCommand driveOverCommand = new AutonomousTrajectoryCommand(driveOverTrajectory);
             VisionRotationDriveCommand visionRotateCommand = new VisionRotationDriveCommand(2);
             VisionRotationDriveCommand visionRotateCommand2 = new VisionRotationDriveCommand(2);
             DoNothingCommand doNothing = new DoNothingCommand(2);
             // output.addSequential(extendIntakeCommand);
             
+            // taxis out of cargo + revs up shooter
             // output.addParallel(retractIntakeCommand);
+            output.addParallel(revUpCommand, 2);
             output.addSequential(driveStartCommand);
             
             Robot.vision.ledOn();
-            output.addSequential(visionRotateCommand);
-            output.addSequential(revUpCommand, 2);
+            output.addParallel(revUpCommand2);
+            output.addSequential(visionRotateCommand, 1.5);
             
+            // retracts intake, shoots
             output.addParallel(runIntake);
             output.addParallel(retractIntakeCommand);
             Robot.vision.ledOn();
 
-            output.addSequential(shooterCommand, 3);
+            output.addSequential(shooterCommand, 1);
 
+            // extends intake, drives to red cargo
+            // uncomment everything below this line 
             output.addParallel(extendIntakeCommand);
+
+            // rotation to get cargo in frame
             output.addSequential(rr);
 
+            // collects intake
             // output.addSequential(driveOverCommand);
             output.addParallel(runIntake2);
-            output.addSequential(fcc1);
+            output.addParallel(revUpCommand3);
+
+            output.addSequential(fcc1, 3);
 
             output.addParallel(runIntake3);
             output.addSequential(collectBallCommand, 2); 
-            output.addSequential(doNothing, 1);// ends the second leg of grabbing red cargo
-            output.addSequential(rr2);
 
+            output.addSequential(doNothing, .1);// ends the second leg of grabbing red cargo
+
+            // Rotation to get in ballpark of hub
+            output.addSequential(rr2, 2);
+
+
+            // shoots cargo
             Robot.vision.ledOn();
-            output.addSequential(visionRotateCommand2);
-            output.addSequential(revUpCommand2, 2);
+            output.addParallel(revUpCommand4);
+            output.addSequential(visionRotateCommand2, 1.5);
+
             
             output.addParallel(runIntake4);
             output.addParallel(retractIntakeCommand2);
             Robot.vision.ledOn();
 
-            output.addSequential(shooterCommand2, 3);
+            output.addSequential(shooterCommand2, 1);
 
             // output.addSequential(fcc2, 5);
 
@@ -569,7 +591,7 @@ public class AutonomousSequences {
             return output; 
         }
 
-        public static CommandGroup twoBallAutoBLUE() { // copy of twoBallAutoRED(), which was previously "threeBallAuto()"
+        public static CommandGroup twoBallAutoShort(String cargoColor, double estimatedRotationToCargo, double estimatedRotationToHubAfter2ndCargo) { // previously "threeBallAuto()"
             CommandGroup output = new CommandGroup();
 
             SimplePathBuilder collectBall = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO).lineTo(new Vector2(-20.0, 0.0));
@@ -580,15 +602,17 @@ public class AutonomousSequences {
             Trajectory collectBallTrajectory = new Trajectory(collectBallPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
             AutonomousTrajectoryCommand collectBallCommand = new AutonomousTrajectoryCommand(collectBallTrajectory);
             
-            FetchCargoCommand fcc1 = new FetchCargoCommand("blue", 5);
-            RobotRotateCommand rr = new RobotRotateCommand(60); 
-            RobotRotateCommand rr2 = new RobotRotateCommand(-90);
-            RobotRotateCommand rr3 = new RobotRotateCommand(90); 
-            RobotRotateCommand rr4 = new RobotRotateCommand(-90);
-            FetchCargoCommand fcc2 = new FetchCargoCommand("blue");
+            FetchCargoCommand fcc1 = new FetchCargoCommand(cargoColor, 5);
+
+            // rr and rr2 to be parameters
+            RobotRotateCommand rr = new RobotRotateCommand(estimatedRotationToCargo); //60 
+            RobotRotateCommand rr2 = new RobotRotateCommand(estimatedRotationToHubAfter2ndCargo); // -80
+            // RobotRotateCommand rr3 = new RobotRotateCommand(90); 
+            // RobotRotateCommand rr4 = new RobotRotateCommand(-90);
+            // FetchCargoCommand fcc2 = new FetchCargoCommand(cargoColor);
 
             SimplePathBuilder driveStart = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
-            .lineTo(new Vector2(50.0, 0.0));
+            .lineTo(new Vector2(60.0, 0.0));
 
             Path driveStartPath = driveStart.build();
             
@@ -602,18 +626,20 @@ public class AutonomousSequences {
 
             IntakeActuateCommand extendIntakeCommand = new IntakeActuateCommand(true, 2);
             IntakeActuateCommand retractIntakeCommand = new IntakeActuateCommand(false, 2);
-            IntakeActuateCommand extendIntakeCommand2 = new IntakeActuateCommand(true, 2);
+            // IntakeActuateCommand extendIntakeCommand2 = new IntakeActuateCommand(true, 2);
             IntakeActuateCommand retractIntakeCommand2 = new IntakeActuateCommand(false, 2);
-            IntakeActuateCommand extendIntakeCommand3 = new IntakeActuateCommand(true, 2);
-            IntakeActuateCommand retractIntakeCommand3 = new IntakeActuateCommand(false, 2);
+            // IntakeActuateCommand extendIntakeCommand3 = new IntakeActuateCommand(true, 2);
+            // IntakeActuateCommand retractIntakeCommand3 = new IntakeActuateCommand(false, 2);
 
             ShooterCommand shooterCommand = new ShooterCommand(true);
             ShooterCommand shooterCommand2 = new ShooterCommand(true);
-            ShooterCommand shooterCommand3 = new ShooterCommand(true);
+            // ShooterCommand shooterCommand3 = new ShooterCommand(true);
 
-            ShooterCommand revUpCommand = new ShooterCommand(true);
-            ShooterIdleCommand revUpCommand2 = new ShooterIdleCommand(3000.0);
-            ShooterIdleCommand revUpCommand3 = new ShooterIdleCommand(3000.0);
+            ShooterIdleCommand revUpCommand = new ShooterIdleCommand(1000.0);
+            ShooterIdleCommand revUpCommand2 = new ShooterIdleCommand(1000.0);
+            ShooterIdleCommand revUpCommand3 = new ShooterIdleCommand(0.0);
+            ShooterIdleCommand revUpCommand4 = new ShooterIdleCommand(1000.0);
+
 
             IntakeCommand runIntake = new IntakeCommand(false);
             IntakeCommand runIntake2 = new IntakeCommand(false);
@@ -622,52 +648,100 @@ public class AutonomousSequences {
 
 
             Trajectory driveOverTrajectory = new Trajectory(driveOverPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
-            AutonomousTrajectoryCommand driveOverCommand = new AutonomousTrajectoryCommand(driveOverTrajectory);
+            // AutonomousTrajectoryCommand driveOverCommand = new AutonomousTrajectoryCommand(driveOverTrajectory);
             VisionRotationDriveCommand visionRotateCommand = new VisionRotationDriveCommand(2);
             VisionRotationDriveCommand visionRotateCommand2 = new VisionRotationDriveCommand(2);
             DoNothingCommand doNothing = new DoNothingCommand(2);
             // output.addSequential(extendIntakeCommand);
             
+            // taxis out of cargo + revs up shooter
             // output.addParallel(retractIntakeCommand);
-            output.addSequential(driveStartCommand);
+            // output.addParallel(revUpCommand, 2);
+            // output.addSequential(driveStartCommand);
             
             Robot.vision.ledOn();
-            output.addSequential(visionRotateCommand);
-            output.addSequential(revUpCommand, 2);
+            output.addParallel(revUpCommand2);
+            output.addSequential(visionRotateCommand, 1.5);
             
+            // retracts intake, shoots
             output.addParallel(runIntake);
             output.addParallel(retractIntakeCommand);
             Robot.vision.ledOn();
 
-            output.addSequential(shooterCommand, 3);
+            output.addSequential(shooterCommand, 1);
 
+            // extends intake, drives to red cargo
+            // uncomment everything below this line 
             output.addParallel(extendIntakeCommand);
+
+            // rotation to get cargo in frame
             output.addSequential(rr);
 
+            // collects intake
             // output.addSequential(driveOverCommand);
             output.addParallel(runIntake2);
-            output.addSequential(fcc1);
+            output.addParallel(revUpCommand3);
+
+            output.addSequential(fcc1, 3);
 
             output.addParallel(runIntake3);
             output.addSequential(collectBallCommand, 2); 
-            output.addSequential(doNothing, 1);// ends the second leg of grabbing red cargo
-            output.addSequential(rr2);
 
+            output.addSequential(doNothing, .1);// ends the second leg of grabbing red cargo
+
+            // Rotation to get in ballpark of hub
+            output.addSequential(rr2, 2);
+
+
+            // shoots cargo
             Robot.vision.ledOn();
-            output.addSequential(visionRotateCommand2);
-            output.addSequential(revUpCommand2, 2);
+            output.addParallel(revUpCommand4);
+            output.addSequential(visionRotateCommand2, 1.5);
+
             
             output.addParallel(runIntake4);
             output.addParallel(retractIntakeCommand2);
             Robot.vision.ledOn();
 
-            output.addSequential(shooterCommand2, 3);
+            output.addSequential(shooterCommand2, 1);
 
             // output.addSequential(fcc2, 5);
 
 
             return output; 
         }
+
+        public static CommandGroup limelightTest() {
+            CommandGroup output = new CommandGroup(); 
+
+            // taxi out of tarmac
+            SimplePathBuilder driveStart = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
+            .lineTo(new Vector2(50.0, 0.0));
+
+            Path driveStartPath = driveStart.build();
+            
+            Trajectory driveStartTrajectory = new Trajectory(driveStartPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+            AutonomousTrajectoryCommand driveStartCommand = new AutonomousTrajectoryCommand(driveStartTrajectory);
+
+            // shooter + intake retract
+            ShooterCommand revUpCommand = new ShooterCommand(true);
+            ShooterCommand shooterCommand = new ShooterCommand(true); 
+            VisionRotationDriveCommand rotate = new VisionRotationDriveCommand(2);
+            IntakeActuateCommand retract = new IntakeActuateCommand(false, 2);
+
+
+            Robot.vision.ledOn();
+            output.addSequential(rotate);
+
+            output.addSequential(revUpCommand, 2);
+            output.addParallel(retract);
+
+            output.addSequential(shooterCommand, 2); 
+
+            return output; 
+        }
+
+        
 
         public static String getMethodName() {
 		    String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();

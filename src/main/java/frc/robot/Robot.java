@@ -218,7 +218,7 @@ private void initButtons() {
 private void initChooser() {
   m_chooser = new SendableChooser<>();
 
-  // vision auto tests
+  // vision auto TESTS
   m_chooser.addOption("VISION - FetchCargoCommand test RED cargo", AutonomousSequences.testFetchCargoCommand2RED());
   m_chooser.addOption("VISION - FetchCargoCommand test BLUE cargo", AutonomousSequences.testFetchCargoCommand2BLUE());
   m_chooser.addOption("fcc new command", AutonomousSequences.testVisionDriveToPickUpCargo());
@@ -235,7 +235,18 @@ private void initChooser() {
   m_chooser.addOption("Shoot Arc Collect Shoot", AutonomousSequences.shootCollectRightNoRotation());
   m_chooser.addOption("Rotate and drive straight", AutonomousSequences.straightLineRotationTest());
   m_chooser.addOption("shoot one pass tarmac", AutonomousSequences.shootPassTarmacLine());
-  m_chooser.addOption("two ball auto RED", AutonomousSequences.twoBallAutoRED());
+
+  // vision auto sequences
+  m_chooser.addOption("two ball auto RED", AutonomousSequences.twoBallAuto("red", 65, -80));
+  m_chooser.addOption("two ball auto BLUE", AutonomousSequences.twoBallAuto("blue", 65, -80));
+
+  m_chooser.addOption("two ball auto RED 2", AutonomousSequences.twoBallAuto("red", -65, 80));
+  m_chooser.addOption("two ball auto BLUE 2", AutonomousSequences.twoBallAuto("blue", -65, 80));
+  m_chooser.addOption("short two ball auto red", AutonomousSequences.twoBallAutoShort("red", 100, -120));
+
+
+
+  m_chooser.addOption("limelight test", AutonomousSequences.limelightTest());
 
   //  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());f
   //  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());

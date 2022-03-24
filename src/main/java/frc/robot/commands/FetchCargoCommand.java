@@ -66,7 +66,7 @@ public class FetchCargoCommand extends Command {
 
   protected void initPID(){
     angleController = new PIDController(0.25, 0.0, 0.0);
-    strafeController = new PIDController(0.009, 0.0, 0.0); // TODO update constants
+    strafeController = new PIDController(0.011, 0.0, 0.0); // TODO update constants
     forwardController = new PIDController(0.05, 0.01, 0.0); // TODO update constants
    
   }
@@ -170,7 +170,7 @@ protected boolean isFinished() {
   }//TODO could lose sight for small amount of time causing command to finish early
   
   //boolean done = Math.abs(closestObject.z-RobotMap.TARGET_TRIGGER_DISTANCE) <= tolerance;
-  isClose = Math.abs(closestObject.z-RobotMap.TARGET_TRIGGER_DISTANCE) <= tolerance;
+  isClose = Math.abs(closestObject.z - RobotMap.TARGET_TRIGGER_DISTANCE) <= tolerance;
   // if (done) {
   //   System.out.println("done FCC");
   // }

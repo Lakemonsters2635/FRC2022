@@ -49,8 +49,8 @@ public class IntakeSubsystem extends Subsystem {
 
     m_ph = new PneumaticHub(PH_CAN_ID);
     intakeSweeperMotor = new CANSparkMax(RobotMap.INTAKE_SWEEPER_MOTOR, MotorType.kBrushless);
-    intakeKickerMotor = new CANSparkMax(RobotMap.INTAKE_KICKER_MOTOR, MotorType.kBrushless);
-    intakeKickerMotor.setIdleMode(IdleMode.kBrake);
+    // intakeKickerMotor = new CANSparkMax(RobotMap.INTAKE_KICKER_MOTOR, MotorType.kBrushless); // from 2021 code, not used in 2022
+    // intakeKickerMotor.setIdleMode(IdleMode.kBrake);
     intakeSweeperMotor.setIdleMode(IdleMode.kBrake);
 
     frontSolenoid = m_ph.makeDoubleSolenoid(RobotMap.FRONT_PISTON_BLOCKED, RobotMap.FRONT_PISTON_UNBLOCKED);
@@ -115,9 +115,9 @@ public class IntakeSubsystem extends Subsystem {
   //   solenoid2.set(true);  
   // }
 
-  public double getKickerCurrent() {
-    return Math.abs(intakeKickerMotor.getOutputCurrent());
-  }
+  // public double getKickerCurrent() {
+  //   return Math.abs(intakeKickerMotor.getOutputCurrent());
+  // }
   
   public void setIntakeMotor(double input) { 
 
@@ -125,9 +125,9 @@ public class IntakeSubsystem extends Subsystem {
     intakeSweeperMotor.set(input);
   }
 
-  public void setKickerMotor(double input){
-    intakeKickerMotor.set(-input);
-  }
+  // public void setKickerMotor(double input){
+  //   intakeKickerMotor.set(-input);
+  // }
  
   public boolean intakeIsExtended() {
     // Value extenderValue = extender.get();
