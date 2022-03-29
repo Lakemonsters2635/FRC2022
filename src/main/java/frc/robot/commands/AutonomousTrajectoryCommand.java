@@ -17,8 +17,6 @@ import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.util.HolonomicDriveSignal;
 import org.frcteam2910.common.util.Side;
 
-
-
 /**
  *
  */
@@ -65,10 +63,7 @@ public class AutonomousTrajectoryCommand extends Command {
 
         Robot.drivetrainSubsystem.getFollower().follow(autonomousTrajectory);
 
-        // System.out.println(autonomousTrajectory.getDuration());
-        
-
-    	
+        // System.out.println(autonomousTrajectory.getDuration());   	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -120,10 +115,8 @@ public class AutonomousTrajectoryCommand extends Command {
         end();
     }
     
-    @Override protected boolean isFinished() {       
-
-
-        
+    @Override 
+    protected boolean isFinished() {              
         boolean isFinished = false;
 
         if(isTimedOut()){

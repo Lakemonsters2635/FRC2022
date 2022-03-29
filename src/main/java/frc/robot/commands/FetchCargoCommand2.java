@@ -4,22 +4,25 @@
 
 package frc.robot.commands;
 
+import org.frcteam2910.common.control.Path;
+import org.frcteam2910.common.control.SimplePathBuilder;
+import org.frcteam2910.common.control.Trajectory;
 import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.models.AutonomousSequences;
 import frc.robot.models.VisionObject;
 import frc.robot.subsystems.Vision;
 
+/** Grabs either the closest object of specified color or the closest object in a given range. 
+ * <p> Dead-reckons to cargo.
+ * <p> Can apply auto velocity/accelearation constraints via AutonomousTrajectoryCommand()
+*/
+
 public class FetchCargoCommand2 extends Command {
-  /** Creates a new FetchCargoCommand2. 
-   *  Grabs either the closest object of specified color or the closest object in a given range
-   *  Dead-reckons to cargo
-   *  
-   *  Not tested on robot yet as of 3/17
-  */
   // ***ALL DISTANCE UNITS SHOULD BE IN INCHES***
 
   private String cargoColor; 
@@ -90,8 +93,16 @@ public class FetchCargoCommand2 extends Command {
     SmartDashboard.putString("FetchCargoCommand2 target position Vector2", this.targetPosition.toString());
     SmartDashboard.putNumber("FetchCargoCommand2 rootation angle", this.targetRotation);
     
-    Robot.drivetrainSubsystem.holonomicDrive(this.targetPosition, 0.0, false); // camera returns robot-centric coordinates
-    // Robot.drivetrainSubsystem.holonomicDrive(new Vector2(0.0, 40.0), 0.0, false); // camera returns robot-centric coordinates
+    /*
+      BELOW: 
+      Use holonomicDrive() for no auto constraints
+      Use autoTrajectoryCommand to use auto constraints
+    */
+
+    // Robot.drivetrainSubsystem.holonomicDrive(this.targetPosition, 0.0, false); // camera returns robot-centric coordinates
+
+    AutonomousTrajectoryCommand autoTrajectoryCommand = applyAutoTrajectoryConstraints();
+    autoTrajectoryCommand.start(); 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -120,6 +131,18 @@ public class FetchCargoCommand2 extends Command {
       super.isTimedOut(); 
     }
     return false; 
+  }
+
+  private AutonomousTrajectoryCommand applyAutoTrajectoryConstraints() {
+    // create simplePathBuilder
+    // create path by building simplePathBuilder
+    // create trajectory
+    // pass trajectory into autotrajectorycommand
+    SimplePathBuilder pathBuilder = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO); 
+    pathBuilder.lineTo(this.targetPosition); // no rotation
+    Path path = pathBuilder.build(); 
+    Trajectory driveOverTrajectory = new Trajectory(path, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, AutonomousSequences.sampleDistance, AutonomousSequences.startingVelocity, AutonomousSequences.endingVelocity);
+    return new AutonomousTrajectoryCommand(driveOverTrajectory); 
   }
 
   private void checkUpdateCargoColor(String color) {

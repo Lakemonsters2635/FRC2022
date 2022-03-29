@@ -20,12 +20,12 @@ import frc.robot.models.VisionObject;
 // import com.kauailabs.navx.frc.AHRS;  
 // import edu.wpi.first.wpilibj.SPI;
 
-/* 
-  Copy of FetchPowerCellCommand with modified contructor to take cargo color
+/** 
+  Copy of FetchPowerCellCommand with modified contructor to take cargo color. 
+  <p> Drives to closest cargo. CLOSED-LOOP.
 */
 
 public class FetchCargoCommand extends Command {
-  PIDController angleController;
   PIDController strafeController;
   PIDController forwardController; 
   double gyroAngle;
@@ -36,6 +36,7 @@ public class FetchCargoCommand extends Command {
   double v; // velocity? 3/14
 
   String cargoColor; // blue or red, gets passed into constructor
+  VisionObject closestObject;
 
   public double totalRotation = 0;
 
@@ -65,7 +66,6 @@ public class FetchCargoCommand extends Command {
   }
 
   protected void initPID(){
-    angleController = new PIDController(0.25, 0.0, 0.0);
     strafeController = new PIDController(0.011, 0.0, 0.0); // TODO update constants
     forwardController = new PIDController(0.05, 0.01, 0.0); // TODO update constants
    
@@ -81,8 +81,7 @@ public class FetchCargoCommand extends Command {
     // SmartDashboard.putNumber("initial angle", gyroAngle);
     // SmartDashboard.putNumber("SetPoint angle", setPointAngle);
     
-    Vector2 position = new Vector2(0, 0);
-    Robot.drivetrainSubsystem.resetKinematics(position, 0);
+    Robot.drivetrainSubsystem.resetKinematics(Vector2.ZERO, 0);
     System.out.println("Initialized FCC");
 
     isClose = false;
@@ -90,38 +89,22 @@ public class FetchCargoCommand extends Command {
 
   @Override
   protected void execute() {
-    
     Robot.objectTrackerSubsystem.data();
+    closestObject = Robot.objectTrackerSubsystem.getClosestObject(cargoColor);
+
     double forward = 0;
     double strafe = 0;
-    double rotation = 0;
 
-    VisionObject closestObject = Robot.objectTrackerSubsystem.getClosestObject(cargoColor);
-     
     if (closestObject == null) {
       SmartDashboard.putNumber("driveRotation", 99);
-      Robot.drivetrainSubsystem.holonomicDrive(new Vector2(0,0), 0, false);
+      Robot.drivetrainSubsystem.holonomicDrive(new Vector2(0,0), 0.0, false);
       return; // no object found
     }
     
     // System.out.println("Closest z: " + closestObject.z);
     closestObject.motionCompensate(Robot.drivetrainSubsystem, true);
   
-    double angle =  Math.atan2(closestObject.x, closestObject.z);
-    
-    angleController.setSetpoint(angle);
-    rotation = angleController.calculate(0) * 0;
-    
-    if (rotation > 1){
-      rotation = 1;
-    } else if (rotation < -1){
-      rotation = -1;
-    }
-
-    totalRotation += rotation;
-    SmartDashboard.putNumber("driveRotation", rotation);
-    
-    // strafe
+    // STRAFE
     strafeController.setSetpoint(closestObject.x);
     strafe = strafeController.calculate(0);
 
@@ -133,7 +116,7 @@ public class FetchCargoCommand extends Command {
 
     SmartDashboard.putNumber("driveStrafe", strafe);
 
-    // forward
+    // FORWARD
     //forwardController.setSetpoint(closestObject.z-RobotMap.TARGET_TRIGGER_DISTANCE); // TODO figure out how to implement code that begins intake process 
     forward = forwardController.calculate(0);
 
@@ -148,46 +131,46 @@ public class FetchCargoCommand extends Command {
     final boolean robotOriented = false;
 
     //final Vector2 translation = new Vector2(-forward, -strafe*0);
-  
-    v = -0.5;  
-    
+      
     //  if (closestObject.z < 60) {
     //    isClose = true;
     // //   v = -0.05;
      
     //  }
-    final Vector2 translation = new Vector2(v, strafe);
+
+    v = -0.5; 
+    final Vector2 translation = new Vector2(v, strafe); // only goes forward 0.5 each time execute() runs?
+
     // System.out.println("translation: " + translation);
-    Robot.drivetrainSubsystem.holonomicDrive(translation, rotation, robotOriented);
+    Robot.drivetrainSubsystem.holonomicDrive(translation, 0.0, robotOriented);
   }
 
-@Override
-protected boolean isFinished() {
-  double tolerance = 4; // TODO units...? i think it's inches
-  VisionObject closestObject = Robot.objectTrackerSubsystem.getClosestObject(cargoColor);
-  if(closestObject == null) {
-    return false;
-  }//TODO could lose sight for small amount of time causing command to finish early
-  
-  //boolean done = Math.abs(closestObject.z-RobotMap.TARGET_TRIGGER_DISTANCE) <= tolerance;
-  isClose = Math.abs(closestObject.z - RobotMap.TARGET_TRIGGER_DISTANCE) <= tolerance;
-  // if (done) {
-  //   System.out.println("done FCC");
-  // }
-  if (isClose) {
-    System.out.println("FCC done");
+  @Override
+  protected boolean isFinished() {
+    double tolerance = 4; // TODO units...? i think it's inches
+    if (closestObject == null) {
+      return false;
+    } // TODO could lose sight for small amount of time causing command to finish early
+    
+    // boolean done = Math.abs(closestObject.z-RobotMap.TARGET_TRIGGER_DISTANCE) <= tolerance;
+    isClose = Math.abs(closestObject.z - RobotMap.TARGET_TRIGGER_DISTANCE) <= tolerance;
+    // if (done) {
+    //   System.out.println("done FCC");
+    // }
+    if (isClose) {
+      System.out.println("FCC done");
+    }
+    return isClose;
+    // return false;
+    // boolean isFinished = super.isTimedOut();
+    // if (isFinished) {
+    //   SmartDashboard.putNumber("totalRotation", totalRotation);
+    // }
+    //  return isFinished;
+    // TODO: add the actual completion test code
   }
-  return isClose;
-  // return false;
-  // boolean isFinished = super.isTimedOut();
-  // if (isFinished) {
-  //   SmartDashboard.putNumber("totalRotation", totalRotation);
-  // }
-  //  return isFinished;
-     // TODO: add the actual completion test code
-}
 
-@Override
+  @Override
   protected void end() {
     Robot.vision.ledOff();
     // Robot.drivetrainSubsystem.holonomicDrive(new Vector2(-100.0, 0.0), 0, true);
@@ -197,11 +180,9 @@ protected boolean isFinished() {
     System.out.println("FCC end()");
   }
 
-  // Called when another command which requires one or more of the same
-  // subsystems is scheduled to run
+  // Called when another command which requires one or more of the same subsystems is scheduled to run
   @Override
   protected void interrupted() {
     end();
   }
-
 }

@@ -711,6 +711,52 @@ public class AutonomousSequences {
             return output; 
         }
 
+        public static CommandGroup shootDriveLikeHellToTerminal2(String cargoColor) {
+            CommandGroup output = new CommandGroup();
+
+            // clear tarmac command
+            SimplePathBuilder driveStart = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
+            .lineTo(new Vector2(77.0, 0.0));
+
+            Path driveStartPath = driveStart.build();
+            
+            Trajectory driveStartTrajectory = new Trajectory(driveStartPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+            AutonomousTrajectoryCommand driveStartCommand = new AutonomousTrajectoryCommand(driveStartTrajectory);
+            
+            // vision rotate command
+            VisionRotationDriveCommand visionRotateCommand = new VisionRotationDriveCommand(2);
+
+            // rev up shooter + shoot + retract intake
+            IntakeActuateCommand retractIntake = new IntakeActuateCommand(false, 1);
+            ShooterIdleCommand revUpCommand = new ShooterIdleCommand(1000.0);
+            ShooterCommand shoot = new ShooterCommand(true); 
+
+            // rotate to get ball in frame
+            RobotRotateCommand rotateGetInFrame = new RobotRotateCommand(127);
+
+            // dead reckon (drive like hell) to cargo
+            FetchCargoCommand2 fcc = new FetchCargoCommand2(cargoColor, 5);
+
+            /********************* */
+            // (drive back out of tarmac $ vision rotate) || rev up shooter
+            output.addSequential(driveStartCommand, 2);
+            output.addParallel(revUpCommand);
+            output.addSequential(visionRotateCommand);
+
+            // shoot
+            output.addParallel(retractIntake);
+            output.addSequential(shoot, 1);
+
+            // rotate to get ball in sight
+            output.addSequential(rotateGetInFrame, 2);            
+            
+            // dead reckon to cargo, FCC2 
+            output.addSequential(fcc);
+            output.addSequential(new DoNothingCommand(0.1));
+
+            return output; 
+        }
+
         public static CommandGroup limelightTest() {
             CommandGroup output = new CommandGroup(); 
 
@@ -740,6 +786,8 @@ public class AutonomousSequences {
 
             return output; 
         }
+
+        
 
         
 
