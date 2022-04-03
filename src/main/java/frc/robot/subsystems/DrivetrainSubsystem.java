@@ -69,9 +69,9 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 
   public static final TrajectoryConstraint[] AUTONOMOUS_CONSTRAINTS = {
     //Original
-      //   new MaxVelocityConstraint(12.0 * 12.0),
-      //   new MaxAccelerationConstraint(15.0 * 12.0),                                 
-      //   new CentripetalAccelerationConstraint(25.0 * 12.0)
+        new MaxVelocityConstraint(6.0 * 12.0),
+        new MaxAccelerationConstraint(15.0 * 12.0),                                 
+        new CentripetalAccelerationConstraint(25.0 * 12.0)
 
       // slow OG constraints 5.0 - 3.0 - 3.0
 
@@ -80,10 +80,16 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
       // new MaxVelocityConstraint(12.0 * 7.5), 
       // new MaxAccelerationConstraint(15.0 * 3.0),                                    
       // new CentripetalAccelerationConstraint(25.0 * 3.0) 
-      new MaxVelocityConstraint(5 * 6 * 3), // before 60
-      new MaxAccelerationConstraint(6.0 * 3.0 * 3), // before 36                                   
-      new CentripetalAccelerationConstraint(15) // before 10
+      // new MaxVelocityConstraint(8.0 * 6.0 * 3.0), // before 60
+      // new MaxAccelerationConstraint(15.0 * 12.0), // before 36                                   
+      // new CentripetalAccelerationConstraint(15) // before 10
   };  
+
+  public static final TrajectoryConstraint[] FETCH_CARGO_CONSTRAINTS = {
+    new MaxVelocityConstraint(5.0 * 5.0), // before 60
+      new MaxAccelerationConstraint(12.0 * 6.0), // before 36                                   
+      new CentripetalAccelerationConstraint(15) // before 10
+  };
 //   public static final ITrajectoryConstraint[] INTAKE_CONSTRAINTS = {
 //     //Original
 //       //   new MaxVelocityConstraint(12.0 * 12.0),
@@ -130,8 +136,8 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 // private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-20 - 1.5); //-336+180    -151.6
 
 // 2022 BOT DRIVETRAIN SWERVE MODULE OFFSETS
-private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-75-2+180); //
-private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(25+3+180); //
+private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-75 - 2 + 180 + 50 + 5 + 2); //
+private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(25 + 3 + 180); //
 private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-15+180); //
 private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(80-3); //
 
@@ -144,10 +150,10 @@ private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians
  //fix this 2/3/2022
  public static final TrajectoryConstraint[] TRAJECTORY_CONSTRAINTS = {
     new FeedforwardConstraint(11.0, FOLLOWER_FEEDFORWARD_CONSTANTS.getVelocityConstant(), FOLLOWER_FEEDFORWARD_CONSTANTS.getAccelerationConstant(), false),
-    new MaxAccelerationConstraint(12.5 * 10.0),
+    new MaxAccelerationConstraint(12.5 * 15.0),
     new CentripetalAccelerationConstraint(15.0 * 15.0)
 };
-  private NavX navX = new NavX(SerialPort.Port.kUSB);
+  private NavX navX = new NavX(SPI.Port.kMXP);
   
   private static final PidConstants SNAP_ROTATION_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);
 

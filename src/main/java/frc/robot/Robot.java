@@ -227,7 +227,11 @@ private void initChooser() {
   m_chooser.addOption("fcc rotate fcc", AutonomousSequences.twoFccOld()); 
   */
 
+  m_chooser.addOption("fcc OLD command RED", AutonomousSequences.testfccOLD());
+
+
   // traditional auto
+  m_chooser.addOption("Two Ball Auto Arc", AutonomousSequences.twoBallAutoWithArc());
   m_chooser.addOption("Shoot Collect Right", AutonomousSequences.shootCollectRight());
   m_chooser.addOption("Shoot Collect Left", AutonomousSequences.shootCollectLeft());
   m_chooser.addOption("Shoot and Collect and Shoot two Cargo", AutonomousSequences.shootCollectShootTwoCargo());
@@ -245,8 +249,8 @@ private void initChooser() {
   m_chooser.addOption("two ball auto RED 2", AutonomousSequences.twoBallAuto("red", -65, 80));
   m_chooser.addOption("two ball auto BLUE 2", AutonomousSequences.twoBallAuto("blue", -65, 80));
   // FRANK TEST m_chooser.addOption("short two ball auto red", AutonomousSequences.twoBallAutoShort("red", 100, -120));
-  m_chooser.addOption("one ball auto drive like hell to terminal 2 RED", AutonomousSequences.shootDriveLikeHellToTerminal2("red"));
-  m_chooser.addOption("one ball auto drive like hell to terminal 2 BLUE", AutonomousSequences.shootDriveLikeHellToTerminal2("blue"));
+  // m_chooser.addOption("one ball auto drive like hell to terminal 2 RED", AutonomousSequences.shootDriveLikeHellToTerminal2("red"));
+  // m_chooser.addOption("one ball auto drive like hell to terminal 2 BLUE", AutonomousSequences.shootDriveLikeHellToTerminal2("blue"));
 
   // end of vision auto sequences
 
@@ -302,7 +306,7 @@ private void initChooser() {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
-    if(vision.getLed() != 1)
+    // if(vision.getLed() != 1)
     vision.ledOff();
   }
 

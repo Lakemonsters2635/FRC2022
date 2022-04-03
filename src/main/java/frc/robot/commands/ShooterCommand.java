@@ -58,15 +58,15 @@ public class ShooterCommand extends Command {
     double leftJoystickZ = Robot.oi.leftStick.getZ();
     // leftJoystickZ = leftJoystickZ + 1;
     if (useCamera == true) {
-      if (ty > -3.6) {
+      if (ty > -4.0) {
         m_motorSpeed = (a * ty) + b;
         
-      } else if (ty <= -3.6 && ty >= -17.0) {
+      } else if (ty <= -4.0 && ty >= -20.0) {
         // m_motorSpeed = (2081.0 - (278.0*ty) - (50.9 * Math.pow(ty, 2)) - (3.91 * (Math.pow(ty, 3)))  - (0.0889 *(Math.pow(ty, 4))));
         // m_motorSpeed = ty;
         
-        m_motorSpeed = 2840 + (102.0 * ty) + (9.64 * ty * ty); //previously 2855
-        m_motorSpeed = m_motorSpeed * (1.0 + (leftJoystickZ) * 0.1);
+        m_motorSpeed = 2325 + (-55.7 * ty) + (1.24 * ty * ty); //previously 2855
+        // m_motorSpeed = m_motorSpeed * (1.0 + (leftJoystickZ) * 0.1);
         System.out.println(leftJoystickZ);
         System.out.println(m_motorSpeed); 
         //-.21875

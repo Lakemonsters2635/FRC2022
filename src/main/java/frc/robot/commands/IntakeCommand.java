@@ -18,6 +18,13 @@ public class IntakeCommand extends Command {
     m_reverse = reverse;
   }
 
+  public IntakeCommand(boolean reverse, boolean isInAuto) {
+    m_reverse = reverse;
+    inAuto = isInAuto;
+  }
+
+
+
   public IntakeCommand(boolean reverse, double timeout) {
     super(timeout);
     m_reverse = reverse;
@@ -43,11 +50,16 @@ public class IntakeCommand extends Command {
     boolean m_intakeExtended = Robot.intakeSubsystem.intakeIsExtended();
     // System.out.println("IntakeSubsystem.isExtended: " + m_intakeExtended);
     // if (m_intakeExtended) {
+    if (inAuto) {
+      Robot.intakeSubsystem.setIntakeMotor(.3);
+    } else {
       if (m_reverse) {
         Robot.intakeSubsystem.setIntakeMotor(-0.3);
       } else {
         Robot.intakeSubsystem.setIntakeMotor(0.45);
       }
+    }
+      
     // } else {
     //   Robot.intakeSubsystem.setIntakeMotor(0.0);
     // }

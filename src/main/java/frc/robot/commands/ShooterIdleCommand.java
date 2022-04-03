@@ -23,8 +23,9 @@ public class ShooterIdleCommand extends Command {
 
     is_idle_done = false;
     m_idleShooterSpeed = idleShooterSpeed;
-    requires(Robot.intakeSubsystem);
-    setInterruptible(true);  }
+    requires(Robot.shooterSubsystem);
+    setInterruptible(true);  
+  }
 
   // Called when the command is initially scheduled.
   @Override

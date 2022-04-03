@@ -33,7 +33,7 @@ public class FetchCargoCommand2 extends Command {
   // {-1, -1} means get the closest object - special case placeholder
 
   private boolean noCargoFound = false; 
-  private double threshold = 50.0; // how close the bot needs to get to cargo before terminating command
+  private double threshold = 30.0; // how close the bot needs to get to cargo before terminating command
 
   public FetchCargoCommand2(String cargoColor, double timeOut) {
     super(timeOut);
@@ -141,7 +141,7 @@ public class FetchCargoCommand2 extends Command {
     SimplePathBuilder pathBuilder = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO); 
     pathBuilder.lineTo(this.targetPosition); // no rotation
     Path path = pathBuilder.build(); 
-    Trajectory driveOverTrajectory = new Trajectory(path, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, AutonomousSequences.sampleDistance, AutonomousSequences.startingVelocity, AutonomousSequences.endingVelocity);
+    Trajectory driveOverTrajectory = new Trajectory(path, Robot.drivetrainSubsystem.FETCH_CARGO_CONSTRAINTS, AutonomousSequences.sampleDistance, AutonomousSequences.startingVelocity, AutonomousSequences.endingVelocity);
     return new AutonomousTrajectoryCommand(driveOverTrajectory); 
   }
 

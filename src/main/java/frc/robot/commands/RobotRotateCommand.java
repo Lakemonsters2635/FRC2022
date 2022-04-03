@@ -69,7 +69,7 @@ public class RobotRotateCommand extends Command {
     //%%System.out.println("angleDelta:" + angleDelta);
     // if ((angleDelta < 2 || (angleDelta > 358 && angleDelta < 362)) && Math.abs(omega) < 0.003)
 
-    if (angleDelta < 3)
+    if (angleDelta < 5)
     {
       // System.out.println("Rotation finished");
       return true;
