@@ -43,12 +43,17 @@ public class ClimberSubsystem extends Subsystem {
 
   }
 
-  public void extendClimber() {
+
+  public void robotDisable() {
+
+  }
+
+  public void retractClimber() {
     climberSolenoid.set(Value.kReverse); // "forward" is 15 open
     
   }
 
-  public void retractClimber() {
+  public void extendClimber() {
     climberSolenoid.set(Value.kForward);
   }
 

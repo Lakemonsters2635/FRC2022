@@ -51,7 +51,7 @@ public class IntakeCommand extends Command {
     // System.out.println("IntakeSubsystem.isExtended: " + m_intakeExtended);
     // if (m_intakeExtended) {
     if (inAuto) {
-      Robot.intakeSubsystem.setIntakeMotor(.3);
+      Robot.intakeSubsystem.setIntakeMotor(.45);
     } else {
       if (m_reverse) {
         Robot.intakeSubsystem.setIntakeMotor(-0.3);

@@ -101,7 +101,7 @@ public class RobotMap {
   //public static final double CAMERA_ANGLE = -1*Math.atan(TARGET_HEIGHT/183);
   public static final double CAMERA_ANGLE = Math.toRadians(26);
 
-  public static final double TARGET_TRIGGER_DISTANCE = 40; 
+  public static final double TARGET_TRIGGER_DISTANCE = 36; // previously 40 before 4/4 9PM change (Megan) 
 
   public static double OBJECT_DETECTION_LATENCY = 0.217; // seconds
   /**

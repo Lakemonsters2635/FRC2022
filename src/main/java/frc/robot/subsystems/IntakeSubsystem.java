@@ -91,6 +91,11 @@ public class IntakeSubsystem extends Subsystem {
 
   }
 
+
+  public void robotDisable() {
+    
+  }
+  
   public void neutralIntake() {
 
   }

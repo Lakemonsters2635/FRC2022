@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
   public static ColorDetectorSubsystem colorDetectorSubsystem;
 
 
+
   SendableChooser<CommandGroup> m_chooser;
   
 
@@ -126,9 +127,9 @@ public void robotInit() {
     // SmartDashboard.putNumber("strafeD", 0.0);
     // SmartDashboard.putNumber("Forward Speed", 0.5);
     // colorDetectorSubsystem.ColorMatcher();
-    
+    // climberSubsystem.retractClimber();
 
-    
+
     oi = new OI();
     //m_chooser.setDefaultOption("Default Auto", new AutonomousCommand());
     initSubsystems();
@@ -227,11 +228,13 @@ private void initChooser() {
   m_chooser.addOption("fcc rotate fcc", AutonomousSequences.twoFccOld()); 
   */
 
-  m_chooser.addOption("fcc OLD command RED", AutonomousSequences.testfccOLD());
+  // m_chooser.addOption("fcc OLD command test RED", AutonomousSequences.testfccOLD());
 
 
   // traditional auto
-  m_chooser.addOption("Two Ball Auto Arc", AutonomousSequences.twoBallAutoWithArc());
+  m_chooser.addOption("Two Ball Auto Arc", AutonomousSequences.twoBallAutoWithArc(false));
+  m_chooser.addOption("Two Ball Auto Arc VISION", AutonomousSequences.twoBallAutoWithArc(true));
+
   m_chooser.addOption("Shoot Collect Right", AutonomousSequences.shootCollectRight());
   m_chooser.addOption("Shoot Collect Left", AutonomousSequences.shootCollectLeft());
   m_chooser.addOption("Shoot and Collect and Shoot two Cargo", AutonomousSequences.shootCollectShootTwoCargo());
@@ -248,6 +251,9 @@ private void initChooser() {
 
   m_chooser.addOption("two ball auto RED 2", AutonomousSequences.twoBallAuto("red", -65, 80));
   m_chooser.addOption("two ball auto BLUE 2", AutonomousSequences.twoBallAuto("blue", -65, 80));
+
+  m_chooser.addOption("two ball auto RED 3", AutonomousSequences.twoBallAuto("red", -55, 80));
+  m_chooser.addOption("two ball auto BLUE 3", AutonomousSequences.twoBallAuto("blue", -55, 80));
   // FRANK TEST m_chooser.addOption("short two ball auto red", AutonomousSequences.twoBallAutoShort("red", 100, -120));
   // m_chooser.addOption("one ball auto drive like hell to terminal 2 RED", AutonomousSequences.shootDriveLikeHellToTerminal2("red"));
   // m_chooser.addOption("one ball auto drive like hell to terminal 2 BLUE", AutonomousSequences.shootDriveLikeHellToTerminal2("blue"));
@@ -292,12 +298,17 @@ private void initChooser() {
   public void disabledInit() {
     Robot.drivetrainSubsystem.getFollower().cancel();
 
+    //TODO: add logic in "robotDisable"
+    //to set Solenoids to desired state.
+    Robot.intakeSubsystem.midState();
+    Robot.climberSubsystem.retractClimber();
+    System.out.println("disabled init");
     Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0.0, true);
 
     subsystemManager.disableKinematicLoop();
     vision.ledOff();
     autoHappened = false;
-
+    
     
   }
 
@@ -328,6 +339,7 @@ private void initChooser() {
     zeroCommand.start();
     // autonomousCommand = AutonomousSequences.shootCollectRight();
     autonomousCommand = m_chooser.getSelected();
+    Robot.climberSubsystem.retractClimber();
 
     // String chosenPath = PathSelecter.choosePath();
     // SmartDashboard.putString("Path", chosenPath);
@@ -380,6 +392,8 @@ private void initChooser() {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    Robot.climberSubsystem.retractClimber();
+
     vision.ledOn();
     if (autonomousCommand != null) {
       autonomousCommand.cancel();

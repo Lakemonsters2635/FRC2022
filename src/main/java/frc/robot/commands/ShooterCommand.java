@@ -65,7 +65,7 @@ public class ShooterCommand extends Command {
         // m_motorSpeed = (2081.0 - (278.0*ty) - (50.9 * Math.pow(ty, 2)) - (3.91 * (Math.pow(ty, 3)))  - (0.0889 *(Math.pow(ty, 4))));
         // m_motorSpeed = ty;
         
-        m_motorSpeed = 2325 + (-55.7 * ty) + (1.24 * ty * ty); //previously 2855
+        m_motorSpeed = 2400 + (-55.7 * ty) + (1.24 * ty * ty); //previously 2325
         // m_motorSpeed = m_motorSpeed * (1.0 + (leftJoystickZ) * 0.1);
         System.out.println(leftJoystickZ);
         System.out.println(m_motorSpeed); 

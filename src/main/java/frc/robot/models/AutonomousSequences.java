@@ -481,7 +481,7 @@ public class AutonomousSequences {
             AutonomousTrajectoryCommand collectBallCommand = new AutonomousTrajectoryCommand(collectBallTrajectory);
             // --------------------------
 
-            FetchCargoCommand fcc1 = new FetchCargoCommand(cargoColor, 5);
+            FetchCargoCommand fcc1 = new FetchCargoCommand(cargoColor);
 
             // rr and rr2 to be parameters
             RobotRotateCommand rotate2ndCargoInFrame = new RobotRotateCommand(estimatedRotationToCargo); //60 
@@ -549,7 +549,7 @@ public class AutonomousSequences {
             output.addParallel(extendIntakeCommand);
 
             // rotation to get cargo in frame
-            output.addSequential(rotate2ndCargoInFrame);
+            output.addSequential(rotate2ndCargoInFrame, 2);
 
             // collects intake
             // output.addSequential(driveOverCommand);
@@ -559,12 +559,12 @@ public class AutonomousSequences {
             output.addSequential(fcc1, 3);
 
             output.addParallel(runIntake3);
-            output.addSequential(collectBallCommand, 2); 
+            output.addSequential(collectBallCommand, 1); 
 
             output.addSequential(doNothing, .1);// ends the second leg of grabbing red cargo
 
             // Rotation to get in ballpark of hub
-            output.addSequential(rotateToHubAfter2ndCargoIn, 2);
+            output.addSequential(rotateToHubAfter2ndCargoIn, 1.5);
 
 
             // shoots cargo
@@ -620,12 +620,12 @@ public class AutonomousSequences {
 
         
 
-        public static CommandGroup twoBallAutoWithArc() { // previously "threeBallAuto()"
+        public static CommandGroup twoBallAutoWithArc(boolean withVision) { // previously "threeBallAuto()"
             CommandGroup output = new CommandGroup();
 
             SimplePathBuilder collectBall = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO).lineTo(new Vector2(-20.0, 0.0));
             collectBall.lineTo(new Vector2(-20.0, 0.0));
-
+ 
             Path collectBallPath = collectBall.build();
             
             Trajectory collectBallTrajectory = new Trajectory(collectBallPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
@@ -710,7 +710,12 @@ public class AutonomousSequences {
             output.addParallel(revUpCommand3);
             output.addParallel(extendIntakeCommand);
             output.addParallel(runIntake2);
-            output.addSequential(driveOverPathCommand);
+
+            if (withVision) {
+                output.addSequential(fcc1);
+            } else {
+                output.addSequential(driveOverPathCommand);
+            }
 
             output.addParallel(revUpCommand4);
             output.addSequential(visionRotateCommand2, 2);
@@ -762,6 +767,91 @@ public class AutonomousSequences {
             return output; 
         }
         
+        public static CommandGroup twoBallAutoWithArcVISION() { // previously "threeBallAuto()"
+        // NOT IN USE - SEE IF CONDITION ON twoBallAutoWithArc()
+        CommandGroup output = new CommandGroup();
+
+        SimplePathBuilder collectBall = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO).lineTo(new Vector2(-20.0, 0.0));
+        collectBall.lineTo(new Vector2(-20.0, 0.0));
+
+        Path collectBallPath = collectBall.build();
+        
+        Trajectory collectBallTrajectory = new Trajectory(collectBallPath, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+        AutonomousTrajectoryCommand collectBallCommand = new AutonomousTrajectoryCommand(collectBallTrajectory);
+        
+        FetchCargoCommand fcc1 = new FetchCargoCommand("red", 5);
+
+        SimplePathBuilder pathBuilder = new SimplePathBuilder(new Vector2(0.0,0.0), Rotation2.ZERO);
+        pathBuilder.arcTo(new Vector2(113.444, -11.855), new Vector2(115.87/2, 0), Rotation2.ZERO);
+
+        Path path = pathBuilder.build();
+                 
+        Trajectory driveTrajectory = new Trajectory(path, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+        AutonomousTrajectoryCommand driveCommand1 = new AutonomousTrajectoryCommand(driveTrajectory);
+
+        SimplePathBuilder driveOver = new SimplePathBuilder(new Vector2(0.0, 0.0), Rotation2.ZERO)
+        .lineTo(new Vector2(-60.0, 0.0));
+
+        Path driveOverPath = driveOver.build();
+
+        Trajectory driveOverPathTrajectory = new Trajectory(driveOverPath, Robot.drivetrainSubsystem.FETCH_CARGO_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);
+        AutonomousTrajectoryCommand driveOverPathCommand = new AutonomousTrajectoryCommand(driveOverPathTrajectory);
+
+        IntakeActuateCommand extendIntakeCommand = new IntakeActuateCommand(true, 2);
+        IntakeActuateCommand retractIntakeCommand = new IntakeActuateCommand(false, 2);
+        IntakeActuateCommand retractIntakeCommand2 = new IntakeActuateCommand(false, 2);
+
+        ShooterIdleCommand shooterCommand = new ShooterIdleCommand(3700.0);
+        ShooterIdleCommand shooterCommand2 = new ShooterIdleCommand(2875.0);
+
+        ShooterIdleCommand revUpCommand = new ShooterIdleCommand(3500.0);
+        ShooterIdleCommand revUpCommand2 = new ShooterIdleCommand(3700.0);
+        ShooterIdleCommand revUpCommand3 = new ShooterIdleCommand(0.0);
+        ShooterIdleCommand revUpCommand4 = new ShooterIdleCommand(2875.0);
+
+
+        IntakeCommand runIntake = new IntakeCommand(false);
+        IntakeCommand runIntake2 = new IntakeCommand(false, true);
+        IntakeCommand runIntake3 = new IntakeCommand(false);
+        IntakeCommand runIntake4 = new IntakeCommand(false);
+
+
+        VisionRotationDriveCommand visionRotateCommand = new VisionRotationDriveCommand(2);
+        VisionRotationDriveCommand visionRotateCommand2 = new VisionRotationDriveCommand(2);
+        DoNothingCommand doNothing = new DoNothingCommand(2);
+        
+        // taxis out of cargo + revs up shooter
+        output.addSequential(driveCommand1);
+        
+        Robot.vision.ledOn();
+        output.addParallel(revUpCommand2);
+        output.addSequential(visionRotateCommand, 1.5);
+        
+        // retracts intake, shoots
+        output.addParallel(runIntake);
+        output.addParallel(retractIntakeCommand);
+        Robot.vision.ledOn();
+
+        output.addSequential(shooterCommand, 1.5);
+
+        output.addParallel(revUpCommand3);
+        output.addParallel(extendIntakeCommand);
+        output.addParallel(runIntake2);
+        // output.addSequential(driveOverPathCommand); // drives forward to second cargo
+        output.addSequential(fcc1);
+
+        output.addParallel(revUpCommand4);
+        output.addSequential(visionRotateCommand2, 2);
+
+        // output.addParallel(runIntake4);
+        output.addParallel(retractIntakeCommand2);
+        Robot.vision.ledOn();
+
+        output.addSequential(shooterCommand2, 1.5);
+        // output.addSequential(fcc1, 3);
+
+        return output; 
+    }
 
         public static String getMethodName() {
 		    String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
