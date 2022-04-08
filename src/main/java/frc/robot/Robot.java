@@ -228,7 +228,7 @@ private void initChooser() {
   m_chooser.addOption("fcc rotate fcc", AutonomousSequences.twoFccOld()); 
   */
 
-  // m_chooser.addOption("fcc OLD command test RED", AutonomousSequences.testfccOLD());
+  m_chooser.addOption("fcc OLD command test RED", AutonomousSequences.testfccOLD());
 
 
   // traditional auto

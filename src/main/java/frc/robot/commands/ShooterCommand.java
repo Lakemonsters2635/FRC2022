@@ -54,7 +54,8 @@ public class ShooterCommand extends Command {
     System.out.println("shooter command init");
     // get ty from limelight
     ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
-    System.out.println(ty);
+    System.out.println("ty = " + ty);
+
     double leftJoystickZ = Robot.oi.leftStick.getZ();
     // leftJoystickZ = leftJoystickZ + 1;
     if (useCamera == true) {
@@ -67,8 +68,8 @@ public class ShooterCommand extends Command {
         
         m_motorSpeed = 2400 + (-55.7 * ty) + (1.24 * ty * ty); //previously 2325
         // m_motorSpeed = m_motorSpeed * (1.0 + (leftJoystickZ) * 0.1);
-        System.out.println(leftJoystickZ);
-        System.out.println(m_motorSpeed); 
+        System.out.println("left joystick z = " + leftJoystickZ);
+        System.out.println("motor speed = " + m_motorSpeed); 
         //-.21875
 
       } else {
@@ -118,9 +119,9 @@ public class ShooterCommand extends Command {
     Robot.shooterSubsystem.configureMotors();
 
     
-    if (useCamera) {
-      Robot.vision.ledOff();
-    }
+    // if (useCamera) {
+    //   Robot.vision.ledOff();
+    // }
   }
 
   // Returns true when the command should end.
