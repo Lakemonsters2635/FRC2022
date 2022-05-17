@@ -53,7 +53,8 @@ public class RobotMap {
 
   public static final int UPPER_KICKER_MOTOR = 11;
   public static final int ELEVATOR_MOTOR_CHANNEL = 10;
-//----------------------------------------------------------------------
+
+  //----------------------------------------------------------------------
 
   public static final int L_SHOOTER_WITHVISION_BUTTON = 1;
   public static final int L_INTAKE_BUTTON = 2;
@@ -62,8 +63,9 @@ public class RobotMap {
   public static final int L_INTAKE_REVERSE_BUTTON = 3;
   // public static final int L_INTAKE_ACTUATE_UP_BUTTON = 6;
   // public static final int L_INTAKE_ACTUATE_MIDDLE_BUTTON = 9;
-  // public static final int L_INTAKE_ACTUATE_DOWN_BUTTON = 7;
+  // public static final int L_INTAKE_ACTUATE_DOWN_BUTTON = 7;]
   public static final int L_INTAKE_MID_STATE_BUTTON = 9;
+  public static final int L_DRIVE_LIKE_HELL_TO_CARGO_VISION = 5; 
 
 
   public static final int R_SHOOTER_NOVISION_BUTTON = 1;
@@ -86,8 +88,8 @@ public class RobotMap {
 
 
   
-  public static final int BACK_PISTON_BLOCKED = 14;
-  public static final int BACK_PISTON_UNBLOCKED = 15;
+  public static final int BACK_PISTON_BLOCKED = 4; // on rev pcm 14
+  public static final int BACK_PISTON_UNBLOCKED = 5; // on rev pcm 15
 
   public static final int FRONT_PISTON_BLOCKED = 6;
   public static final int FRONT_PISTON_UNBLOCKED = 7;

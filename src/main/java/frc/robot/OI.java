@@ -53,7 +53,8 @@ public class OI {
   Button shooterNoVisionButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_NOVISION_BUTTON);
   Button shooterReverseButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_REVERSE_BUTTON);
  
-  Button visionDriveButton = new JoystickButton(leftStick, RobotMap.L_VISION_BUTTON);
+  Button visionDriveButtonLimelight = new JoystickButton(leftStick, RobotMap.L_VISION_BUTTON);
+  Button driveToCargoMonsterVision = new JoystickButton(leftStick, RobotMap.L_DRIVE_LIKE_HELL_TO_CARGO_VISION);
   
   // Button intakeDetectButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_BUTTON);
   Button intakeInButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_BUTTON);
@@ -70,7 +71,8 @@ public class OI {
   // Button shooterZERORPMButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_ZERO_RPM_BUTTON);
   // climber extend is left 6
   // climber retract is left 7
-  Button extendClimberButton = new JoystickButton(rightStick, RobotMap.R_EXTEND_CLIMBER_BUTTON);
-  Button retractClimberButton = new JoystickButton(rightStick, RobotMap.R_RETRACT_CLIMBER_BUTTON);
+  
+  // Button extendClimberButton = new JoystickButton(rightStick, RobotMap.R_EXTEND_CLIMBER_BUTTON);
+  // Button retractClimberButton = new JoystickButton(rightStick, RobotMap.R_RETRACT_CLIMBER_BUTTON);
 
 }

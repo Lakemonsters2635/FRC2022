@@ -26,7 +26,7 @@ public class ShooterCommand extends Command {
   private boolean shootHigh = true;
   private double ty;
   private double a = -23.4;
-  private double b = 1750.0;
+  private double b = 1900.0;
   
   // 2081 - 278x - 50.9x^2 -3.91x^3 - 0.0889x^4
   /**

@@ -16,6 +16,7 @@ import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.robot.commands.ZeroFieldOrientedCommand;
 import org.frcteam2910.common.robot.subsystems.SubsystemManager;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -94,6 +95,7 @@ public class Robot extends TimedRobot {
 
   VisionRotationDriveCommand visionRotationDriveCommand;
   RobotRotateCommand robotRotateCommand;
+  FetchCargoCommand fetchCargoCommand;
 
 
   boolean autoHappened;
@@ -146,7 +148,7 @@ public void robotInit() {
 private void initSubsystems() {
   vision = new Vision();
   drivetrainSubsystem = new DrivetrainSubsystem();
-  climberSubsystem = new ClimberSubsystem();
+  // climberSubsystem = new ClimberSubsystem();
   // drivetrainSubsystem = new DrivetrainSubsystem();
   shooterSubsystem = new ShooterSubsystem();
   subsystemManager = new SubsystemManager(drivetrainSubsystem);
@@ -162,14 +164,16 @@ private void initCommands() {
     visionRotationDriveCommand = new VisionRotationDriveCommand();
     robotRotateCommand = new RobotRotateCommand(90);
 
+    fetchCargoCommand = new FetchCargoCommand(DriverStation.getAlliance().name(), true);
+
     shooterWithVisionCommand = new ShooterCommand(true);
     shooterNoVisionCommand = new ShooterCommand(false);
     // shooterIdleCommand = new ShooterIdleCommand();
     // shooterIdleCommand_ZERO_RPM = new ShooterIdleCommand(0.0);
     reverseShooterCommand = new ShooterIdleCommand(-1000);
   
-    extendClimberCommand = new ClimberActuateCommand(false, 3);
-    retractClimberCommand = new ClimberActuateCommand(true, 3);
+    // extendClimberCommand = new ClimberActuateCommand(false, 3);
+    // retractClimberCommand = new ClimberActuateCommand(true, 3);
 
 
     intakeInCommand = new IntakeCommand(false);
@@ -187,7 +191,8 @@ private void initCommands() {
 private void initButtons() {
     //oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
     // oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
-    oi.visionDriveButton.whileHeld(visionRotationDriveCommand);
+    oi.visionDriveButtonLimelight.whileHeld(visionRotationDriveCommand);
+    oi.driveToCargoMonsterVision.whileHeld(fetchCargoCommand);
     
     //oi.intakeButton.whileHeld(intakeCommandGroup);
     oi.intakeActuateUpButton.whenPressed(retractIntakeCommand);
@@ -200,8 +205,6 @@ private void initButtons() {
     oi.intakeOutButton.whileHeld(intakeOutCommand);
     //  oi.intakeDetectButton.whileHeld(intakeDetectToElevatorIndexCommand);
 
-     
-
     //oi.helloArcButton.whileHeld(robotRotateCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
@@ -210,8 +213,10 @@ private void initButtons() {
     //oi.snapShotButton.whenPressed(snapshotCommand);
     // oi.shooterIdleButton.whenPressed(shooterIdleCommand);
     // oi.shooterZERORPMButton.whenPressed(shooterIdleCommand_ZERO_RPM);
-    oi.extendClimberButton.whenPressed(extendClimberCommand);
-    oi.retractClimberButton.whenPressed(retractClimberCommand);
+
+    // oi.extendClimberButton.whenPressed(extendClimberCommand);
+    // oi.retractClimberButton.whenPressed(retractClimberCommand);
+    
     oi.shooterReverseButton.whileHeld(reverseShooterCommand);
 
 }

@@ -10,6 +10,7 @@ package frc.robot.commands;
 import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,16 +34,24 @@ public class FetchCargoCommand extends Command {
   double desiredAngle;
   double setPointAngle = 6;
   boolean isClose;
-  double v; // velocity? 3/14
 
   String cargoColor; // blue or red, gets passed into constructor
 
   public double totalRotation = 0;
 
+  private boolean inTeleop = false; 
+
   public FetchCargoCommand(String cargoColor) {
     requires(Robot.drivetrainSubsystem);
     //initPID();
     checkUpdateCargoColor(cargoColor);     
+  }
+
+  public FetchCargoCommand(String cargoColor, boolean inTeleop) {
+    requires(Robot.drivetrainSubsystem);
+    //initPID();
+    checkUpdateCargoColor(cargoColor); 
+    this.inTeleop = inTeleop;    
   }
 
   public FetchCargoCommand(String cargoColor, double timeout) {
@@ -86,6 +95,7 @@ public class FetchCargoCommand extends Command {
     System.out.println("Initialized FCC");
 
     isClose = false;
+    SmartDashboard.putString("FCC Status", "FCC Init");
   }
 
   @Override
@@ -98,12 +108,14 @@ public class FetchCargoCommand extends Command {
 
     VisionObject closestObject = Robot.objectTrackerSubsystem.getClosestObject(cargoColor);
      
-    if (closestObject == null) {
+    if (closestObject == null || closestObject.z > 150) {
       SmartDashboard.putNumber("driveRotation", 99);
       Robot.drivetrainSubsystem.holonomicDrive(new Vector2(0,0), 0, false);
+      SmartDashboard.putString("FCC Status", "No cargo in frame OR cargo out of range");
       return; // no object found
     }
     
+  double v; // velocity? 3/14
     // System.out.println("Closest z: " + closestObject.z);
     closestObject.motionCompensate(Robot.drivetrainSubsystem, true);
   
@@ -150,6 +162,10 @@ public class FetchCargoCommand extends Command {
     //final Vector2 translation = new Vector2(-forward, -strafe*0);
   
     v = -0.4;  
+
+    if (inTeleop) {
+      v = -0.7;
+    }
     
     //  if (closestObject.z < 60) {
     //    isClose = true;

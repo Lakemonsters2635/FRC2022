@@ -651,8 +651,11 @@ public class AutonomousSequences {
             // FetchCargoCommand fcc2 = new FetchCargoCommand(cargoColor);
 
             SimplePathBuilder pathBuilder = new SimplePathBuilder(new Vector2(0.0,0.0), Rotation2.ZERO);
-            pathBuilder.arcTo(new Vector2(113.444, -11.855), new Vector2(115.87/2, 0), Rotation2.ZERO);
-
+            // pathBuilder.arcTo(new Vector2(113.444, -11.855), new Vector2(115.87/2, 0), Rotation2.ZERO);
+            pathBuilder.arcTo(new Vector2(115.262, -11.793), new Vector2(53.475, -43.362), Rotation2.ZERO); // arcing to left instead of right now
+            // pls work i'm begging you
+            // for next year try doing field centric auto paths, that is what jack in the bot does
+            // also check pid values when trying to drive and rotate
             Path path = pathBuilder.build();
                      
             Trajectory driveTrajectory = new Trajectory(path, Robot.drivetrainSubsystem.AUTONOMOUS_CONSTRAINTS, sampleDistance, startingVelocity, endingVelocity);

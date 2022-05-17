@@ -57,8 +57,15 @@ public class ObjectTrackerSubsystem extends Subsystem {
             return;
         }
         jsonString = entry.getString("ObjectTracker");
-        foundObjects = gson.fromJson(jsonString, VisionObject[].class);
-        applyRotationTranslationMatrix();
+        try {
+            foundObjects = gson.fromJson(jsonString, VisionObject[].class);
+        } catch (Exception e) {
+            foundObjects = null; 
+        }
+        
+        if (foundObjects != null) {
+            applyRotationTranslationMatrix();
+        }
         // for (VisionObject object : foundObjects){
         //     System.out.format("%s %.1f %.1f %.1f %.1f\n",object.objectLabel, object.x, object.y, object.z, object.confidence);
         // }       
