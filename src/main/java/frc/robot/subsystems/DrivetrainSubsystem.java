@@ -7,13 +7,24 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Optional;
+
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
-import org.frcteam2910.common.control.*;
+import org.frcteam2910.common.control.CentripetalAccelerationConstraint;
+import org.frcteam2910.common.control.FeedforwardConstraint;
+import org.frcteam2910.common.control.HolonomicMotionProfiledTrajectoryFollower;
+import org.frcteam2910.common.control.MaxAccelerationConstraint;
+import org.frcteam2910.common.control.MaxVelocityConstraint;
+import org.frcteam2910.common.control.PidConstants;
+import org.frcteam2910.common.control.PidController;
+import org.frcteam2910.common.control.TrajectoryConstraint;
+import org.frcteam2910.common.control.TrajectoryFollower;
 import org.frcteam2910.common.drivers.Gyroscope;
 import org.frcteam2910.common.drivers.SwerveModule;
 import org.frcteam2910.common.math.RigidTransform2;
@@ -25,25 +36,12 @@ import org.frcteam2910.common.util.DrivetrainFeedforwardConstants;
 import org.frcteam2910.common.util.HolonomicDriveSignal;
 import org.frcteam2910.common.util.HolonomicFeedforward;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
-
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.SPI;
 //import frc.lib.motion_profiling.Path2D;
 import frc.robot.Mk2SwerveModule;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.HolonomicDriveCommand;
-
-import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SerialPort;
 
 
 
@@ -136,10 +134,16 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 // private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-20 - 1.5); //-336+180    -151.6
 
 // 2022 BOT DRIVETRAIN SWERVE MODULE OFFSETS
-private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-75 - 2 + 180 + 50 + 5 + 2); //
-private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(25 + 3 + 180); //
-private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-15+180); //
-private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(80-3); //
+//private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-75 - 2 + 180 + 50 + 5 + 2); //
+//private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(25 + 3 + 180); //
+//private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-15+180); //
+//private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(80-3); //
+
+//2023 OUTREACH AND CORRECT OFFSETS
+private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(160 - 3) - 3.04;
+private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(298 - 3) - 2.87;
+private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(165 - 3) - 3.08;
+private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(257 - 3) - 6.18;
 
   private static final PidConstants FOLLOWER_TRANSLATION_CONSTANTS = new PidConstants(0.05, 0.01, 0.0);
   private static final PidConstants FOLLOWER_ROTATION_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);//0.3, 0.1, 0.0

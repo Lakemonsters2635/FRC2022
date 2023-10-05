@@ -8,21 +8,16 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ColorSensorV3;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.PneumaticsControlModule;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.commands.IntakeCommand;
 
 /**
  * Add your docs here.
@@ -31,7 +26,7 @@ public class IntakeSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private static final int PH_CAN_ID = 15;
-  PneumaticsControlModule m_ph; 	
+  PneumaticHub m_ph; 	
   CANSparkMax intakeSweeperMotor;
   CANSparkMax intakeKickerMotor;
   DoubleSolenoid frontSolenoid;
@@ -48,7 +43,7 @@ public class IntakeSubsystem extends Subsystem {
 
   public IntakeSubsystem() {
 
-    m_ph = new PneumaticsControlModule(PH_CAN_ID);
+    m_ph = new PneumaticHub(PH_CAN_ID);
     intakeSweeperMotor = new CANSparkMax(RobotMap.INTAKE_SWEEPER_MOTOR, MotorType.kBrushless);
     // intakeKickerMotor = new CANSparkMax(RobotMap.INTAKE_KICKER_MOTOR, MotorType.kBrushless); // from 2021 code, not used in 2022
     // intakeKickerMotor.setIdleMode(IdleMode.kBrake);

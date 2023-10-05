@@ -54,9 +54,9 @@ public class IntakeCommand extends Command {
       Robot.intakeSubsystem.setIntakeMotor(.45);
     } else {
       if (m_reverse) {
-        Robot.intakeSubsystem.setIntakeMotor(-0.3);
+        Robot.intakeSubsystem.setIntakeMotor(0.3);
       } else {
-        Robot.intakeSubsystem.setIntakeMotor(0.45);
+        Robot.intakeSubsystem.setIntakeMotor(-0.45);
       }
     }
       
