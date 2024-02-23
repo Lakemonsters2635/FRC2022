@@ -93,7 +93,10 @@ public class ShooterCommand extends Command {
     // double motor1Speed = m_motorSpeed + leftJoystickZ * 1000;
     
     // uncomment 3 lines above if you want to use the slider - Ritchie
-    Robot.shooterSubsystem.SpinShooter(m_motorSpeed);
+    // Robot.shooterSubsystem.SpinShooter(m_motorSpeed);
+    // Robot.shooterSubsystem.SpinShooter(500); // USE THIS LINE FOR INDOOR TESTING, USE LINE ABOVE FOR ASSEMBLY/IRL
+    Robot.shooterSubsystem.SpinShooter(6000);
+
     // if use camera and if ty greater than a certain distance, calculate rpm
     // spinshooter(rpm)
     // System.out.println("shooter command " + motor1Speed);

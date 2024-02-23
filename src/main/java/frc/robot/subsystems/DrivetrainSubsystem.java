@@ -137,7 +137,7 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 
 // 2022 BOT DRIVETRAIN SWERVE MODULE OFFSETS
 private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-75 - 2 + 180 + 50 + 5 + 2); //
-private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(25 + 3 + 180); //
+private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(3 - 55); //
 private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-15+180); //
 private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(80-3); //
 

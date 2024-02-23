@@ -88,8 +88,8 @@ public class RobotMap {
 
 
   
-  public static final int BACK_PISTON_BLOCKED = 4; // on rev pcm 14
-  public static final int BACK_PISTON_UNBLOCKED = 5; // on rev pcm 15
+  public static final int BACK_PISTON_BLOCKED = 14; // on rev pcm 14
+  public static final int BACK_PISTON_UNBLOCKED = 15; // on rev pcm 15
 
   public static final int FRONT_PISTON_BLOCKED = 6;
   public static final int FRONT_PISTON_UNBLOCKED = 7;

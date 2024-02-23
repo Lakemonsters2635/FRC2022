@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
 
   public static IntakeSubsystem intakeSubsystem;
   public static ShooterSubsystem shooterSubsystem;
-  public static ClimberSubsystem climberSubsystem;
+  //public static ClimberSubsystem climberSubsystem; //comment to make pnumatic work
   public static ColorDetectorSubsystem colorDetectorSubsystem;
 
 
@@ -81,8 +81,8 @@ public class Robot extends TimedRobot {
   
   // IndexZoneCommand indexZoneCommand;
 
-  ClimberActuateCommand extendClimberCommand;
-  ClimberActuateCommand retractClimberCommand;
+  // ClimberActuateCommand extendClimberCommand;
+  // ClimberActuateCommand retractClimberCommand;
 
   IntakeCommand  intakeInCommand;
   IntakeCommand intakeOutCommand;
@@ -306,7 +306,7 @@ private void initChooser() {
     //TODO: add logic in "robotDisable"
     //to set Solenoids to desired state.
     Robot.intakeSubsystem.midState();
-    Robot.climberSubsystem.retractClimber();
+    // Robot.climberSubsystem.retractClimber();
     System.out.println("disabled init");
     Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0.0, true);
 
@@ -344,7 +344,7 @@ private void initChooser() {
     zeroCommand.start();
     // autonomousCommand = AutonomousSequences.shootCollectRight();
     autonomousCommand = m_chooser.getSelected();
-    Robot.climberSubsystem.retractClimber();
+    // Robot.climberSubsystem.retractClimber();
 
     // String chosenPath = PathSelecter.choosePath();
     // SmartDashboard.putString("Path", chosenPath);
@@ -397,7 +397,7 @@ private void initChooser() {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    Robot.climberSubsystem.retractClimber();
+    // Robot.climberSubsystem.retractClimber();
 
     vision.ledOn();
     if (autonomousCommand != null) {

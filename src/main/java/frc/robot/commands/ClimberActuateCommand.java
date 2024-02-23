@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,7 +18,7 @@ public class ClimberActuateCommand extends Command {
   public ClimberActuateCommand(boolean retractClimber, double timeOut) {
     super(timeOut);
     m_retractClimber = retractClimber;
-    requires(Robot.climberSubsystem);
+    // requires(Robot.climberSubsystem);
   }
 
   // Called just before this Command runs the first time
@@ -25,9 +26,9 @@ public class ClimberActuateCommand extends Command {
   protected void initialize() {
 
     if (m_retractClimber) {
-      Robot.climberSubsystem.extendClimber();
+      // Robot.climberSubsystem.extendClimber();
     } else {
-      Robot.climberSubsystem.retractClimber();
+      // Robot.climberSubsystem.retractClimber();
     }
   }
 
@@ -57,3 +58,5 @@ public class ClimberActuateCommand extends Command {
     end();
   }
 }
+
+

@@ -31,7 +31,9 @@ public class IntakeSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   private static final int PH_CAN_ID = 15;
-  PneumaticsControlModule m_ph; 	
+  // PneumaticsControlModule m_ph; 	
+  PneumaticHub m_ph;
+
   CANSparkMax intakeSweeperMotor;
   CANSparkMax intakeKickerMotor;
   DoubleSolenoid frontSolenoid;
@@ -48,7 +50,9 @@ public class IntakeSubsystem extends Subsystem {
 
   public IntakeSubsystem() {
 
-    m_ph = new PneumaticsControlModule(PH_CAN_ID);
+    // m_ph = new PneumaticsControlModule(PH_CAN_ID);
+    m_ph = new PneumaticHub(PH_CAN_ID);
+
     intakeSweeperMotor = new CANSparkMax(RobotMap.INTAKE_SWEEPER_MOTOR, MotorType.kBrushless);
     // intakeKickerMotor = new CANSparkMax(RobotMap.INTAKE_KICKER_MOTOR, MotorType.kBrushless); // from 2021 code, not used in 2022
     // intakeKickerMotor.setIdleMode(IdleMode.kBrake);
