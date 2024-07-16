@@ -7,17 +7,11 @@
 
 package frc.robot;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.robot.commands.ZeroFieldOrientedCommand;
 import org.frcteam2910.common.robot.subsystems.SubsystemManager;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -25,11 +19,23 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.commands.*;
+import frc.robot.commands.FetchCargoCommand;
+import frc.robot.commands.HolonomicDriveCommand;
+import frc.robot.commands.IntakeActuateCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakeRetractCommand;
+import frc.robot.commands.IntakeRetractCommand2;
+import frc.robot.commands.RobotRotateCommand;
+import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.ShooterIdleCommand;
+import frc.robot.commands.VisionRotationDriveCommand;
 import frc.robot.models.AutonomousSequences;
-import frc.robot.subsystems.*;
-import frc.robot.subsystems.IntakeSubsystem.IntakePosition;
+import frc.robot.subsystems.ColorDetectorSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ObjectTrackerSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.Vision;
 
 
 //changes

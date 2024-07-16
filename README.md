@@ -36,11 +36,12 @@ this step may no longer be needed if 2910/robototes updates
 - following steps manually determine build order
 
 To fix:
-- Put [gradlew build   -Dorg.gradle.java.home="C:\Users\Public\wpilib\2022\jdk"] (or whatever VSCode terminal runs) into the command prompt. Do this inside the COMMON directory FIRST. 
+- Go to the VSCode Terminal window and run the following commands:
+-     cd common
+-     ./gradlew build
+-     cd ..
+-     ./gradlew build
 
-- Then put the same prompt into the MAIN (robot code w/ subsystems/commands) NEXT.
-
-- Should be able to build in VSCode fine after. 
 
 Additional notes:
 - there is probably a way to specify build order in gradle

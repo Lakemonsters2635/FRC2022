@@ -7,31 +7,26 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 /**
  * Add your docs here.
  */
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxRelativeEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.SparkMaxRelativeEncoder.Type;
-
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Notifier;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.frcteam2910.common.control.PidConstants;
 import org.frcteam2910.common.control.PidController;
 import org.frcteam2910.common.drivers.SwerveModule;
 import org.frcteam2910.common.math.Vector2;
 
-
-import java.util.concurrent.atomic.AtomicLong;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.RobotController;
 
 public class Mk2SwerveModule extends SwerveModule {
+    
     private static final PidConstants ANGLE_CONSTANTS = new PidConstants(0.5, 0.0, 0.000);//0.5, 0.0, 0.0001
     // private static final double DRIVE_TICKS_PER_INCH = (1.0 / (4.0625 * Math.PI / 60.0 * 15.0 / 20.0 * 24.0 / 38.0 * 18.0) / 0.827828) * (200/213.875);
     private static final double DRIVE_TICKS_PER_REVOLUTION_OF_WHEEL =  (1.0 * // ticks per revolution of motor

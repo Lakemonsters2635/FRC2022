@@ -1,18 +1,14 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
-
-import com.revrobotics.ColorSensorV3;
-
-
-import com.revrobotics.ColorMatchResult;
-
 import java.util.Dictionary;
 import java.util.Hashtable;
 
 import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.util.Color;
 
 public class ColorDetectorSubsystem {
   /**

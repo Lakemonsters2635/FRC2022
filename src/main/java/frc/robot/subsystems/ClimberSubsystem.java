@@ -7,21 +7,10 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.ColorSensorV3;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.commands.IntakeCommand;
 
 /**
  * Add your docs here.
