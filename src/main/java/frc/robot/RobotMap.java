@@ -49,7 +49,7 @@ public class RobotMap {
   // public static final int INTAKE_KICKER_MOTOR = 16; // from 2021 code, not used in 2022 
 
   // public static final int SHOOTER_TOP_CAN = 12;
-  public static final int SHOOTER_BOTTOM_CAN = 13;
+  public static final int SHOOTER_BOTTOM_CAN = 5;
 
   public static final int UPPER_KICKER_MOTOR = 11;
   public static final int ELEVATOR_MOTOR_CHANNEL = 10;
@@ -61,7 +61,7 @@ public class RobotMap {
   public static final int L_VISION_BUTTON = 4;
   public static final int L_REFERENCE_RESET_BUTTON = 8;
   public static final int L_INTAKE_REVERSE_BUTTON = 3;
-  // public static final int L_INTAKE_ACTUATE_UP_BUTTON = 6;
+  public static final int L_INTAKE_ACTUATE_UP_BUTTON = 6;
   // public static final int L_INTAKE_ACTUATE_MIDDLE_BUTTON = 9;
   // public static final int L_INTAKE_ACTUATE_DOWN_BUTTON = 7;]
   public static final int L_INTAKE_MID_STATE_BUTTON = 9;
@@ -143,8 +143,8 @@ public class RobotMap {
 	//  public final static Gains kGains_Velocit = new Gains(kP2, 0.0, 0.0, 0,  0,  1.00); // before 2/21 we were using kF = 0.047
   public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
 
-   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 2000; // can go up to 6000, 10000+ in phoenix tuner
-   public final static double SHOOTER_MOTOR_LOW_DEFAULT_SPEED = 3100;
+   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 6000; // can go up to 6000, 10000+ in phoenix tuner
+   public final static double SHOOTER_MOTOR_LOW_DEFAULT_SPEED = 6000;
    public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 2200; //1742 to 500 on 2/10/22
 
 

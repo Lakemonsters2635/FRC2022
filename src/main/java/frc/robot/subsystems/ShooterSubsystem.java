@@ -32,7 +32,7 @@ public class ShooterSubsystem extends Subsystem {
   }
 
 
-  public void configureMotors(){
+  public void configureMotors(){  
       motor1.setSensorPhase(true);
 
       motor1.configNominalOutputForward(0, RobotMap.kTimeoutMs);
@@ -80,7 +80,7 @@ public class ShooterSubsystem extends Subsystem {
 
     SmartDashboard.putNumber("shooter speed", motorSpeed);
     // SmartDashboard.putNumber("lower", lowerMotorSpeed);
-    motor1.set(ControlMode.Velocity, motorSpeed*2048/600);
+    motor1.set(ControlMode.Velocity, motorSpeed*2048/400);
 
   }
   
