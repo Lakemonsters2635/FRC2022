@@ -95,7 +95,7 @@ public class ShooterCommand extends Command {
     // uncomment 3 lines above if you want to use the slider - Ritchie
     // Robot.shooterSubsystem.SpinShooter(m_motorSpeed);
     // Robot.shooterSubsystem.SpinShooter(500); // USE THIS LINE FOR INDOOR TESTING, USE LINE ABOVE FOR ASSEMBLY/IRL
-    Robot.shooterSubsystem.SpinShooter(6000);
+    Robot.shooterSubsystem.SpinShooter(8000);
 
     // if use camera and if ty greater than a certain distance, calculate rpm
     // spinshooter(rpm)
