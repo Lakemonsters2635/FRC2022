@@ -67,7 +67,8 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 
   public static final TrajectoryConstraint[] AUTONOMOUS_CONSTRAINTS = {
     //Original
-        new MaxVelocityConstraint(6.0 * 12.0),
+        //new MaxVelocityConstraint(6.0 * 12.0),
+        new MaxVelocityConstraint(6.0*6.0),
         new MaxAccelerationConstraint(15.0 * 12.0),                                 
         new CentripetalAccelerationConstraint(25.0 * 12.0)
 
@@ -518,7 +519,7 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
 
   @Override
   protected void initDefaultCommand() {
-      setDefaultCommand(new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick));
+      setDefaultCommand(new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.SingleStick));
   }
 
   public TrajectoryFollower<HolonomicDriveSignal> getFollower() {

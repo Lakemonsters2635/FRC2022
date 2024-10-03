@@ -11,6 +11,7 @@ import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem.ControlMode;
@@ -48,16 +49,21 @@ protected void execute() {
       forward = Robot.oi.leftStick.getRawAxis(1);
       strafe = Robot.oi.leftStick.getRawAxis(0);
       rotation = Robot.oi.leftStick.getRawAxis(4);  
-      break;    
-      
+      break;
+    
+    
   }
 
 
   double deadzone = 0.05;
   
+  rotation*=-1;
+
   forward = deadZoneAdjust(forward, deadzone);
   strafe = deadZoneAdjust(strafe, deadzone);
   rotation = deadZoneAdjust(rotation, deadzone);
+
+  SmartDashboard.putNumber("Rotation", rotation);
 
   
   boolean robotOriented = false;
